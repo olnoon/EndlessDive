@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     {
         float xSpeed = 0;
         float ySpeed = 0;
-
+        
         if (Input.GetKey(KeyCode.A))
         {
             xSpeed = -1;
@@ -49,12 +50,16 @@ public class PlayerMove : MonoBehaviour
             ySpeed = 0;
         }
 
-        rigid.linearVelocity = new Vector2(xSpeed * speed, ySpeed * speed);
+        Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
+        Vector2 targetPos = (Vector2)transform.position + moveDir * speed * Time.deltaTime;
 
-        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);//x좌표 제한
-        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);//y좌표 제한
+        //위치 제한
+        float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
+        float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
+        Vector2 clampedTarget = new Vector2(clampedX, clampedY);
 
-        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
+        //DOTween을 이용한 이동
+        transform.DOMove(clampedTarget, 0.1f); 
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
