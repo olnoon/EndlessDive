@@ -4,6 +4,10 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] int speed;//속도
     [SerializeField] Rigidbody2D rigid;//리지드
+    public float minX = -10f;
+    public float maxX = 10f;
+    public float minY = -5f;
+    public float maxY = 5f;
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -46,6 +50,11 @@ public class PlayerMove : MonoBehaviour
         }
 
         rigid.linearVelocity = new Vector2(xSpeed * speed, ySpeed * speed);
+
+        float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);//x좌표 제한
+        float clampedY = Mathf.Clamp(transform.position.y, minY, maxY);//y좌표 제한
+
+        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
