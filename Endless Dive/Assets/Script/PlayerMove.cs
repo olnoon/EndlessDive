@@ -4,15 +4,10 @@ using DG.Tweening;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] int speed;//속도
-    [SerializeField] Rigidbody2D rigid;//리지드
     public float minX = -10f;
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-    }
 
     void Update()
     {
