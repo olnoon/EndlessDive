@@ -16,13 +16,13 @@ public class CameraMove : MonoBehaviour
         minY = player.GetComponent<PlayerMove>().minY + 4.37f;
         maxY = player.GetComponent<PlayerMove>().maxY - 4.37f;
     }
-    void Update()//카메라를 자동으로 playerTransform으로 이동시킴
+    void LateUpdate()
     {
-        Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
+        Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
-        this.transform.position = targetPos;
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5f);
     }
 }
