@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0977330f2d94e09459f8d718890733df, type: 3}
-  m_Name: A Player Stats Set SO
+  m_Script: {fileID: 11500000, guid: ef96a39917c22ed46ace9b77a44c643e, type: 3}
+  m_Name: 1 HP SO
   m_EditorClassIdentifier: 
-  hp: {fileID: 0}
-  cost: {fileID: 0}
-  ammo: {fileID: 0}
-  ap: {fileID: 0}
-  atk: {fileID: 0}
-  shield: {fileID: 0}
-  cri: {fileID: 0}
-  criDam: {fileID: 0}
+  baseMax: 100
+  bonusFlat: 0
+  bonusRate: 0
+  tempMax: 0

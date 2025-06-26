@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0977330f2d94e09459f8d718890733df, type: 3}
+  m_Name: A Player Stats Set SO
+  m_EditorClassIdentifier: 
+  hp: {fileID: 11400000, guid: 8e2eeb49c8060364785ee919886881f6, type: 2}
+  cost: {fileID: 11400000, guid: 92b7cd5e7d66d044390c1b3b7a04d349, type: 2}
+  ammo: {fileID: 11400000, guid: 426ec9e2d42ead44aab5d24c4672fb61, type: 2}
+  ap: {fileID: 11400000, guid: 0100c610722a8524188ad83e5695aeee, type: 2}
+  atk: {fileID: 11400000, guid: 3c197219d5db3484081bda9ca0e9d1f9, type: 2}
+  shield: {fileID: 11400000, guid: 654caa6d16191524db3c33a2d881e4e9, type: 2}
+  cri: {fileID: 11400000, guid: f2347ff2276ee9344b0ae8270597fa10, type: 2}
+  criDam: {fileID: 11400000, guid: 5ab90b85b3e070146ab4e13905ce9c71, type: 2}

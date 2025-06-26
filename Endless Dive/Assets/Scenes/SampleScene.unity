@@ -413,9 +413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb43188e033eb24c8be1e2edb546658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statDB: {fileID: 0}
-  maxHP: 0
   currectHP: 0
+  MaxHP: 0
+  stat: {fileID: 11400000, guid: 36850da81b3b4d549b513c2a6c8dd092, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
