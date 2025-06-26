@@ -3,37 +3,26 @@ using System.Collections.Generic;
 
 public class PlayerStat : MonoBehaviour
 {
-    public int currectHP;
-    public int MaxHP;
     public PlayerStatsSetSO stat;
+    public GaugeStatRuntime HP;
+    public SingleStatRuntime ATK;
+    public RatioStatRuntime Cri;
+    public RatioStatRuntime Dam;
 
-    void Start()
+    void Awake()
     {
-        SetHP();
+        HP = new GaugeStatRuntime(stat.hp.MaxFinal);
+        ATK = new SingleStatRuntime(stat.atk.FinalValue);
+        Cri = new RatioStatRuntime(stat.cri.FinalRatio);
+        Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
     }
-
+    
     void Update()
     {
-        if (currectHP <= 0)
+        if (HP.MaxFinal <= 0)
         {
             GameOver();
         }
-    }
-
-    void SetHP()//최대체력을 설정해주는 함수
-    {
-        MaxHP = stat.hp.MaxFinal;
-        currectHP = MaxHP;
-    }
-
-    void GetDamage(int atk)//대미지 받는 함수
-    {
-        currectHP -= atk;
-    }
-
-    void Attack(GameObject target)//대미지 주는 함수
-    {
-        target.GetComponent<PlayerStat>().GetDamage(stat.atk.FinalValue);//EnemyStat으로 바꿀 예정
     }
 
     void GameOver()//게임오버
