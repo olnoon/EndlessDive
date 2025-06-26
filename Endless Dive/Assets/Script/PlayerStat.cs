@@ -48,9 +48,16 @@ public class PlayerStat : MonoBehaviour
             foreach (var hitCollider in hitColliders)
             {
                 Debug.Log(hitCollider.name);
-                if (GM.enemies.Contains(hitCollider.gameObject) && Vector2.Distance(hitCollider.transform.position, this.transform.position) < Vector2.Distance(targetEnemy.transform.position, this.transform.position))
+                if (GM.enemies.Contains(hitCollider.gameObject))
                 {
-                    targetEnemy = hitCollider.gameObject;
+                    if (targetEnemy == null)
+                    {
+                        targetEnemy = hitCollider.gameObject;
+                    }
+                    if (Vector2.Distance(hitCollider.transform.position, transform.position) < Vector2.Distance(targetEnemy.transform.position, transform.position))
+                    {
+                        targetEnemy = hitCollider.gameObject;
+                    }
                 }
             }
             yield return new WaitForSeconds(0.2f);

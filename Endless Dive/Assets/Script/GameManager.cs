@@ -7,10 +7,20 @@ public class GameManager : MonoBehaviour
 
     public GameObject enemyPrefab;
 
+    void Start()
+    {
+        Vector2 pos = new Vector2(1, 1);
+        string kind = "A";
+        int num = 2;
+        SummonEnemy(pos, kind, num);
+    }
+
     public void SummonEnemy(Vector2 pos, string kind, int num)
     {
+        //생성위치, 적 종류, 갯수를 받아서 갯수만큼 생성위치에 알맞은 적의 종류를 생성 혹은 재사용하는 함수
         for (int i = 0; i < num; i++)
         {
+            Debug.Log(i);
             bool reused = false;
 
             foreach (GameObject enemy in enemies)
@@ -18,6 +28,7 @@ public class GameManager : MonoBehaviour
                 var move = enemy.GetComponent<EnemyMove>();
                 if (move.state == State.Death && move.kind.ToString() == kind)
                 {
+                    move.Revive(pos);
                     enemy.transform.position = pos;
                     enemy.SetActive(true);
                     reused = true;
@@ -27,7 +38,8 @@ public class GameManager : MonoBehaviour
 
             if (!reused)
             {
-                Instantiate(enemyPrefab, pos, Quaternion.identity);
+                GameObject enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
+                enemies.Add(enemy);
             }
         }
     }

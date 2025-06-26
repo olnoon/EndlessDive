@@ -25,6 +25,14 @@ public class EnemyMove : MonoBehaviour
         Move();
     }
 
+    public void Revive(Vector2 spawnPos)
+    {
+        //spawnPos로 가서 해당 오브젝트를 활성화 되게 하는 함수
+        transform.position = spawnPos;
+        state = State.Normal;
+        gameObject.SetActive(true);
+    }
+
     void Move()
     {
         Debug.Log("움직이는 중");
