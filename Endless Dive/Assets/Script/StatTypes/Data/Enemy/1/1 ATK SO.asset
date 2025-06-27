@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2960a31ee0b1c0c49a175b8fafd48922, type: 3}
   m_Name: 1 ATK SO
   m_EditorClassIdentifier: 
-  baseValue: 0
+  baseValue: 1
   bonusFlat: 0
   bonusRate: 0
   tempValue: 0

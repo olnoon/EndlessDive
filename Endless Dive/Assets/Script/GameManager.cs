@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         //생성위치, 적 종류, 갯수를 받아서 갯수만큼 생성위치에 알맞은 적의 종류를 생성 혹은 재사용하는 함수
         for (int i = 0; i < num; i++)
         {
-            Debug.Log(i);
             bool reused = false;
 
             foreach (GameObject enemy in enemies)

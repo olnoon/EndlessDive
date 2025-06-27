@@ -9,9 +9,13 @@ public class PlayerStat : MonoBehaviour
     public SingleStatRuntime ATK;
     public RatioStatRuntime Cri;
     public RatioStatRuntime Dam;
+    public GameObject bulletPrefab;
     public GameObject targetEnemy;
     public float findEnemyRange;
     public GameManager GM;
+    [SerializeField] float bulletCooldown = 0.5f;
+    [SerializeField] Transform bulletSpawnPoint;
+    [SerializeField] List<GameObject> bullets = new List<GameObject>();
 
     void Awake()
     {
@@ -20,11 +24,14 @@ public class PlayerStat : MonoBehaviour
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
         Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
+
+        bulletSpawnPoint = transform.GetChild(0);
     }
 
     void Start()
     {
         StartCoroutine("FindEnemy");
+        StartCoroutine("TriggerBullet");
     }
 
     void Update()
@@ -40,14 +47,13 @@ public class PlayerStat : MonoBehaviour
         Debug.Log("GameOver");
     }
 
-    IEnumerator FindEnemy()
+    IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음
     {
         while (true)
         {
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, findEnemyRange, LayerMask.GetMask("Enemy"));
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log(hitCollider.name);
                 if (GM.enemies.Contains(hitCollider.gameObject))
                 {
                     if (targetEnemy == null)
@@ -61,6 +67,39 @@ public class PlayerStat : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    IEnumerator TriggerBullet()//Bullet생성 및 재사용
+    {
+        while (true)
+        {
+            GameObject theBullet = null;
+
+            bool reused = false;
+
+            foreach (GameObject bullet in bullets)
+            {
+                var move = bullet.GetComponent<Bullet>();
+                if (!bullet.activeSelf)
+                {
+                    theBullet = bullet;
+                    move.transform.position = bulletSpawnPoint.position;
+                    bullet.SetActive(true);
+                    reused = true;
+                    break;
+                }
+            }
+
+            if (!reused)
+            {
+                theBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+                bullets.Add(theBullet);
+            }
+            theBullet.GetComponent<Bullet>().target = targetEnemy;
+            theBullet.GetComponent<Bullet>().Reset();
+            theBullet.GetComponent<Bullet>().ATK = ATK;
+            yield return new WaitForSeconds(bulletCooldown);
         }
     }
 }

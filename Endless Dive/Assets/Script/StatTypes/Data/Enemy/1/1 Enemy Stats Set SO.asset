@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0977330f2d94e09459f8d718890733df, type: 3}
-  m_Name: 1 Player Stats Set SO
+  m_Name: 1 Enemy Stats Set SO
   m_EditorClassIdentifier: 
   hp: {fileID: 11400000, guid: bc1ac0d28dc18cb408e33bd78427f060, type: 2}
   atk: {fileID: 11400000, guid: 5ee0ea95e4b3e734e8079ba219a5ed4d, type: 2}

@@ -1,0 +1,63 @@
+using UnityEngine;
+using DG.Tweening;
+using System.Collections;
+
+public class Bullet : MonoBehaviour
+{
+    public GameObject target;
+    [SerializeField] int spendingTime;//target 까지 가는데 걸리는 시간
+    [SerializeField] Vector2 direction;
+    Coroutine deSpawnRoutine;
+    public SingleStatRuntime ATK;
+
+    void FixedUpdate()
+    {
+        MoveBullet();
+    }
+
+    void MoveBullet()//총알 움직임 제어
+    {
+        float distance = 5f; // 이동할 거리
+
+        Vector2 targetPos = (Vector2)transform.position + direction * distance;
+        transform.DOMove(targetPos, spendingTime);
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            this.gameObject.SetActive(false);
+            transform.DOKill();
+            if (deSpawnRoutine != null)
+            {
+                StopCoroutine(deSpawnRoutine);
+                deSpawnRoutine = null;
+            }
+            collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue);
+        }
+    }
+
+    public void Reset()//Bullet이 생성 또는 재사용 될 때 초기화 시켜주는 메서드
+    {
+        ResetDerection();
+        deSpawnRoutine = StartCoroutine(DeSpawnBullet());
+    }
+
+    void ResetDerection()//힘이 가해지는 방향 초기화
+    {
+        if (target == null)
+        {
+            direction = new Vector2(0, 0);
+            return;
+        }
+        Vector3 diff = target.transform.position - transform.position;
+        direction = new Vector2(diff.x, diff.y).normalized;
+    }
+
+    IEnumerator DeSpawnBullet()//5초후 해당 오브젝트가 적 오브젝트에 닿지 않은 것으로 간주하여 비활성화 시킴
+    {
+        yield return new WaitForSeconds(5);
+        gameObject.SetActive(false);
+    }
+}
