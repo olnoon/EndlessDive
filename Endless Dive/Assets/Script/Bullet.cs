@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] Vector2 direction;
     Coroutine deSpawnRoutine;
     public SingleStatRuntime ATK;
+    public bool isSpawned = false;
 
     void FixedUpdate()
     {
@@ -40,11 +41,15 @@ public class Bullet : MonoBehaviour
 
     public void Reset()//Bullet이 생성 또는 재사용 될 때 초기화 시켜주는 메서드
     {
-        ResetDerection();
+        ResetDirection();
+        if (deSpawnRoutine != null)
+        {
+            StopCoroutine(deSpawnRoutine);
+        }
         deSpawnRoutine = StartCoroutine(DeSpawnBullet());
     }
 
-    void ResetDerection()//힘이 가해지는 방향 초기화
+    void ResetDirection()//힘이 가해지는 방향 초기화
     {
         if (target == null)
         {
@@ -55,9 +60,19 @@ public class Bullet : MonoBehaviour
         direction = new Vector2(diff.x, diff.y).normalized;
     }
 
-    IEnumerator DeSpawnBullet()//5초후 해당 오브젝트가 적 오브젝트에 닿지 않은 것으로 간주하여 비활성화 시킴
+    IEnumerator DeSpawnBullet()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5f);
         gameObject.SetActive(false);
+    }
+
+    void OnDisable()
+    {
+        if (deSpawnRoutine != null)
+        {
+            StopCoroutine(deSpawnRoutine);
+            deSpawnRoutine = null;
+        }
+        transform.DOKill();
     }
 }
