@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")//적과의 충돌 판정으로 대미지
         {
             this.gameObject.SetActive(false);
             transform.DOKill();

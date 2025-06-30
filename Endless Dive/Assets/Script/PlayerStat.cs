@@ -36,9 +36,13 @@ public class PlayerStat : MonoBehaviour
 
     void Update()
     {
-        if (HP.MaxFinal <= 0)
+        if (HP.MaxFinal <= 0)//사망 판정
         {
             GameOver();
+        }
+        if (targetEnemy != null && !targetEnemy.activeSelf)//타겟팅된 적이 사망했는지 판단
+        {
+            targetEnemy = null;
         }
     }
 
@@ -78,6 +82,11 @@ public class PlayerStat : MonoBehaviour
 
             bool reused = false;
 
+            if (targetEnemy == null)
+            {
+                goto flag;
+            }
+
             foreach (GameObject bullet in bullets)
             {
                 var move = bullet.GetComponent<Bullet>();
@@ -99,6 +108,8 @@ public class PlayerStat : MonoBehaviour
             theBullet.GetComponent<Bullet>().target = targetEnemy;
             theBullet.GetComponent<Bullet>().Reset();
             theBullet.GetComponent<Bullet>().ATK = ATK;
+
+        flag:
             yield return new WaitForSeconds(bulletCooldown);
         }
     }

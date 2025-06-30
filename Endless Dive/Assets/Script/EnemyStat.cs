@@ -20,7 +20,7 @@ public class EnemyStat : MonoBehaviour
 
     void Update()
     {
-        if (HP.Current <= 0)
+        if (HP.Current <= 0)//사망 판정
         {
             gameObject.SetActive(false);
         }
@@ -28,7 +28,7 @@ public class EnemyStat : MonoBehaviour
     
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerStat>() != null)
+        if (collision.gameObject.GetComponent<PlayerStat>() != null)//대미지 주는 용도
         {
             if (Time.time - lastAttackTime >= attackCooldown)
             {

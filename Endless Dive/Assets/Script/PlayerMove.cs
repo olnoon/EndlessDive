@@ -4,10 +4,16 @@ using DG.Tweening;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] int speed;//속도
+    [SerializeField] Rigidbody2D rb;
     public float minX = -10f;
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
@@ -54,11 +60,15 @@ public class PlayerMove : MonoBehaviour
         Vector2 clampedTarget = new Vector2(clampedX, clampedY);
 
         //DOTween을 이용한 이동
-        transform.DOMove(clampedTarget, 0.1f); 
+        DOTween.To(() => rb.position, x => rb.MovePosition(x), clampedTarget, 0.1f).SetEase(Ease.Linear);
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
     {
         return Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D);
+    }
+    void OnTriggerStay2D(Collider2D collision)
+    {
+
     }
 }
