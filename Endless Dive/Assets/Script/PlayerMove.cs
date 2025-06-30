@@ -60,15 +60,12 @@ public class PlayerMove : MonoBehaviour
         Vector2 clampedTarget = new Vector2(clampedX, clampedY);
 
         //DOTween을 이용한 이동
-        DOTween.To(() => rb.position, x => rb.MovePosition(x), clampedTarget, 0.1f).SetEase(Ease.Linear);
+        transform.DOKill();
+        DOTween.To(() => rb.position, x => rb.MovePosition(x), clampedTarget, 0.1f);
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
     {
         return Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D);
-    }
-    void OnTriggerStay2D(Collider2D collision)
-    {
-
     }
 }

@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  rb: {fileID: 384228393}
   minX: -50
   maxX: 50
   minY: -50
