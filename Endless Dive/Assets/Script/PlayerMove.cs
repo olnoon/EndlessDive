@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Move();
     }
@@ -50,18 +50,23 @@ public class PlayerMove : MonoBehaviour
             xSpeed = 0;
             ySpeed = 0;
         }
-
+        
+        // 이동 방향 계산
         Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
+
+        // 목표 위치 계산
         Vector2 targetPos = (Vector2)transform.position + moveDir * speed * Time.deltaTime;
 
-        //위치 제한
+        // 위치 제한 적용
         float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
         float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
         Vector2 clampedTarget = new Vector2(clampedX, clampedY);
 
-        //DOTween을 이용한 이동
-        transform.DOKill();
-        DOTween.To(() => rb.position, x => rb.MovePosition(x), clampedTarget, 0.1f);
+        // 제한된 위치로 향하는 속도 계산
+        Vector2 velocity = (clampedTarget - (Vector2)transform.position) / Time.fixedDeltaTime;
+
+        // 속도 적용
+        rb.linearVelocity = velocity;
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
