@@ -16,6 +16,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] float bulletCooldown = 0.5f;
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
+    public bool isDisableATK;
 
     void Awake()
     {
@@ -82,7 +83,7 @@ public class PlayerStat : MonoBehaviour
 
             bool reused = false;
 
-            if (targetEnemy == null)
+            if (targetEnemy == null || isDisableATK)
             {
                 goto flag;
             }

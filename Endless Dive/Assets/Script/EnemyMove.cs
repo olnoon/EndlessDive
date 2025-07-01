@@ -25,7 +25,7 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = FindAnyObjectByType<PlayerMove>().gameObject;
+        player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
     }
 
     void Update()

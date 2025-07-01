@@ -10,11 +10,11 @@ public class CameraMove : MonoBehaviour
 
     void Awake()
     {
-        player = FindAnyObjectByType<PlayerMove>().gameObject;
-        minX = player.GetComponent<PlayerMove>().minX + 8.6f;
-        maxX = player.GetComponent<PlayerMove>().maxX - 8.6f;
-        minY = player.GetComponent<PlayerMove>().minY + 4.37f;
-        maxY = player.GetComponent<PlayerMove>().maxY - 4.37f;
+        player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
+        minX = player.GetComponent<PlayerMoveSet>().minX + 8.6f;
+        maxX = player.GetComponent<PlayerMoveSet>().maxX - 8.6f;
+        minY = player.GetComponent<PlayerMoveSet>().minY + 4.37f;
+        maxY = player.GetComponent<PlayerMoveSet>().maxY - 4.37f;
     }
     void LateUpdate()
     {

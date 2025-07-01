@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMoveSet : MonoBehaviour
 {
     [SerializeField] int speed;//속도
     [SerializeField] Rigidbody2D rb;
@@ -8,6 +8,9 @@ public class PlayerMove : MonoBehaviour
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
+    public GameObject mineral;
+    public float getherCooldown = 1.0f;
+    float lastGetherTime;
 
     void Awake()
     {
@@ -17,13 +20,33 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        Gether();
+    }
+
+    void Gether()//광물 캐기
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GetComponent<PlayerStat>().isDisableATK = true;
+        }
+        
+        if (Input.GetKey(KeyCode.Space) && (Time.time - getherCooldown >= lastGetherTime))
+        {
+            lastGetherTime = Time.time;
+            Debug.Log($"광물, {mineral}을 캐는 중");
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            GetComponent<PlayerStat>().isDisableATK = false;
+        }
     }
 
     void Move()//플레이어 움직임 제어
     {
         float xSpeed = 0;
         float ySpeed = 0;
-        
+
         if (Input.GetKey(KeyCode.A))
         {
             xSpeed = -1;
@@ -43,13 +66,13 @@ public class PlayerMove : MonoBehaviour
         {
             ySpeed = -1;
         }
-        
+
         if (isCheckGetUpKey())
         {
             xSpeed = 0;
             ySpeed = 0;
         }
-        
+
         // 이동 방향 계산
         Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
 
@@ -71,5 +94,23 @@ public class PlayerMove : MonoBehaviour
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인
     {
         return Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D);
+    }
+
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision.tag);
+        if (collision.tag == "Mineral")//mineral에 캐고 있는 광물 오브젝트 할당
+        {
+            mineral = collision.transform.parent.gameObject;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Mineral")//mineral에 캐고 있는 광물 오브젝트 초기화
+        {
+            mineral = null;
+        }
     }
 }
