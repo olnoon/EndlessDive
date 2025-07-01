@@ -25,14 +25,15 @@ public class EnemyStat : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    
-    void OnTriggerStay2D(Collider2D collision)
+
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerStat>() != null)//대미지 주는 용도
         {
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 collision.gameObject.GetComponent<PlayerStat>().HP.TakeDamage(ATK.FinalValue);
+                Debug.Log($"{collision.gameObject.name}에게 {ATK.FinalValue}의 대미지를 가해서 체력이 {collision.gameObject.GetComponent<PlayerStat>().HP.Current}만큼 남았습니다.");
                 lastAttackTime = Time.time;
             }
         }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using DG.Tweening;
 
 public enum State
 {
@@ -21,9 +20,11 @@ public class EnemyMove : MonoBehaviour
     public float minY = -5f;
     public float maxY = 5f;
     [SerializeField] GameObject player;
+    [SerializeField] Rigidbody2D rb;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         player = FindAnyObjectByType<PlayerMove>().gameObject;
     }
 
@@ -41,6 +42,20 @@ public class EnemyMove : MonoBehaviour
 
     void Move()//움직임 제어
     {
-        transform.DOMove(player.transform.position, moveDuration);
+        // 현재 위치와 목표 위치
+        Vector2 currentPos = rb.position;
+        Vector2 targetPos = player.transform.position;
+
+        // 목표까지의 방향 벡터
+        Vector2 dir = (targetPos - currentPos).normalized;
+
+        // 목표까지 거리
+        float distance = Vector2.Distance(currentPos, targetPos);
+
+        // moveDuration 동안 도달하기 위한 속도 계산
+        float speed = distance / moveDuration;
+
+        // 속도 적용
+        rb.linearVelocity = dir * speed;
     }
 }

@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
                 deSpawnRoutine = null;
             }
             collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue);
+            Debug.Log($"{collision.gameObject.name}에게 {ATK.FinalValue}의 대미지를 가해서 체력이 {collision.gameObject.GetComponent<EnemyStat>().HP.Current}만큼 남았습니다.");
         }
     }
 
