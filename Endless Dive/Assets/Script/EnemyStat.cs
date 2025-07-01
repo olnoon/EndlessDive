@@ -22,6 +22,7 @@ public class EnemyStat : MonoBehaviour
     {
         if (HP.Current <= 0)//사망 판정
         {
+            GetComponent<EnemyMove>().player.GetComponent<PlayerStat>().addXP();
             gameObject.SetActive(false);
         }
     }

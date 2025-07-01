@@ -33,6 +33,7 @@ public class PlayerMoveSet : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && (Time.time - getherCooldown >= lastGetherTime))
         {
             lastGetherTime = Time.time;
+            GetComponent<PlayerStat>().mineralNum++;
             Debug.Log($"광물, {mineral}을 캐는 중");
         }
 

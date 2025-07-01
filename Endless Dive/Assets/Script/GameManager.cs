@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,12 +8,23 @@ public class GameManager : MonoBehaviour
 
     public GameObject enemyPrefab;
 
+    public GameObject UpgradeScreen;
+
     void Start()
     {
-        Vector2 pos = new Vector2(1, 1);
-        string kind = "A";
-        int num = 2;
-        SummonEnemy(pos, kind, num);
+        StartCoroutine(SpawnTempEnemy());
+    }
+
+    IEnumerator SpawnTempEnemy()
+    {
+        while (true)
+        {
+            Vector2 pos = new Vector2(1, 1);
+            string kind = "A";
+            int num = 2;
+            SummonEnemy(pos, kind, num);
+            yield return new WaitForSeconds(5);
+        }
     }
 
     public void SummonEnemy(Vector2 pos, string kind, int num)
@@ -41,6 +53,11 @@ public class GameManager : MonoBehaviour
                 enemies.Add(enemy);
             }
         }
+    }
+    public void UpgradeOn()//UpgradeScreen활성화 및 시간 정지
+    {
+        Time.timeScale = 0f;
+        UpgradeScreen.SetActive(true);
     }
 
 }

@@ -17,6 +17,10 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
     public bool isDisableATK;
+    public int currentLvl;
+    public int maxXp;
+    public int currentXp;
+    public int mineralNum;
 
     void Awake()
     {
@@ -50,6 +54,22 @@ public class PlayerStat : MonoBehaviour
     void GameOver()//게임오버
     {
         Debug.Log("GameOver");
+    }
+
+    public void addXP()//경험치 증가
+    {
+        currentXp++;
+        if (currentXp >= maxXp)
+        {
+            levelUP();
+        }
+    }
+
+    void levelUP()//레벨 증가 및 업그레이드 화면 띄우기
+    {
+        currentXp = 0;
+        currentLvl++;
+        GM.UpgradeOn();
     }
 
     IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음

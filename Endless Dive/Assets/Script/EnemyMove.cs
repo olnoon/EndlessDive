@@ -19,7 +19,7 @@ public class EnemyMove : MonoBehaviour
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
-    [SerializeField] GameObject player;
+    public GameObject player;
     [SerializeField] Rigidbody2D rb;
 
     void Start()
