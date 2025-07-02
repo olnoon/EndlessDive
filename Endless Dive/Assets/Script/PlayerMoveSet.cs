@@ -27,12 +27,14 @@ public class PlayerMoveSet : MonoBehaviour
     {
         if (mineral == null)
         {
+            GetComponent<PlayerStat>().isDisableATK = false;
             return;
         }
+        
         if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GetComponent<PlayerStat>().isDisableATK = true;
-            }
+        {
+            GetComponent<PlayerStat>().isDisableATK = true;
+        }
         
         if (Input.GetKey(KeyCode.Space) && (Time.time - getherCooldown >= lastGetherTime))
         {
@@ -44,6 +46,7 @@ public class PlayerMoveSet : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            Debug.Log("스페이스바에서 손 땜");
             GetComponent<PlayerStat>().isDisableATK = false;
         }
     }

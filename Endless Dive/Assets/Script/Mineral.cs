@@ -38,7 +38,6 @@ public class Mineral : MonoBehaviour
             if (getherer.GetComponent<PlayerMoveSet>() != null)
             {
                 getherer.GetComponent<PlayerMoveSet>().mineral = null;
-                getherer.GetComponent<PlayerStat>().isDisableATK = false;
             }
             gameObject.SetActive(false);
         }
