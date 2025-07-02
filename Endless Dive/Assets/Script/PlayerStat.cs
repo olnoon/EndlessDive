@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
@@ -21,9 +22,17 @@ public class PlayerStat : MonoBehaviour
     public int maxXp;
     public int currentXp;
     public int mineralNum;
+    [SerializeField] GameObject HPBarBackground;
+    [SerializeField] Image HPBarFilled;
+    [SerializeField] Text HPtext;
+    [SerializeField] GameObject XPBarBackground;
+    [SerializeField] Image XPBarFilled;
+    [SerializeField] Text XPtext;
 
     void Awake()
     {
+        HPBarFilled.fillAmount = 1f;
+        XPBarFilled.fillAmount = 0f;
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
@@ -41,6 +50,8 @@ public class PlayerStat : MonoBehaviour
 
     void Update()
     {
+        HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
+        HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
         if (HP.MaxFinal <= 0)//사망 판정
         {
             GameOver();
@@ -63,6 +74,8 @@ public class PlayerStat : MonoBehaviour
         {
             levelUP();
         }
+        XPBarFilled.fillAmount = (float)currentXp / maxXp;
+        XPtext.text = $"{currentXp}/{maxXp}";
     }
 
     void levelUP()//레벨 증가 및 업그레이드 화면 띄우기
