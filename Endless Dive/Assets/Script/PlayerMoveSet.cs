@@ -25,10 +25,14 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Gether()//광물 캐기
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (mineral == null)
         {
-            GetComponent<PlayerStat>().isDisableATK = true;
+            return;
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GetComponent<PlayerStat>().isDisableATK = true;
+            }
         
         if (Input.GetKey(KeyCode.Space) && (Time.time - getherCooldown >= lastGetherTime))
         {

@@ -35,6 +35,11 @@ public class Mineral : MonoBehaviour
         quantityText.text = $"{currectQuantity}/{totalQuantity}";
         if (currectQuantity == 0)
         {
+            if (getherer.GetComponent<PlayerMoveSet>() != null)
+            {
+                getherer.GetComponent<PlayerMoveSet>().mineral = null;
+                getherer.GetComponent<PlayerStat>().isDisableATK = false;
+            }
             gameObject.SetActive(false);
         }
     }
