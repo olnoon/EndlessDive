@@ -34,6 +34,7 @@ public class PlayerMoveSet : MonoBehaviour
         {
             lastGetherTime = Time.time;
             GetComponent<PlayerStat>().mineralNum++;
+            mineral.GetComponent<Mineral>().Gathered();
             Debug.Log($"광물, {mineral}을 캐는 중");
         }
 

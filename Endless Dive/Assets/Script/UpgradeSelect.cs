@@ -31,9 +31,9 @@ public class UpgradeSelect : MonoBehaviour
         Complete();
     }
 
-    void Complete()//해당 오브젝트 비활성화 및 시간 흐르게 하기
+    void Complete()//해당 오브젝트 비활성화
     {
-        Time.timeScale = 1f;
+        FindAnyObjectByType<GameManager>().PauseTime(1);
         transform.parent.gameObject.SetActive(false);
     }
 }

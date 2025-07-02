@@ -54,10 +54,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void UpgradeOn()//UpgradeScreen활성화 및 시간 정지
+    public void UpgradeOn()//UpgradeScreen활성화
     {
-        Time.timeScale = 0f;
+        PauseTime(0);
         UpgradeScreen.SetActive(true);
     }
 
+    public void PauseTime(int isStop)//시간 활성화 및 시간 정지
+    {
+        Time.timeScale = isStop;
+    }
 }
