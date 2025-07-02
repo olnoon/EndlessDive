@@ -1,13 +1,34 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public class UpgradeOption
+{
+    public Action action;
+    public string name;
+    public string description;
+
+    public UpgradeOption(Action action, string name, string description)
+    {
+        this.action = action;
+        this.name = name;
+        this.description = description;
+    }
+}
 
 public class UpgradeSelect : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    List<UpgradeOption> choices;
 
-    void Start()
+    void Awake()
     {
         player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
+        choices = new List<UpgradeOption>()
+        {
+            new UpgradeOption(UpgradeATK, "공격력 Up", "공격력 +1"),
+        };
     }
 
     void OnEnable()
@@ -17,10 +38,27 @@ public class UpgradeSelect : MonoBehaviour
 
     void SetFuction()//기능 및 텍스트들을 바꿔주는 함수
     {
-        transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();;
-        transform.GetChild(0).GetComponent<Text>().text = "공격력 Up";
-        transform.GetChild(1).GetComponent<Text>().text = "공격력 +1";
-        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(UpgradeATK);
+        int randIndex = UnityEngine.Random.Range(0, choices.Count);
+
+        transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners(); ;
+        
+        Transform btnTransform = transform.GetChild(2);
+        if (btnTransform == null)
+        {
+            Debug.LogError("SetFuction 실패: 2번째 자식이 없습니다.");
+            return;
+        }
+
+        Button btn = btnTransform.GetComponent<Button>();
+        if (btn == null)
+        {
+            Debug.LogError("SetFuction 실패: 2번째 자식에 Button 컴포넌트가 없습니다.");
+            return;
+        }
+
+        transform.GetChild(0).GetComponent<Text>().text = choices[randIndex].name;
+        transform.GetChild(1).GetComponent<Text>().text = choices[randIndex].description;
+        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => choices[randIndex].action());
     }
 
     public void UpgradeATK()//공격력 업그레이드
