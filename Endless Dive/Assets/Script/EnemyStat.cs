@@ -12,6 +12,11 @@ public class EnemyStat : MonoBehaviour
 
     void Awake()
     {
+        Revive();
+    }
+
+    public void Revive()
+    {
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
@@ -23,6 +28,7 @@ public class EnemyStat : MonoBehaviour
         if (HP.Current <= 0)//사망 판정
         {
             GetComponent<EnemyMove>().player.GetComponent<PlayerStat>().addXP();
+            GetComponent<EnemyMove>().state = State.Death;
             gameObject.SetActive(false);
         }
     }

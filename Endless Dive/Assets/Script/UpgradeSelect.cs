@@ -40,21 +40,7 @@ public class UpgradeSelect : MonoBehaviour
     {
         int randIndex = UnityEngine.Random.Range(0, choices.Count);
 
-        transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners(); ;
-        
-        Transform btnTransform = transform.GetChild(2);
-        if (btnTransform == null)
-        {
-            Debug.LogError("SetFuction 실패: 2번째 자식이 없습니다.");
-            return;
-        }
-
-        Button btn = btnTransform.GetComponent<Button>();
-        if (btn == null)
-        {
-            Debug.LogError("SetFuction 실패: 2번째 자식에 Button 컴포넌트가 없습니다.");
-            return;
-        }
+        transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
 
         transform.GetChild(0).GetComponent<Text>().text = choices[randIndex].name;
         transform.GetChild(1).GetComponent<Text>().text = choices[randIndex].description;
