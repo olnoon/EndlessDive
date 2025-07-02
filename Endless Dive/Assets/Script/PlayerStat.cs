@@ -33,6 +33,7 @@ public class PlayerStat : MonoBehaviour
     {
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
+        XPtext.text = $"{currentXp}/{maxXp}";
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);

@@ -10,11 +10,13 @@ public class Mineral : MonoBehaviour
     [SerializeField] int totalQuantity;
     [SerializeField] GameObject quantityBarBackground;
     [SerializeField] Image quantityBarFilled;
+    [SerializeField] Text quantityText;
 
     void Awake()
     {
         currectQuantity = totalQuantity;
         quantityBarFilled.fillAmount = 1f;
+        quantityText.text = $"{currectQuantity}/{totalQuantity}";
     }
 
     void Update()
@@ -25,8 +27,12 @@ public class Mineral : MonoBehaviour
     public void Gathered()//currectQuantity을 줄이고 플레이어스텟의 mineralNum을 그만큼 늘려줌
     {
         currectQuantity--;
-        getherer.GetComponent<PlayerStat>().mineralNum++;
+        if (getherer.GetComponent<PlayerStat>() != null)
+        {
+            getherer.GetComponent<PlayerStat>().mineralNum++;
+        }
         quantityBarFilled.fillAmount = (float)currectQuantity / totalQuantity;
+        quantityText.text = $"{currectQuantity}/{totalQuantity}";
         if (currectQuantity == 0)
         {
             gameObject.SetActive(false);
