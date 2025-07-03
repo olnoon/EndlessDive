@@ -46,18 +46,16 @@ public class PlayerMoveSet : MonoBehaviour
             return;
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log($"bruh : {GetComponent<PlayerStat>().isDisableATK}");
             GetComponent<PlayerStat>().isDisableATK = true;
-        }
-        
-        if (Input.GetKey(KeyCode.Space) && (Time.time - getherCooldown >= lastGetherTime))
-        {
-            lastGetherTime = Time.time;
-            GetComponent<PlayerStat>().mineralNum++;
-            mineral.GetComponent<Mineral>().Gathered();
-            Debug.Log($"광물, {mineral}을 캐는 중");
+            if (Time.time - getherCooldown >= lastGetherTime)
+            {
+                lastGetherTime = Time.time;
+                GetComponent<PlayerStat>().mineralNum++;
+                mineral.GetComponent<Mineral>().Gathered();
+                Debug.Log($"광물, {mineral}을 캐는 중");
+            }
         }
 
         if (!Input.GetKey(KeyCode.Space))

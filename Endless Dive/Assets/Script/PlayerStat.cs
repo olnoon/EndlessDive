@@ -77,14 +77,17 @@ public class PlayerStat : MonoBehaviour
 
     void AttackMethod()//마우스 오른쪽, 왼쪽 입력 감지
     {
-        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+        if (!isDisableATK)
         {
-            isToggleATK = !isToggleATK;
-        }
+            if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+            {
+                isToggleATK = !isToggleATK;
+            }
 
-        if (Input.GetMouseButtonDown(1) && Time.timeScale != 0)
-        {
-            SpellSkill();
+            if (Input.GetMouseButtonDown(1) && Time.timeScale != 0)
+            {
+                SpellSkill();
+            }
         }
     }
 
@@ -95,10 +98,6 @@ public class PlayerStat : MonoBehaviour
 
     void SpellSkill()//강한 탄환 발사하는 함수
     {
-        if (isDisableATK)
-        {
-            return;
-        }
         
         GameObject theBullet = null;
 
