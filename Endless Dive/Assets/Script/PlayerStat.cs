@@ -32,7 +32,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] GameObject XPBarBackground;
     [SerializeField] Image XPBarFilled;
     [SerializeField] Text XPtext;
-    Vector3 mousePos;
+    public Vector3 mousePos;
 
     void Awake()
     {
@@ -70,6 +70,13 @@ public class PlayerStat : MonoBehaviour
             targetEnemy = null;
         }
 
+        AttackMethod();
+        
+        CalculateMouseCoord();
+    }
+
+    void AttackMethod()//마우스 오른쪽, 왼쪽 입력 감지
+    {
         if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
         {
             isToggleATK = !isToggleATK;
@@ -86,7 +93,7 @@ public class PlayerStat : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    void SpellSkill()
+    void SpellSkill()//강한 탄환 발사하는 함수
     {
         GameObject theBullet = null;
 
@@ -111,7 +118,6 @@ public class PlayerStat : MonoBehaviour
             specialBullets.Add(theBullet);
         }
 
-        CalculateMouseCoord();
         theBullet.GetComponent<Bullet>().target = mousePos;
         theBullet.GetComponent<Bullet>().Reset();
         theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);

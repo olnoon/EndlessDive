@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMoveSet : MonoBehaviour
@@ -20,7 +21,21 @@ public class PlayerMoveSet : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        Gether();
+        if (Time.timeScale != 0)
+        {
+            Gether();
+            UpdateFacing();
+        }
+    }
+
+    void UpdateFacing()//마우스 방향 보는 함수
+    {
+        float currectScaleX = Math.Abs(transform.localScale.x);
+        float lookingDirec = GetComponent<PlayerStat>().mousePos.x > transform.position.x ? currectScaleX : -currectScaleX;
+
+        Vector2 toSize = new Vector2(lookingDirec, transform.localScale.y);
+
+        transform.localScale = toSize;
     }
 
     void Gether()//광물 캐기
