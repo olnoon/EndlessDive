@@ -81,7 +81,7 @@ public class PlayerStat : MonoBehaviour
 
     void levelUP()//레벨 증가 및 업그레이드 화면 띄우기
     {
-        currentXp = 0;
+        currentXp -= maxXp;
         currentLvl++;
         GM.UpgradeOn();
     }

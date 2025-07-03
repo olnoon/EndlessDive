@@ -33,6 +33,7 @@ public class PlayerMoveSet : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log($"bruh : {GetComponent<PlayerStat>().isDisableATK}");
             GetComponent<PlayerStat>().isDisableATK = true;
         }
         
@@ -44,7 +45,7 @@ public class PlayerMoveSet : MonoBehaviour
             Debug.Log($"광물, {mineral}을 캐는 중");
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (!Input.GetKey(KeyCode.Space))
         {
             Debug.Log("스페이스바에서 손 땜");
             GetComponent<PlayerStat>().isDisableATK = false;
@@ -108,7 +109,6 @@ public class PlayerMoveSet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.tag);
         if (collision.tag == "Mineral")//mineral에 캐고 있는 광물 오브젝트 할당
         {
             mineral = collision.transform.parent.gameObject;

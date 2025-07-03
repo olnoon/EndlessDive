@@ -9,10 +9,12 @@ public class EnemyStat : MonoBehaviour
     public RatioStatRuntime Dam;
     public float attackCooldown = 1.0f;
     private float lastAttackTime;
+    GameManager GM;
 
     void Awake()
     {
         Revive();
+        GM = FindAnyObjectByType<GameManager>();
     }
 
     public void Revive()
@@ -27,8 +29,8 @@ public class EnemyStat : MonoBehaviour
     {
         if (HP.Current <= 0)//사망 판정
         {
-            GetComponent<EnemyMove>().player.GetComponent<PlayerStat>().addXP();
             GetComponent<EnemyMove>().state = State.Death;
+            GM.GenerateXPorb(gameObject);
             gameObject.SetActive(false);
         }
     }
