@@ -71,7 +71,7 @@ public class PlayerStat : MonoBehaviour
         }
 
         AttackMethod();
-        
+
         CalculateMouseCoord();
     }
 
@@ -95,6 +95,11 @@ public class PlayerStat : MonoBehaviour
 
     void SpellSkill()//강한 탄환 발사하는 함수
     {
+        if (isDisableATK)
+        {
+            return;
+        }
+        
         GameObject theBullet = null;
 
         bool reused = false;
