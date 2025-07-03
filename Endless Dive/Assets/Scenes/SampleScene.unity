@@ -564,12 +564,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat: {fileID: 11400000, guid: 36850da81b3b4d549b513c2a6c8dd092, type: 2}
   bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}
+  specialBulletPrefab: {fileID: 2525984864775521835, guid: 26428746a93c34942a9c079b37b6f085, type: 3}
   targetEnemy: {fileID: 0}
   findEnemyRange: 5
   GM: {fileID: 0}
   bulletCooldown: 0.5
   bulletSpawnPoint: {fileID: 0}
+  spcialBulletCooldown: 0.5
   bullets: []
+  specialBullets: []
+  isToggleATK: 1
   isDisableATK: 0
   currentLvl: 0
   maxXp: 10
@@ -5275,7 +5279,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &1913269613
 GameObject:

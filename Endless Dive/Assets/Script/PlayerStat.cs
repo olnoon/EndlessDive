@@ -11,12 +11,16 @@ public class PlayerStat : MonoBehaviour
     public RatioStatRuntime Cri;
     public RatioStatRuntime Dam;
     public GameObject bulletPrefab;
+    public GameObject specialBulletPrefab;
     public GameObject targetEnemy;
     public float findEnemyRange;
     public GameManager GM;
     [SerializeField] float bulletCooldown = 0.5f;
     [SerializeField] Transform bulletSpawnPoint;
+    [SerializeField] float spcialBulletCooldown = 0.5f;
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
+    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
+    [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
     public int currentLvl;
     public int maxXp;
@@ -28,9 +32,11 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] GameObject XPBarBackground;
     [SerializeField] Image XPBarFilled;
     [SerializeField] Text XPtext;
+    Vector3 mousePos;
 
     void Awake()
     {
+        mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         XPtext.text = $"{currentXp}/{maxXp}";
@@ -53,17 +59,65 @@ public class PlayerStat : MonoBehaviour
     {
         HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
         HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
+
         if (HP.MaxFinal <= 0)//사망 판정
         {
             GameOver();
         }
+
         if (targetEnemy != null && !targetEnemy.activeSelf)//타겟팅된 적이 사망했는지 판단
         {
             targetEnemy = null;
         }
+
+        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+        {
+            isToggleATK = !isToggleATK;
+        }
+
+        if (Input.GetMouseButtonDown(1) && Time.timeScale != 0)
+        {
+            SpellSkill();
+        }
     }
 
-    void GameOver()//게임오버
+    void CalculateMouseCoord()//마우스 위치 계산
+    {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    void SpellSkill()
+    {
+        GameObject theBullet = null;
+
+        bool reused = false;
+
+        foreach (GameObject bullet in specialBullets)
+        {
+            var move = bullet.GetComponent<Bullet>();
+            if (!bullet.activeSelf)
+            {
+                theBullet = bullet;
+                move.transform.position = bulletSpawnPoint.position;
+                bullet.SetActive(true);
+                reused = true;
+                break;
+            }
+        }
+
+        if (!reused)
+        {
+            theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            specialBullets.Add(theBullet);
+        }
+
+        CalculateMouseCoord();
+        theBullet.GetComponent<Bullet>().target = mousePos;
+        theBullet.GetComponent<Bullet>().Reset();
+        theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+    }
+
+    void GameOver()//게임 오버
     {
         Debug.Log("GameOver");
     }
@@ -117,7 +171,7 @@ public class PlayerStat : MonoBehaviour
 
             bool reused = false;
 
-            if (targetEnemy == null || isDisableATK)
+            if (isDisableATK || !isToggleATK)
             {
                 goto flag;
             }
@@ -140,9 +194,10 @@ public class PlayerStat : MonoBehaviour
                 theBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
                 bullets.Add(theBullet);
             }
-            theBullet.GetComponent<Bullet>().target = targetEnemy;
+            CalculateMouseCoord();
+            theBullet.GetComponent<Bullet>().target = mousePos;
             theBullet.GetComponent<Bullet>().Reset();
-            theBullet.GetComponent<Bullet>().ATK = ATK;
+            theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
 
         flag:
             yield return new WaitForSeconds(bulletCooldown);

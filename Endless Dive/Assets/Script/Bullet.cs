@@ -4,12 +4,12 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    public GameObject target;
+    public Vector2 target;
     [SerializeField] int spendingTime;//target 까지 가는데 걸리는 시간
     [SerializeField] Vector2 direction;
     Coroutine deSpawnRoutine;
     public SingleStatRuntime ATK;
-    public bool isSpawned = false;
+    public int weight = 1;
 
     void FixedUpdate()
     {
@@ -35,8 +35,8 @@ public class Bullet : MonoBehaviour
                 StopCoroutine(deSpawnRoutine);
                 deSpawnRoutine = null;
             }
-            collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue);
-            Debug.Log($"{collision.gameObject.name}에게 {ATK.FinalValue}의 대미지를 가해서 체력이 {collision.gameObject.GetComponent<EnemyStat>().HP.Current}만큼 남았습니다.");
+            collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue * weight);
+            Debug.Log($"{collision.gameObject.name}에게 {ATK.FinalValue * weight}의 대미지를 가해서 체력이 {collision.gameObject.GetComponent<EnemyStat>().HP.Current}만큼 남았습니다.");
         }
     }
 
@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
             direction = new Vector2(0, 0);
             return;
         }
-        Vector3 diff = target.transform.position - transform.position;
+        Vector3 diff = target - (Vector2)transform.position;
         direction = new Vector2(diff.x, diff.y).normalized;
     }
 
