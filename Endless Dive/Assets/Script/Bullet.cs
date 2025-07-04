@@ -10,6 +10,12 @@ public class Bullet : MonoBehaviour
     Coroutine deSpawnRoutine;
     public SingleStatRuntime ATK;
     public int weight = 1;
+    Rigidbody2D rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void FixedUpdate()
     {
@@ -19,12 +25,13 @@ public class Bullet : MonoBehaviour
     void MoveBullet()//총알 움직임 제어
     {
         float distance = 5f; // 이동할 거리
+        float speed = distance / spendingTime;
 
         Vector2 targetPos = (Vector2)transform.position + direction * distance;
-        transform.DOMove(targetPos, spendingTime);
+        rb.MovePosition(Vector2.MoveTowards(rb.position, targetPos, speed * Time.fixedDeltaTime));
     }
 
-    void OnTriggerStay2D(Collider2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")//적과의 충돌 판정으로 대미지
         {

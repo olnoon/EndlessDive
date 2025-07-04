@@ -19,6 +19,8 @@ public class EnemyMove : MonoBehaviour
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
+    [SerializeField] bool isKnockAble = true;
+    [SerializeField] float knockbackPower;
     public GameObject player;
     [SerializeField] Rigidbody2D rb;
 
@@ -26,6 +28,7 @@ public class EnemyMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
+        SetKnockBack();
     }
 
     void Update()
@@ -39,6 +42,7 @@ public class EnemyMove : MonoBehaviour
         transform.position = spawnPos;
         state = State.Normal;
         gameObject.SetActive(true);
+        SetKnockBack();
     }
 
     void Move()//움직임 제어
@@ -58,5 +62,18 @@ public class EnemyMove : MonoBehaviour
 
         // 속도 적용
         rb.linearVelocity = dir * speed;
+    }
+
+    void SetKnockBack()
+    {
+        if (!isKnockAble)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+        else
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.mass = knockbackPower;
+        }
     }
 }

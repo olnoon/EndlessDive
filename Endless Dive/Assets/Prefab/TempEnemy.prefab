@@ -104,7 +104,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 10
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -137,6 +137,8 @@ MonoBehaviour:
   maxX: 10
   minY: -5
   maxY: 5
+  isKnockAble: 1
+  knockbackPower: 10
   player: {fileID: 0}
   rb: {fileID: 0}
 --- !u!114 &-2966572898830851253

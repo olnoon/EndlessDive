@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // Vector2 pos = new Vector2(1, 1);
+        // string kind = "A";
+        // int num = 1;
+        // SummonEnemy(pos, kind, num);
         StartCoroutine(SpawnTempEnemy());
     }
 
@@ -68,16 +72,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isStop;
     }
 
-    public void GenerateXPorb(GameObject enemy)//적 사망시 경험치 오브를 생성함
+    public void GenerateOrb(GameObject enemy, OrbKind orbKind)//적 사망시 경험치 혹은 체력 오브를 생성함
     {
         bool reused = false;
 
         foreach (GameObject orb in orbs)
         {
-            var orbScript = orb.GetComponent<ExpOrb>();
             if (!orb.activeSelf)
             {
                 orb.transform.position = enemy.transform.position;
+                orb.GetComponent<OrbScript>().orbKind = orbKind;
                 orb.SetActive(true);
                 reused = true;
                 break;
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
         if (!reused)
         {
             GameObject orb = Instantiate(orbPrefab, enemy.transform.position, Quaternion.identity);
+            orb.GetComponent<OrbScript>().orbKind = orbKind;
             orbs.Add(orb);
         }
     }

@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 197016563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 384228393}
   - component: {fileID: 384228394}
   - component: {fileID: 384228395}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TempPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 640453279}
   - component: {fileID: 640453281}
   - component: {fileID: 640453280}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146ea7a0d4d87f54fb54ced8f0c2c527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 30
+  range: 1
   isGetherable: 0
   getherer: {fileID: 0}
   currectQuantity: 0
@@ -1593,7 +1593,7 @@ GameObject:
   - component: {fileID: 720420557}
   - component: {fileID: 720420558}
   - component: {fileID: 720420559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MineralDisplay
   m_TagString: Mineral
   m_Icon: {fileID: 0}
@@ -1730,7 +1730,7 @@ GameObject:
   - component: {fileID: 739433821}
   - component: {fileID: 739433820}
   - component: {fileID: 739433822}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2777,7 +2777,7 @@ GameObject:
   - component: {fileID: 1051235630}
   - component: {fileID: 1051235632}
   - component: {fileID: 1051235631}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: quantityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4283,7 +4283,7 @@ GameObject:
   - component: {fileID: 1135284680}
   - component: {fileID: 1135284682}
   - component: {fileID: 1135284681}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FilledImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4620,7 +4620,7 @@ GameObject:
   - component: {fileID: 1482533206}
   - component: {fileID: 1482533208}
   - component: {fileID: 1482533207}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5258,7 +5258,7 @@ GameObject:
   - component: {fileID: 1903369876}
   - component: {fileID: 1903369875}
   - component: {fileID: 1903369874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

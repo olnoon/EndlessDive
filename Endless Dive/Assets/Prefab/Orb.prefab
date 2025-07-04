@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3956107602428550414}
   - component: {fileID: 6315550064485562943}
   m_Layer: 0
-  m_Name: ExpOrb
+  m_Name: Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,3 +137,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82a710f604ba814b8c489c13bef74a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orbKind: 1

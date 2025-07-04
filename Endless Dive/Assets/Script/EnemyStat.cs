@@ -30,7 +30,15 @@ public class EnemyStat : MonoBehaviour
         if (HP.Current <= 0)//사망 판정
         {
             GetComponent<EnemyMove>().state = State.Death;
-            GM.GenerateXPorb(gameObject);
+            int probability = Random.Range(0, 101);
+            if (probability >= 0 && probability <= 39)
+            {
+                GM.GenerateOrb(gameObject, OrbKind.XP);
+            }
+            else if (probability >= 40 && probability <= 54)
+            {
+                GM.GenerateOrb(gameObject, OrbKind.HP);
+            }
             gameObject.SetActive(false);
         }
     }
