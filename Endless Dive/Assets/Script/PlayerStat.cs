@@ -17,7 +17,9 @@ public class PlayerStat : MonoBehaviour
     public GameManager GM;
     [SerializeField] float bulletCooldown = 0.5f;
     [SerializeField] Transform bulletSpawnPoint;
-    [SerializeField] float spcialBulletCooldown = 0.5f;
+    [SerializeField] int spcialBulletCooldown = 10;//단위 0.1초
+    [SerializeField] int spcialCurrectTime = 1;//단위 0.1초
+    [SerializeField] bool isSpecialATKable = true;
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
     [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
     [SerializeField] bool isToggleATK = true;
@@ -32,6 +34,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] GameObject XPBarBackground;
     [SerializeField] Image XPBarFilled;
     [SerializeField] Text XPtext;
+    [SerializeField] Text SkilCooltext;
     public Vector3 mousePos;
 
     void Awake()
@@ -84,7 +87,7 @@ public class PlayerStat : MonoBehaviour
                 isToggleATK = !isToggleATK;
             }
 
-            if (Input.GetMouseButtonDown(1) && Time.timeScale != 0)
+            if (Input.GetMouseButtonDown(1) && Time.timeScale != 0 && isSpecialATKable)
             {
                 SpellSkill();
             }
@@ -98,7 +101,10 @@ public class PlayerStat : MonoBehaviour
 
     void SpellSkill()//강한 탄환 발사하는 함수
     {
-        
+        isSpecialATKable = false;
+
+        StartCoroutine(SpecialSkillColling());
+
         GameObject theBullet = null;
 
         bool reused = false;
@@ -125,6 +131,22 @@ public class PlayerStat : MonoBehaviour
         theBullet.GetComponent<Bullet>().target = mousePos;
         theBullet.GetComponent<Bullet>().Reset();
         theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+    }
+
+    IEnumerator SpecialSkillColling()//스킬 쿨타임
+    {
+        while (true)
+        {
+            if (spcialCurrectTime == spcialBulletCooldown)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+            spcialCurrectTime++;
+            SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+        }
+        spcialCurrectTime = 1;
+        isSpecialATKable = true;
     }
 
     void GameOver()//게임 오버
