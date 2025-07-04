@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyStat : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class EnemyStat : MonoBehaviour
     public float attackCooldown = 1.0f;
     private float lastAttackTime;
     GameManager GM;
+    [SerializeField] GameObject HPBarBackground;
+    [SerializeField] Image HPBarFilled;
+    [SerializeField] Text HPtext;
 
     void Awake()
     {
-        Revive();
         GM = FindAnyObjectByType<GameManager>();
+        HPBarFilled.fillAmount = 1f;
+        Revive();
     }
 
     public void Revive()
@@ -23,6 +28,7 @@ public class EnemyStat : MonoBehaviour
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
         Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
+        DetectDamage();
     }
 
     void Update()
@@ -41,6 +47,12 @@ public class EnemyStat : MonoBehaviour
             }
             gameObject.SetActive(false);
         }
+    }
+
+    public void DetectDamage()//대미지를 받을 때 감지해서 체력바를 줄여주는 메서드
+    {
+        HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
+        HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
     }
 
     void OnCollisionStay2D(Collision2D collision)
