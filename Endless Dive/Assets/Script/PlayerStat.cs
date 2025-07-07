@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +37,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] Text XPtext;
     [SerializeField] Text SkilCooltext;
     public Vector3 mousePos;
+    [SerializeField] float gainRange;
 
     void Awake()
     {
@@ -43,6 +45,7 @@ public class PlayerStat : MonoBehaviour
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         XPtext.text = $"{currentXp}/{maxXp}";
+        StartCoroutine(SpecialSkillColling());
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
@@ -55,6 +58,7 @@ public class PlayerStat : MonoBehaviour
     void Start()
     {
         StartCoroutine("FindEnemy");
+        StartCoroutine("FindOrb");
         StartCoroutine("TriggerBullet");
     }
 
@@ -169,7 +173,7 @@ public class PlayerStat : MonoBehaviour
     {
         currentXp -= maxXp;
         currentLvl++;
-        GM.UpgradeOn();
+        GM.levelUP();
     }
 
     IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음
@@ -189,6 +193,28 @@ public class PlayerStat : MonoBehaviour
                     {
                         targetEnemy = hitCollider.gameObject;
                     }
+                }
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    IEnumerator FindOrb()//0.2초 마다 주변의 오브들을 찾음
+    {
+        while (true)
+        {
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, gainRange, LayerMask.GetMask("Orb"));
+            foreach (var hitCollider in hitColliders)
+            {
+                if (GM.orbs.Contains(hitCollider.gameObject) && hitCollider.gameObject.activeSelf)
+                {
+                    if (HP.Current >= HP.MaxFinal && hitCollider.GetComponent<OrbScript>().orbKind == OrbKind.HP)
+                    {
+                        break;
+                    }
+                    hitCollider.GetComponent<OrbScript>().isFinded = true;
+                    hitCollider.GetComponent<OrbScript>().player = gameObject;
+                    hitCollider.GetComponent<OrbScript>().MoveToPlayer();
                 }
             }
             yield return new WaitForSeconds(0.2f);

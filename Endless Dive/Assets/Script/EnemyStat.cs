@@ -22,7 +22,7 @@ public class EnemyStat : MonoBehaviour
         Revive();
     }
 
-    public void Revive()
+    public void Revive()//부활 시킬 때 해당 오브젝트의 변수들을 초기화 시켜주는 메서드
     {
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
@@ -46,6 +46,7 @@ public class EnemyStat : MonoBehaviour
                 GM.GenerateOrb(gameObject, OrbKind.HP);
             }
             gameObject.SetActive(false);
+            GM.IncreaseMissionRemain(GetComponent<EnemyMove>().kind);
         }
     }
 

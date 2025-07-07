@@ -20,9 +20,9 @@ public class PlayerMoveSet : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
         if (Time.timeScale != 0)
         {
+            Move();
             Gether();
             UpdateFacing();
         }

@@ -21,17 +21,19 @@ public class UpgradeSelect : MonoBehaviour
 {
     [SerializeField] GameObject player;
     List<UpgradeOption> choices;
+    public GameManager GM;
 
     void Awake()
     {
+        GM = FindAnyObjectByType<GameManager>();
         player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
-        choices = new List<UpgradeOption>()
+        choices = new List<UpgradeOption>()//선택지들 초기화
         {
             new UpgradeOption(UpgradeATK, "공격력 Up", "공격력 +1"),
         };
     }
 
-    void OnEnable()
+    void OnEnable()//활성화시 랜덤으로 이벤트 선택
     {
         SetFuction();
     }
@@ -57,7 +59,7 @@ public class UpgradeSelect : MonoBehaviour
 
     void Complete()//해당 오브젝트 비활성화
     {
-        FindAnyObjectByType<GameManager>().PauseTime(1);
         transform.parent.gameObject.SetActive(false);
+        GM.UpgradeOn();
     }
 }

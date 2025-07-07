@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 using System.Collections;
 
 public enum OrbKind
@@ -6,10 +7,14 @@ public enum OrbKind
     HP,
     XP
 }
+
 public class OrbScript : MonoBehaviour
 {
     Coroutine deSpawnRoutine;
-    public OrbKind orbKind; 
+    public OrbKind orbKind;
+    public bool isFinded;
+    public GameObject player;
+    public float duration = 1f;
 
     void Awake()
     {
@@ -21,23 +26,33 @@ public class OrbScript : MonoBehaviour
         ChangeOrbColor();
     }
 
+    public void MoveToPlayer()
+    {
+        if (isFinded)
+        {
+            PlayerStat playerStat = player.GetComponent<PlayerStat>();
+
+            transform.DOMove(player.transform.position, duration).SetEase(Ease.InCubic);
+        }
+    }
+
     void OnEnable()
     {
-        if (deSpawnRoutine != null)//일정시간 후 디스폰해주는 루틴 활성화
+        if (deSpawnRoutine != null)//일정 시간 후 디스폰해주는 루틴 활성화
         {
-            StopCoroutine(deSpawnRoutine);
+            // StopCoroutine(deSpawnRoutine);
         }
         deSpawnRoutine = StartCoroutine(DeSpawnOrb());
         ChangeOrbColor();
     }
 
-    void ChangeOrbColor()
+    void ChangeOrbColor()//orbKind에 따라 오브의 색깔 변경
     {
-        if (orbKind == OrbKind.HP)//체력오브라고 판단시 빨간색으로 변경
+        if (orbKind == OrbKind.HP)//체력 오브라고 판단시 빨간색으로 변경
         {
             GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.7f);
         }
-        else if (orbKind == OrbKind.XP)//경험치오브라고 판단시 테니공색?으로 변경
+        else if (orbKind == OrbKind.XP)//경험치 오브라고 판단시 테니공색?으로 변경
         {
             GetComponent<SpriteRenderer>().color = new Color(0.8282f, 1, 0, 0.7f);
         }
@@ -60,17 +75,15 @@ public class OrbScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")//플레이어와 충돌했을 때 플레이어의 xp증가
+        if (collision.tag == "Player")
         {
-            if (orbKind == OrbKind.XP)
+            if (orbKind == OrbKind.XP)//플레이어와 충돌했을 때 플레이어의 xp 증가
             {
                 collision.GetComponent<PlayerStat>().addXP();
-                Debug.Log("경험치 증가");
             }
-            else if (orbKind == OrbKind.HP)
+            else if (orbKind == OrbKind.HP)//플레이어와 충돌했을 때 플레이어의 체력 회복
             {
                 collision.GetComponent<PlayerStat>().HP.Heal(1);
-                Debug.Log("체력 회복");
             }
             gameObject.SetActive(false);
         }

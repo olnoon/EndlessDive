@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef96a39917c22ed46ace9b77a44c643e, type: 3}
-  m_Name: 1 HP SO
+  m_Name: 2 HP SO
   m_EditorClassIdentifier: 
-  baseMax: 100
+  baseMax: 30
   bonusFlat: 0
   bonusRate: 0
   tempMax: 0

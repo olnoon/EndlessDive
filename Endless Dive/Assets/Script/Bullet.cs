@@ -69,7 +69,7 @@ public class Bullet : MonoBehaviour
         direction = new Vector2(diff.x, diff.y).normalized;
     }
 
-    IEnumerator DeSpawnBullet()
+    IEnumerator DeSpawnBullet()//불렛 디스폰
     {
         yield return new WaitForSeconds(5f);
         gameObject.SetActive(false);
@@ -77,7 +77,7 @@ public class Bullet : MonoBehaviour
 
     void OnDisable()
     {
-        if (deSpawnRoutine != null)
+        if (deSpawnRoutine != null)//불렛이 디스폰 될 때 다음 재사용에서 디스폰 루틴이 충돌하지 않게 하기 위해 만듦
         {
             StopCoroutine(deSpawnRoutine);
             deSpawnRoutine = null;

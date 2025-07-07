@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,14 +14,17 @@ public class GameManager : MonoBehaviour
     public GameObject UpgradeScreen;
 
     public GameObject orbPrefab;
-
+    public GameObject lvlParent;
+    public GameObject lvlDisplay;
+    public EnemyKind missionTarget;
+    public int missionNum;
+    public int currentMissionNum;
+    public Text missionText;
+    public List<Action> upgrades;
     void Start()
     {
-        // Vector2 pos = new Vector2(1, 1);
-        // string kind = "A";
-        // int num = 1;
-        // SummonEnemy(pos, kind, num);
         StartCoroutine(SpawnTempEnemy());
+        GiveMainMission();
     }
 
     IEnumerator SpawnTempEnemy()
@@ -28,7 +33,7 @@ public class GameManager : MonoBehaviour
         {
             Vector2 pos = new Vector2(1, 1);
             string kind = "A";
-            int num = 2;
+            int num = 1;
             SummonEnemy(pos, kind, num);
             yield return new WaitForSeconds(5);
         }
@@ -61,9 +66,20 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void levelUP()//원형 아이콘 추가
+    {
+        //TODO 나중에 재사용 가능하게 바꿔 주기
+        Instantiate(lvlDisplay, Vector2.zero, Quaternion.identity, lvlParent.transform);
+    }
     public void UpgradeOn()//UpgradeScreen활성화
     {
-        PauseTime(0);
+        if(upgrades.Count == 0)
+        {
+            PauseTime(1);
+            return;
+        }
+        upgrades.RemoveAt(0);
         UpgradeScreen.SetActive(true);
     }
 
@@ -96,4 +112,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GiveMainMission()//미션을 줌
+    {
+        missionTarget = EnemyKind.A;
+        currentMissionNum = 0;
+        missionNum = 5;
+
+        missionText.text = $"{missionTarget}을 {missionNum}만큼 잡으시오.({currentMissionNum}/{missionNum})";
+    }
+
+    public void IncreaseMissionRemain(EnemyKind enemyKind)//missionTarget증가 및 미션완료여부 판단
+    {
+        if (enemyKind == missionTarget)
+        {
+            currentMissionNum++;
+            if (currentMissionNum == missionNum)
+            {
+                CompleteMission();
+            }
+            missionText.text = $"{missionTarget}을 {missionNum}만큼 잡으시오.({currentMissionNum}/{missionNum})";
+        }
+    }
+
+    void CompleteMission()//upgrades에 UpgradeOn함수를 구독해 줌, 또한 레벨 초기화
+    {
+        upgrades = new List<Action>();
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<EnemyStat>().HP.TakeDamage(enemy.GetComponent<EnemyStat>().HP.Current);
+        }
+        for (int i = 0; i < lvlParent.transform.childCount; i++)
+        {
+            upgrades.Add(UpgradeOn);
+        }
+        foreach (Transform child in lvlParent.transform)//TODO 나중에 비활성화로 바꿔줄 것
+        {
+            Destroy(child.gameObject);
+        }
+        PauseTime(0);
+        upgrades[0]();
+    }
 }

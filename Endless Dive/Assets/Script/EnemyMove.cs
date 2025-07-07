@@ -64,7 +64,7 @@ public class EnemyMove : MonoBehaviour
         rb.linearVelocity = dir * speed;
     }
 
-    void SetKnockBack()//낙백 설정
+    void SetKnockBack()//넉백 설정
     {
         if (!isKnockAble)
         {
