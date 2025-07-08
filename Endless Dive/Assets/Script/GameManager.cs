@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemies;
     public List<GameObject> orbs;
 
-    public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs;
 
     public GameObject UpgradeScreen;
 
@@ -32,14 +32,14 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             Vector2 pos = new Vector2(1, 1);
-            string kind = "A";
+            EnemyKind kind = EnemyKind.A;
             int num = 1;
             SummonEnemy(pos, kind, num);
             yield return new WaitForSeconds(5);
         }
     }
 
-    public void SummonEnemy(Vector2 pos, string kind, int num)
+    public void SummonEnemy(Vector2 pos, EnemyKind kind, int num)
     {
         //생성위치, 적 종류, 갯수를 받아서 갯수만큼 생성위치에 알맞은 적의 종류를 생성 혹은 재사용하는 함수
         for (int i = 0; i < num; i++)
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 var move = enemy.GetComponent<EnemyMove>();
-                if (move.state == State.Death && move.kind.ToString() == kind)
+                if (move.state == State.Death && move.kind == kind)
                 {
                     move.Revive(pos);
                     enemy.transform.position = pos;
@@ -61,7 +61,15 @@ public class GameManager : MonoBehaviour
 
             if (!reused)
             {
-                GameObject enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
+                GameObject investedEnemy = null;
+                foreach (GameObject enemyPrefab in enemyPrefabs)
+                {
+                    if (enemyPrefab.GetComponent<EnemyMove>().kind == kind)
+                    {
+                        investedEnemy = enemyPrefab;
+                    }
+                }
+                GameObject enemy = Instantiate(investedEnemy, pos, Quaternion.identity);
                 enemies.Add(enemy);
             }
         }
@@ -69,20 +77,35 @@ public class GameManager : MonoBehaviour
 
     public void levelUP()//원형 아이콘 추가
     {
-        //TODO 나중에 재사용 가능하게 바꿔 주기
+        foreach (Transform child in lvlParent.transform)
+        {
+            if (!child.gameObject.activeSelf)
+            {
+                child.gameObject.SetActive(true);
+                return;
+            }
+        }
         Instantiate(lvlDisplay, Vector2.zero, Quaternion.identity, lvlParent.transform);
     }
     public void UpgradeOn()//UpgradeScreen활성화
     {
         if(upgrades.Count == 0)
         {
-            PauseTime(1);
+            EndFinalUpgrade();
             return;
         }
         upgrades.RemoveAt(0);
         UpgradeScreen.SetActive(true);
     }
 
+    public void EndFinalUpgrade()//미션을 완료한 후 쌓여있던 업그레이드를 모두 끝냈을 때 사용하는 메서드
+    {
+        PauseTime(1);
+        currentMissionNum = 0;
+        missionText.text = $"{missionTarget}을 {missionNum}만큼 잡으시오.({currentMissionNum}/{missionNum})";
+        Vector3 resetPos = Vector3.zero;
+        GameObject.FindGameObjectWithTag("Player").transform.position = resetPos;
+    }
     public void PauseTime(int isStop)//시간 활성화 및 시간 정지
     {
         Time.timeScale = isStop;
@@ -139,15 +162,18 @@ public class GameManager : MonoBehaviour
         upgrades = new List<Action>();
         foreach (GameObject enemy in enemies)
         {
-            enemy.GetComponent<EnemyStat>().HP.TakeDamage(enemy.GetComponent<EnemyStat>().HP.Current);
+            enemy.SetActive(false);
         }
         for (int i = 0; i < lvlParent.transform.childCount; i++)
         {
-            upgrades.Add(UpgradeOn);
+            if (lvlParent.transform.GetChild(i).gameObject.activeSelf)
+            {
+                upgrades.Add(UpgradeOn);
+            }
         }
-        foreach (Transform child in lvlParent.transform)//TODO 나중에 비활성화로 바꿔줄 것
+        foreach (Transform child in lvlParent.transform)
         {
-            Destroy(child.gameObject);
+            child.gameObject.SetActive(false);
         }
         PauseTime(0);
         upgrades[0]();

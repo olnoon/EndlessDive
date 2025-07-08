@@ -4988,7 +4988,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies: []
   orbs: []
-  enemyPrefab: {fileID: 4363925063115173746, guid: 6410e6e3e6f32124ab0301207fcb24bd, type: 3}
+  enemyPrefabs:
+  - {fileID: 4363925063115173746, guid: 6410e6e3e6f32124ab0301207fcb24bd, type: 3}
+  - {fileID: 4363925063115173746, guid: 91eef525bdf532a45a4c4cd0af072135, type: 3}
   UpgradeScreen: {fileID: 222731905}
   orbPrefab: {fileID: 7617711883690222224, guid: feb2db9f62ee6da44aed197f1600896b, type: 3}
   lvlParent: {fileID: 1069129345}
