@@ -9,6 +9,9 @@ public class PlayerStatsSetSO : ScriptableObject
     [Header("공격력 (ATK)")]
     public SingleStatSO atk;
 
+    [Header("속도 (Speed)")]
+    public SingleStatSO speed;
+
     [Header("치명타율 (CRI)")]
     public RatioStatSO cri;
 

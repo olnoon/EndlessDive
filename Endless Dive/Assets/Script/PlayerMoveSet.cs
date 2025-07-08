@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerMoveSet : MonoBehaviour
 {
-    [SerializeField] int speed;//속도
+    public SingleStatRuntime speed;
     [SerializeField] Rigidbody2D rb;
     public float minX = -10f;
     public float maxX = 10f;
@@ -15,6 +15,7 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Awake()
     {
+        speed = new SingleStatRuntime(GetComponent<PlayerStat>().stat.speed.FinalValue);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -99,7 +100,7 @@ public class PlayerMoveSet : MonoBehaviour
         Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
 
         // 목표 위치 계산
-        Vector2 targetPos = (Vector2)transform.position + moveDir * speed * Time.deltaTime;
+        Vector2 targetPos = (Vector2)transform.position + moveDir * speed.FinalValue * Time.deltaTime;
 
         // 위치 제한 적용
         float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
