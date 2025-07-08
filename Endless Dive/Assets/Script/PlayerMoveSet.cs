@@ -54,13 +54,12 @@ public class PlayerMoveSet : MonoBehaviour
                 lastGetherTime = Time.time;
                 GetComponent<PlayerStat>().mineralNum++;
                 mineral.GetComponent<Mineral>().Gathered();
-                Debug.Log($"광물, {mineral}을 캐는 중");
+                Debug.Log($"{mineral} 캐는 중");
             }
         }
 
         if (!Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("스페이스바에서 손 땜");
             GetComponent<PlayerStat>().isDisableATK = false;
         }
     }

@@ -51,9 +51,9 @@ public class UpgradeSelect : MonoBehaviour
 
     public void UpgradeATK()//공격력 업그레이드
     {
-        Debug.Log($"공격력(업그레이드 전) : {player.GetComponent<PlayerStat>().ATK.FinalValue}");
+        Debug.Log($"공격력(업글 전) : {player.GetComponent<PlayerStat>().ATK.FinalValue}");
         player.GetComponent<PlayerStat>().ATK.AddModifier(new StatModifier(1, StatModType.Flat, this));
-        Debug.Log($"공격력 : {player.GetComponent<PlayerStat>().ATK.FinalValue}");
+        Debug.Log($"공격력(업글 후) :  {player.GetComponent<PlayerStat>().ATK.FinalValue}");
         Complete();
     }
 

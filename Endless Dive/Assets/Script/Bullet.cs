@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
             }
             collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue * weight);
             collision.gameObject.GetComponent<EnemyStat>().DetectDamage();
-            Debug.Log($"{collision.gameObject.name}에게 {ATK.FinalValue * weight}의 대미지를 가해서 체력이 {collision.gameObject.GetComponent<EnemyStat>().HP.Current}만큼 남았습니다.");
+            Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {collision.gameObject.GetComponent<EnemyStat>().HP.Current}");
         }
     }
 

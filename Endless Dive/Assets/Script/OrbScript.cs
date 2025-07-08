@@ -18,7 +18,7 @@ public class OrbScript : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log($"orb가 {transform.position}에 생성됨");
+        Debug.Log($"orb가 {transform.position}에 생성");
     }
 
     void Start()
@@ -26,21 +26,52 @@ public class OrbScript : MonoBehaviour
         ChangeOrbColor();
     }
 
-    public void MoveToPlayer()
+    public void MoveToPlayer()//플레이어 방향으로 다가가는 메서드
     {
-        if (isFinded)
-        {
-            PlayerStat playerStat = player.GetComponent<PlayerStat>();
+        if (!isFinded || player == null) return;
 
-            transform.DOMove(player.transform.position, duration).SetEase(Ease.InCubic);
+        if (deSpawnRoutine != null)
+        {
+            StopCoroutine(deSpawnRoutine);
+            deSpawnRoutine = null;
         }
+
+        StartCoroutine(MoveTowardPlayerRoutine());
     }
 
+    IEnumerator MoveTowardPlayerRoutine()
+    {
+        float acceleration = 5f;
+        float currentSpeed = 0f;
+        float speedBuffer = 2f;
+
+        while (true)
+        {
+            if (player == null) yield break;
+
+            // 플레이어 속도 가져오기
+            float playerSpeed = 0f;
+            if (player.TryGetComponent<Rigidbody2D>(out var rb2d))
+                playerSpeed = rb2d.linearVelocity.magnitude;
+
+            float targetSpeed = playerSpeed + speedBuffer;
+
+            // 가속
+            currentSpeed += acceleration * Time.deltaTime;
+            currentSpeed = Mathf.Min(currentSpeed, targetSpeed);
+
+            // 방향 계산 및 이동
+            Vector3 dir = (player.transform.position - transform.position).normalized;
+            transform.position += dir * currentSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+    }
     void OnEnable()
     {
         if (deSpawnRoutine != null)//일정 시간 후 디스폰해주는 루틴 활성화
         {
-            // StopCoroutine(deSpawnRoutine);
+            StopCoroutine(deSpawnRoutine);
         }
         deSpawnRoutine = StartCoroutine(DeSpawnOrb());
         ChangeOrbColor();

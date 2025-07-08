@@ -176,6 +176,9 @@ public class GameManager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         PauseTime(0);
-        upgrades[0]();
+        if (upgrades.Count > 0)
+        {
+            upgrades[0]();
+        }
     }
 }
