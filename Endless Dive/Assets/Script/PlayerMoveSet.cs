@@ -96,22 +96,14 @@ public class PlayerMoveSet : MonoBehaviour
             ySpeed = 0;
         }
 
-        // 이동 방향 계산
         Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
+        Vector2 targetPos = rb.position + moveDir * speed.FinalValue * Time.fixedDeltaTime;
 
-        // 목표 위치 계산
-        Vector2 targetPos = (Vector2)transform.position + moveDir * speed.FinalValue * Time.deltaTime;
-
-        // 위치 제한 적용
         float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
         float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
         Vector2 clampedTarget = new Vector2(clampedX, clampedY);
 
-        // 제한된 위치로 향하는 속도 계산
-        Vector2 velocity = (clampedTarget - (Vector2)transform.position) / Time.fixedDeltaTime;
-
-        // 속도 적용
-        rb.linearVelocity = velocity;
+        rb.MovePosition(clampedTarget);
     }
 
     bool isCheckGetUpKey()//WASD키를 입력하지 않고 있는지 확인

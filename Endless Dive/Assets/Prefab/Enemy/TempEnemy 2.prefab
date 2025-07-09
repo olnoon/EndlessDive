@@ -100,7 +100,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4363925063115173746}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -117,7 +117,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &4253089099370784295
 MonoBehaviour:
@@ -133,7 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   kind: 1
-  moveDuration: 0.5
   minX: -10
   maxX: 10
   minY: -5
@@ -193,8 +192,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0016091142, y: -0.0027151809}
-  m_Size: {x: 1.0000006, y: 1.0089524}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.4099597, y: 1.2560558}
   m_Direction: 1
 --- !u!1 &5717934861311804051
 GameObject:

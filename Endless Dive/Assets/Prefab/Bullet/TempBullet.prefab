@@ -151,7 +151,8 @@ MonoBehaviour:
   target: {x: 0, y: 0}
   spendingTime: 1
   direction: {x: 0, y: 0}
-  weight: 1
+  buffKind: 0
+  buffDuration: 0
 --- !u!50 &-2938533370815090873
 Rigidbody2D:
   serializedVersion: 5
@@ -164,7 +165,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
