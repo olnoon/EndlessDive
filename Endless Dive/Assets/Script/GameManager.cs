@@ -171,14 +171,17 @@ public class GameManager : MonoBehaviour
                 upgrades.Add(UpgradeOn);
             }
         }
+        if (upgrades.Count <= 0)
+        {
+            Debug.Log("미션완료, 레벨 낮아서 업그레이드 불가");
+            GiveMainMission();
+            return;
+        }
         foreach (Transform child in lvlParent.transform)
         {
             child.gameObject.SetActive(false);
         }
         PauseTime(0);
-        if (upgrades.Count > 0)
-        {
-            upgrades[0]();
-        }
+        upgrades[0]();
     }
 }
