@@ -78,7 +78,7 @@ public class EnemyStat : MonoBehaviour
         StartCoroutine(ClearBuffEnemy(buffDuration));
     }
 
-    public IEnumerator BuffEnemy(GameObject bullet, int dam, float weight = 1)//플레이어에서 해당 오브젝트에게 디버프를 거는 코루틴
+    public IEnumerator BuffEnemy(GameObject bullet, int dam = 5, float weight = 1)//플레이어에서 해당 오브젝트에게 디버프를 거는 코루틴
     {
         Debug.Log("디버프 시작");
         Debug.Log($"대미지와 가중치 : {dam} {weight}");
@@ -96,6 +96,7 @@ public class EnemyStat : MonoBehaviour
         yield return new WaitForSeconds(buffDuration);
         StopCoroutine(buffing);
         buffing = null;
+        GetComponent<EnemyMove>().state = State.Normal;
         Debug.Log("디버프 끝");
     }
 }

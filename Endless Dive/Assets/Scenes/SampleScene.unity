@@ -947,7 +947,7 @@ MonoBehaviour:
   duration: 5
   buffKind: 1
   isBuff: 0
-  buffingIntensity: 5
+  buffingIntensity: 3
 --- !u!212 &505119316
 SpriteRenderer:
   m_ObjectHideFlags: 0
