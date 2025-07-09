@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public List<Action> upgrades;
     void Start()
     {
-        // StartCoroutine(SpawnTempEnemy());
+        StartCoroutine(SpawnTempEnemy());
         GiveMainMission();
     }
 

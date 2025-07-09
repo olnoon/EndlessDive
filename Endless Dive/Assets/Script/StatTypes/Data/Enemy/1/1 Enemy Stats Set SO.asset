@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 11400000, guid: bc1ac0d28dc18cb408e33bd78427f060, type: 2}
   atk: {fileID: 11400000, guid: 5ee0ea95e4b3e734e8079ba219a5ed4d, type: 2}
-  shield: {fileID: 11400000, guid: c007a0d37fb643040b29e971fc2e6644, type: 2}
+  speed: {fileID: 11400000, guid: e7193a22ad2aca64ca453e54c05fb3dc, type: 2}
   cri: {fileID: 11400000, guid: 47636f1c5afa0974a97db2cf767de968, type: 2}
   criDam: {fileID: 11400000, guid: 03b02984c52a3b24195c61b1f0bd4a2e, type: 2}
