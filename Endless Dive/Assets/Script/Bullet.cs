@@ -9,8 +9,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] Vector2 direction;
     Coroutine deSpawnRoutine;
     public SingleStatRuntime ATK;
-    public int weight = 1;
     Rigidbody2D rb;
+    [SerializeField] BuffKind buffKind;
+    [SerializeField] float buffDuration;
 
     void Awake()
     {
@@ -42,10 +43,21 @@ public class Bullet : MonoBehaviour
                 StopCoroutine(deSpawnRoutine);
                 deSpawnRoutine = null;
             }
-            collision.gameObject.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue * weight);
-            collision.gameObject.GetComponent<EnemyStat>().DetectDamage();
-            Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {collision.gameObject.GetComponent<EnemyStat>().HP.Current}");
+            
+            DealDamage(collision.gameObject);
+
+            if (buffDuration > 0)
+            {
+                collision.gameObject.GetComponent<EnemyStat>().StartPoissonCour(gameObject, ATK.FinalValue, buffDuration);
+            }
         }
+    }
+
+    void DealDamage(GameObject enemy, int weight = 1)//대미지를 가하는 메서드
+    {
+        enemy.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue * weight);
+        enemy.GetComponent<EnemyStat>().DetectDamage();
+        Debug.Log($"{gameObject.name} > {enemy.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {enemy.GetComponent<EnemyStat>().HP.Current}");
     }
 
     public void Reset()//Bullet이 생성 또는 재사용 될 때 초기화 시켜주는 메서드

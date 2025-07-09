@@ -3,6 +3,7 @@ using UnityEngine;
 public enum State
 {
     Normal,
+    Poisoned,
     Death
 }
 public enum EnemyKind

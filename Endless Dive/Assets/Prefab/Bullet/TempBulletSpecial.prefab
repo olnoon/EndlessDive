@@ -151,7 +151,8 @@ MonoBehaviour:
   target: {x: 0, y: 0}
   spendingTime: 1
   direction: {x: 0, y: 0}
-  weight: 2
+  buffKind: 3
+  buffDuration: 5
 --- !u!50 &-6389844440021542426
 Rigidbody2D:
   serializedVersion: 5

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class EnemyStat : MonoBehaviour
     [SerializeField] GameObject HPBarBackground;
     [SerializeField] Image HPBarFilled;
     [SerializeField] Text HPtext;
+    public Coroutine buffing;
 
     void Awake()
     {
@@ -67,5 +69,33 @@ public class EnemyStat : MonoBehaviour
                 lastAttackTime = Time.time;
             }
         }
+    }
+
+    public void StartPoissonCour(GameObject bullet, int bulletAtk, float buffDuration)//버프 코루틴을 활성화 시켜주는 메서드
+    {
+        GetComponent<EnemyMove>().state = State.Poisoned;
+        buffing = StartCoroutine(BuffEnemy(bullet, bulletAtk, 0.5f));
+        StartCoroutine(ClearBuffEnemy(buffDuration));
+    }
+
+    public IEnumerator BuffEnemy(GameObject bullet, int dam, float weight = 1)//플레이어에서 해당 오브젝트에게 디버프를 거는 코루틴
+    {
+        Debug.Log("디버프 시작");
+        Debug.Log($"대미지와 가중치 : {dam} {weight}");
+        while (true)
+        {
+            GetComponent<EnemyStat>().HP.TakeDamage(Mathf.RoundToInt(dam * weight));
+            GetComponent<EnemyStat>().DetectDamage();
+            Debug.Log($"{bullet.name} > {gameObject.name}에게 {ATK.FinalValue}의 대미지. 남은 HP {HP.Current}");
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    public IEnumerator ClearBuffEnemy(float buffDuration)//해당 오브젝트의 디버프를 제거하는 코루틴
+    {
+        yield return new WaitForSeconds(buffDuration);
+        StopCoroutine(buffing);
+        buffing = null;
+        Debug.Log("디버프 끝");
     }
 }
