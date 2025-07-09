@@ -35,9 +35,9 @@ public class Buff : MonoBehaviour
                 Debug.Log($"공격력(버프 후) :  {collision.GetComponent<EnemyStat>().ATK.FinalValue}");
                 break;
             case BuffKind.speed:
-                // Debug.Log($"속도(버프 전) : {collision.GetComponent<EnemyMove>().speed.FinalValue}");
-                // collision.GetComponent<EnemyMove>().speed.AddModifier(new StatModifier(5 * sign, StatModType.Flat, this));
-                // Debug.Log($"속도(버프 후) :  {collision.GetComponent<EnemyMove>().speed.FinalValue}");
+                Debug.Log($"속도(버프 전) : {collision.GetComponent<EnemyMove>().speed.FinalValue}");
+                collision.GetComponent<EnemyMove>().speed.AddModifier(new StatModifier(5 * sign, StatModType.Flat, this));
+                Debug.Log($"속도(버프 후) :  {collision.GetComponent<EnemyMove>().speed.FinalValue}");
                 break;
             case BuffKind.maxHP:
                 collision.GetComponent<EnemyStat>().HP.AddModifier(new StatModifier(5 * sign, StatModType.Flat, this));
@@ -68,7 +68,7 @@ public class Buff : MonoBehaviour
         StartCoroutine(ClearBuffPlayer(collision));
     }
 
-    IEnumerator ClearBuffPlayer(GameObject collision)
+    IEnumerator ClearBuffPlayer(GameObject collision)//지속시간이 끝나면 플레이어의 버프 삭제
     {
         yield return new WaitForSeconds(duration);
         switch (buffKind)
@@ -89,7 +89,7 @@ public class Buff : MonoBehaviour
         }
     }
 
-    IEnumerator ClearBuffEnemy(GameObject collision)
+    IEnumerator ClearBuffEnemy(GameObject collision)//지속시간이 끝나면 적의 버프 삭제
     {
         yield return new WaitForSeconds(duration);
         switch (buffKind)
@@ -100,9 +100,9 @@ public class Buff : MonoBehaviour
                 Debug.Log($"공격력(해제 후) :  {collision.GetComponent<EnemyStat>().ATK.FinalValue}");
                 break;
             case BuffKind.speed:
-                // Debug.Log($"속도(해제 전) : {collision.GetComponent<EnemyMoveSet>().speed.FinalValue}");
-                // collision.GetComponent<EnemyMoveSet>().speed.RemoveModifiersFromSource(this);
-                // Debug.Log($"속도(해제 후) :  {collision.GetComponent<EnemyMoveSet>().speed.FinalValue}");
+                Debug.Log($"속도(해제 전) : {collision.GetComponent<EnemyMove>().speed.FinalValue}");
+                collision.GetComponent<EnemyMove>().speed.RemoveModifiersFromSource(this);
+                Debug.Log($"속도(해제 후) :  {collision.GetComponent<EnemyMove>().speed.FinalValue}");
                 break;
             case BuffKind.maxHP:
                 collision.GetComponent<EnemyStat>().HP.RemoveModifiersFromSource(this);
