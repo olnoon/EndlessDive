@@ -76,13 +76,25 @@ public class PlayerSkill : MonoBehaviour
         switch (skillType)
         {
             case SkillType.Poison:
+                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                {
+                    break;
+                }
                 SpellSkill();
                 break;
             case SkillType.NewSkill:
-                Debug.Log($"{key} 스킬 A발동");
+                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                {
+                    break;
+                }
+                SkillA();
                 break;
             case SkillType.NewSkill2:
-                Debug.Log($"{key} 스킬 B발동");
+                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                {
+                    break;
+                }
+                SkillB();
                 break;
             case SkillType.Gether:
                 Gether();
@@ -110,13 +122,23 @@ public class PlayerSkill : MonoBehaviour
             Debug.Log($"{mineral} 캐는 중");
         }
     }
+
+    void SkillA()
+    {
+        isSpecialATKable = false;
+        Debug.Log($"{key} 스킬 A발동");
+        StartCoroutine(SpecialSkillColling());
+    }
     
+    void SkillB()
+    {
+        isSpecialATKable = false;
+        Debug.Log($"{key} 스킬 B발동");
+        StartCoroutine(SpecialSkillColling());
+    }
+
     void SpellSkill()//강한 탄환 발사하는 함수
     {
-        if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
-        {
-            return;
-        }
         
         isSpecialATKable = false;
 
@@ -160,7 +182,8 @@ public class PlayerSkill : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             spcialCurrectTime++;
-            GetComponent<PlayerStat>().SkillCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+            // GetComponent<PlayerStat>().SkillCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+            //임시로 비활성화
         }
         spcialCurrectTime = 1;
         isSpecialATKable = true;
