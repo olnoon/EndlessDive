@@ -142,7 +142,7 @@ public class PlayerStat : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             spcialCurrectTime++;
-            SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+            // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
         }
         spcialCurrectTime = 1;
         isSpecialATKable = true;
