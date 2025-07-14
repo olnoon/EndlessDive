@@ -25,6 +25,7 @@ public class PlayerSkill : MonoBehaviour
     float lastGetherTime;
     [SerializeField] bool isGetKey;
     [SerializeField] bool isGetKey2;
+    bool isCoolingDown = false; // 중복 방지용
 
     void Start()
     {
@@ -125,21 +126,27 @@ public class PlayerSkill : MonoBehaviour
 
     void SkillA()
     {
-        isSpecialATKable = false;
+        if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+            return;
+
         Debug.Log($"{key} 스킬 A발동");
+        // 스킬 A의 고유 효과 실행 코드 추가 가능
         StartCoroutine(SpecialSkillColling());
     }
     
     void SkillB()
     {
-        isSpecialATKable = false;
+        if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+            return;
+
         Debug.Log($"{key} 스킬 B발동");
+        // 스킬 B의 고유 효과 실행 코드 추가 가능
         StartCoroutine(SpecialSkillColling());
     }
 
+
     void SpellSkill()//강한 탄환 발사하는 함수
     {
-        
         isSpecialATKable = false;
 
         StartCoroutine(SpecialSkillColling());
@@ -182,8 +189,7 @@ public class PlayerSkill : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             spcialCurrectTime++;
-            // GetComponent<PlayerStat>().SkillCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
-            //임시로 비활성화
+            // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
         }
         spcialCurrectTime = 1;
         isSpecialATKable = true;
