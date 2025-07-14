@@ -16,36 +16,31 @@ public class PlayerStat : MonoBehaviour
     public GameObject targetEnemy;
     public float findEnemyRange;
     public GameManager GM;
-    [SerializeField] float bulletCooldown = 0.5f;
-    [SerializeField] Transform bulletSpawnPoint;
-    [SerializeField] int spcialBulletCooldown = 10;//단위 0.1초
-    [SerializeField] int spcialCurrectTime = 1;//단위 0.1초
-    [SerializeField] bool isSpecialATKable = true;
-    [SerializeField] List<GameObject> bullets = new List<GameObject>();
-    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
-    [SerializeField] bool isToggleATK = true;
+    public float bulletCooldown = 0.5f;
+    public Transform bulletSpawnPoint;
+    public int spcialBulletCooldown = 10;//단위 0.1초
+    public bool isToggleATK = true;
     public bool isDisableATK;
     public int currentLvl;
     public int maxXp;
     public int currentXp;
     public int mineralNum;
-    [SerializeField] GameObject HPBarBackground;
-    [SerializeField] Image HPBarFilled;
-    [SerializeField] Text HPtext;
-    [SerializeField] GameObject XPBarBackground;
-    [SerializeField] Image XPBarFilled;
-    [SerializeField] Text XPtext;
-    [SerializeField] Text SkilCooltext;
+    public GameObject HPBarBackground;
+    public Image HPBarFilled;
+    public Text HPtext;
+    public GameObject XPBarBackground;
+    public Image XPBarFilled;
+    public Text XPtext;
+    public Text SkillCooltext;
+    public float gainRange;
     public Vector3 mousePos;
-    [SerializeField] float gainRange;
+    [SerializeField] List<GameObject> bullets = new List<GameObject>();
 
     void Awake()
     {
-        mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         XPtext.text = $"{currentXp}/{maxXp}";
-        StartCoroutine(SpecialSkillColling());
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
@@ -53,6 +48,7 @@ public class PlayerStat : MonoBehaviour
         Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
+        mousePos.z = 0f;
     }
 
     void Start()
@@ -78,7 +74,7 @@ public class PlayerStat : MonoBehaviour
         }
 
         AttackMethod();
-
+        
         CalculateMouseCoord();
     }
 
@@ -90,67 +86,7 @@ public class PlayerStat : MonoBehaviour
             {
                 isToggleATK = !isToggleATK;
             }
-
-            if (Input.GetMouseButtonDown(1) && Time.timeScale != 0 && isSpecialATKable)
-            {
-                SpellSkill();
-            }
         }
-    }
-
-    void CalculateMouseCoord()//마우스 위치 계산
-    {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }
-
-    void SpellSkill()//강한 탄환 발사하는 함수
-    {
-        isSpecialATKable = false;
-
-        StartCoroutine(SpecialSkillColling());
-
-        GameObject theBullet = null;
-
-        bool reused = false;
-
-        foreach (GameObject bullet in specialBullets)
-        {
-            var move = bullet.GetComponent<Bullet>();
-            if (!bullet.activeSelf)
-            {
-                theBullet = bullet;
-                move.transform.position = bulletSpawnPoint.position;
-                bullet.SetActive(true);
-                reused = true;
-                break;
-            }
-        }
-
-        if (!reused)
-        {
-            theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            specialBullets.Add(theBullet);
-        }
-
-        theBullet.GetComponent<Bullet>().target = mousePos;
-        theBullet.GetComponent<Bullet>().Reset();
-        theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
-    }
-
-    IEnumerator SpecialSkillColling()//스킬 쿨타임
-    {
-        while (true)
-        {
-            if (spcialCurrectTime == spcialBulletCooldown)
-            {
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
-            spcialCurrectTime++;
-            SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
-        }
-        spcialCurrectTime = 1;
-        isSpecialATKable = true;
     }
 
     void GameOver()//게임 오버
@@ -220,7 +156,7 @@ public class PlayerStat : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-
+    
     IEnumerator TriggerBullet()//Bullet생성 및 재사용
     {
         while (true)
@@ -229,7 +165,7 @@ public class PlayerStat : MonoBehaviour
 
             bool reused = false;
 
-            if (isDisableATK || !isToggleATK)
+            if (GetComponent<PlayerStat>().isDisableATK || !GetComponent<PlayerStat>().isToggleATK)
             {
                 goto flag;
             }
@@ -252,13 +188,19 @@ public class PlayerStat : MonoBehaviour
                 theBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
                 bullets.Add(theBullet);
             }
-            CalculateMouseCoord();
-            theBullet.GetComponent<Bullet>().target = mousePos;
+            GetComponent<PlayerStat>().CalculateMouseCoord();
+            theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
             theBullet.GetComponent<Bullet>().Reset();
-            theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+            theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(GetComponent<PlayerStat>().ATK.FinalValue);
 
         flag:
-            yield return new WaitForSeconds(bulletCooldown);
+            yield return new WaitForSeconds(GetComponent<PlayerStat>().bulletCooldown);
         }
     }
+
+    public void CalculateMouseCoord()//마우스 위치 계산
+    {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
 }

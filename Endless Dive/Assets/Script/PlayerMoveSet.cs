@@ -10,8 +10,6 @@ public class PlayerMoveSet : MonoBehaviour
     public float minY = -5f;
     public float maxY = 5f;
     public GameObject mineral;
-    public float getherCooldown = 1.0f;
-    float lastGetherTime;
 
     void Awake()
     {
@@ -24,7 +22,6 @@ public class PlayerMoveSet : MonoBehaviour
         if (Time.timeScale != 0)
         {
             Move();
-            Gether();
             UpdateFacing();
         }
     }
@@ -37,32 +34,6 @@ public class PlayerMoveSet : MonoBehaviour
         Vector2 toSize = new Vector2(lookingDirec, transform.localScale.y);
 
         transform.localScale = toSize;
-    }
-
-    void Gether()//광물 캐기
-    {
-        if (mineral == null)
-        {
-            GetComponent<PlayerStat>().isDisableATK = false;
-            return;
-        }
-        
-        if (Input.GetKey(KeyCode.Space))
-        {
-            GetComponent<PlayerStat>().isDisableATK = true;
-            if (Time.time - getherCooldown >= lastGetherTime)
-            {
-                lastGetherTime = Time.time;
-                GetComponent<PlayerStat>().mineralNum++;
-                mineral.GetComponent<Mineral>().Gathered();
-                Debug.Log($"{mineral} 캐는 중");
-            }
-        }
-
-        if (!Input.GetKey(KeyCode.Space))
-        {
-            GetComponent<PlayerStat>().isDisableATK = false;
-        }
     }
 
     void Move()//플레이어 움직임 제어

@@ -503,6 +503,9 @@ GameObject:
   - component: {fileID: 384228393}
   - component: {fileID: 384228394}
   - component: {fileID: 384228395}
+  - component: {fileID: 384228397}
+  - component: {fileID: 384228399}
+  - component: {fileID: 384228398}
   m_Layer: 8
   m_Name: TempPlayer
   m_TagString: Player
@@ -626,7 +629,6 @@ MonoBehaviour:
   minY: -50
   maxY: 50
   mineral: {fileID: 0}
-  getherCooldown: 1
 --- !u!114 &384228395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,10 +650,6 @@ MonoBehaviour:
   bulletCooldown: 0.5
   bulletSpawnPoint: {fileID: 0}
   spcialBulletCooldown: 5
-  spcialCurrectTime: 1
-  isSpecialATKable: 1
-  bullets: []
-  specialBullets: []
   isToggleATK: 1
   isDisableATK: 0
   currentLvl: 0
@@ -664,9 +662,10 @@ MonoBehaviour:
   XPBarBackground: {fileID: 711804223}
   XPBarFilled: {fileID: 594369625}
   XPtext: {fileID: 1558245526}
-  SkilCooltext: {fileID: 1000842527}
-  mousePos: {x: 0, y: 0, z: 0}
+  SkillCooltext: {fileID: 1000842527}
   gainRange: 10
+  mousePos: {x: 0, y: 0, z: 0}
+  bullets: []
 --- !u!70 &384228396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -704,6 +703,75 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
+--- !u!114 &384228397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384228389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 324
+  skillType: 0
+  isSpecialATKable: 1
+  specialBullets: []
+  bulletPrefab: {fileID: 0}
+  specialBulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
+  spcialBulletCooldown: 0
+  spcialCurrectTime: 1
+  getherCooldown: 1
+  isGetKey: 0
+--- !u!114 &384228398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384228389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 0
+  skillType: 2
+  isSpecialATKable: 1
+  specialBullets: []
+  bulletPrefab: {fileID: 0}
+  specialBulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
+  spcialBulletCooldown: 0
+  spcialCurrectTime: 1
+  getherCooldown: 1
+  isGetKey: 0
+--- !u!114 &384228399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384228389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 32
+  skillType: 1
+  isSpecialATKable: 1
+  specialBullets: []
+  bulletPrefab: {fileID: 0}
+  specialBulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
+  spcialBulletCooldown: 0
+  spcialCurrectTime: 1
+  getherCooldown: 1
+  isGetKey: 1
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
