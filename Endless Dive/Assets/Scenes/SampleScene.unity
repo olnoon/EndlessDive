@@ -717,6 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 324
   skillType: 0
+  skillType2: 3
   isSpecialATKable: 1
   specialBullets: []
   bulletPrefab: {fileID: 0}
@@ -726,6 +727,7 @@ MonoBehaviour:
   spcialCurrectTime: 1
   getherCooldown: 1
   isGetKey: 0
+  isGetKey2: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,8 +740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 0
+  key: 304
   skillType: 2
+  skillType2: 3
   isSpecialATKable: 1
   specialBullets: []
   bulletPrefab: {fileID: 0}
@@ -749,6 +752,7 @@ MonoBehaviour:
   spcialCurrectTime: 1
   getherCooldown: 1
   isGetKey: 0
+  isGetKey2: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,6 +767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 32
   skillType: 1
+  skillType2: 3
   isSpecialATKable: 1
   specialBullets: []
   bulletPrefab: {fileID: 0}
@@ -772,6 +777,7 @@ MonoBehaviour:
   spcialCurrectTime: 1
   getherCooldown: 1
   isGetKey: 1
+  isGetKey2: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0

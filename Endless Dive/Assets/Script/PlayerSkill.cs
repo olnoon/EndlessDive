@@ -6,12 +6,14 @@ public enum SkillType
 {
     Poison,
     Gether,
-    NewSkill
+    NewSkill,
+    NewSkill2
 }
 public class PlayerSkill : MonoBehaviour
 {
     [SerializeField] KeyCode key;
     [SerializeField] SkillType skillType;
+    [SerializeField] SkillType skillType2;
     [SerializeField] bool isSpecialATKable = true;
     [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
     public GameObject bulletPrefab;
@@ -22,6 +24,7 @@ public class PlayerSkill : MonoBehaviour
     public float getherCooldown = 1.0f;
     float lastGetherTime;
     [SerializeField] bool isGetKey;
+    [SerializeField] bool isGetKey2;
 
     void Start()
     {
@@ -34,7 +37,7 @@ public class PlayerSkill : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(skillType == SkillType.Gether)
+        if (skillType == SkillType.Gether)
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(KeyCode.Space))
             {
@@ -42,13 +45,30 @@ public class PlayerSkill : MonoBehaviour
             }
         }
         if (!isGetKey && Input.GetKeyDown(key) && Time.timeScale != 0)
-            {
-                DetermineSkill();
-            }
-            else if (isGetKey && Input.GetKey(key) && Time.timeScale != 0)
-            {
-                DetermineSkill();
-            }
+        {
+            DetermineSkill();
+        }
+        else if (isGetKey && Input.GetKey(key) && Time.timeScale != 0)
+        {
+            DetermineSkill();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ChangeSkillOntTwo();
+        }
+    }
+
+    void ChangeSkillOntTwo()//첫번째 스킬과 두번째 스킬을 체인지
+    {
+        SkillType Temp = skillType;
+        bool isGetKeyTemp = isGetKey;
+
+        skillType = skillType2;
+        isGetKey = isGetKey2;
+        
+        skillType2 = Temp;
+        isGetKey2 = isGetKeyTemp;
     }
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단
@@ -60,6 +80,9 @@ public class PlayerSkill : MonoBehaviour
                 break;
             case SkillType.NewSkill:
                 Debug.Log($"{key} 스킬 A발동");
+                break;
+            case SkillType.NewSkill2:
+                Debug.Log($"{key} 스킬 B발동");
                 break;
             case SkillType.Gether:
                 Gether();
