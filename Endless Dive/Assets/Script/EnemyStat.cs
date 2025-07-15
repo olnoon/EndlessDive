@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class EnemyStat : MonoBehaviour
 {
@@ -65,7 +65,7 @@ public class EnemyStat : MonoBehaviour
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 collision.gameObject.GetComponent<PlayerStat>().HP.TakeDamage(ATK.FinalValue);
-                Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue}의 대미지. 남은 HP {collision.gameObject.GetComponent<PlayerStat>().HP.Current}");
+                // Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue}의 대미지. 남은 HP {collision.gameObject.GetComponent<PlayerStat>().HP.Current}");
                 lastAttackTime = Time.time;
             }
         }

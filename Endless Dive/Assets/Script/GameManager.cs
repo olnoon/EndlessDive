@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             EnemyKind kind = EnemyKind.A;
             int num = 1;
             SummonEnemy(pos, kind, num);
-            yield return new WaitForSeconds(7);
+            yield return new WaitForSeconds(20);
         }
     }
 

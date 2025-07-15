@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour
     {
         enemy.GetComponent<EnemyStat>().HP.TakeDamage(ATK.FinalValue * weight);
         enemy.GetComponent<EnemyStat>().DetectDamage();
-        Debug.Log($"{gameObject.name} > {enemy.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {enemy.GetComponent<EnemyStat>().HP.Current}");
+        // Debug.Log($"{gameObject.name} > {enemy.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {enemy.GetComponent<EnemyStat>().HP.Current}");
     }
 
     public void Reset()//Bullet이 생성 또는 재사용 될 때 초기화 시켜주는 메서드

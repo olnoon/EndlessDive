@@ -57,11 +57,11 @@ public class PlayerSkill : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ChangeSkillOntTwo();
+            ChangeSkillOneTwo();
         }
     }
 
-    void ChangeSkillOntTwo()//첫번째 스킬과 두번째 스킬을 체인지
+    void ChangeSkillOneTwo()//첫번째 스킬과 두번째 스킬을 체인지
     {
         SkillType Temp = skillType;
         bool isGetKeyTemp = isGetKey;
