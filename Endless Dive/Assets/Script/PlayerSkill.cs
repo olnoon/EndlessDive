@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -25,6 +26,7 @@ public class PlayerSkill : MonoBehaviour
     float lastGetherTime;
     [SerializeField] bool isGetKey;
     [SerializeField] bool isGetKey2;
+    [SerializeField] Text SkilCooltext;
 
     void Start()
     {
@@ -192,7 +194,7 @@ public class PlayerSkill : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             spcialCurrectTime++;
-            // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+            SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
         }
         spcialCurrectTime = 1;
         isSpecialATKable = true;

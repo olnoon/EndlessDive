@@ -35,7 +35,6 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] GameObject XPBarBackground;
     [SerializeField] Image XPBarFilled;
     [SerializeField] Text XPtext;
-    [SerializeField] Text SkilCooltext;
     public Vector3 mousePos;
     [SerializeField] float gainRange;
 
