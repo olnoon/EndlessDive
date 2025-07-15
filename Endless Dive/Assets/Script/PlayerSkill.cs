@@ -25,7 +25,6 @@ public class PlayerSkill : MonoBehaviour
     float lastGetherTime;
     [SerializeField] bool isGetKey;
     [SerializeField] bool isGetKey2;
-    bool isCoolingDown = false; // 중복 방지용
 
     void Start()
     {
@@ -131,6 +130,8 @@ public class PlayerSkill : MonoBehaviour
 
         Debug.Log($"{key} 스킬 A발동");
         // 스킬 A의 고유 효과 실행 코드 추가 가능
+        isSpecialATKable = false;
+
         StartCoroutine(SpecialSkillColling());
     }
     
@@ -141,6 +142,8 @@ public class PlayerSkill : MonoBehaviour
 
         Debug.Log($"{key} 스킬 B발동");
         // 스킬 B의 고유 효과 실행 코드 추가 가능
+        isSpecialATKable = false;
+
         StartCoroutine(SpecialSkillColling());
     }
 

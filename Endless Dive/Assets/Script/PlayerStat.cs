@@ -45,7 +45,7 @@ public class PlayerStat : MonoBehaviour
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         XPtext.text = $"{currentXp}/{maxXp}";
-        StartCoroutine(SpecialSkillColling());
+        // StartCoroutine(SpecialSkillColling());
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new SingleStatRuntime(stat.atk.FinalValue);
@@ -98,55 +98,55 @@ public class PlayerStat : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    void SpellSkill()//강한 탄환 발사하는 함수
-    {
-        isSpecialATKable = false;
+    // void SpellSkill()//강한 탄환 발사하는 함수
+    // {
+    //     isSpecialATKable = false;
 
-        StartCoroutine(SpecialSkillColling());
+    //     StartCoroutine(SpecialSkillColling());
 
-        GameObject theBullet = null;
+    //     GameObject theBullet = null;
 
-        bool reused = false;
+    //     bool reused = false;
 
-        foreach (GameObject bullet in specialBullets)
-        {
-            var move = bullet.GetComponent<Bullet>();
-            if (!bullet.activeSelf)
-            {
-                theBullet = bullet;
-                move.transform.position = bulletSpawnPoint.position;
-                bullet.SetActive(true);
-                reused = true;
-                break;
-            }
-        }
+    //     foreach (GameObject bullet in specialBullets)
+    //     {
+    //         var move = bullet.GetComponent<Bullet>();
+    //         if (!bullet.activeSelf)
+    //         {
+    //             theBullet = bullet;
+    //             move.transform.position = bulletSpawnPoint.position;
+    //             bullet.SetActive(true);
+    //             reused = true;
+    //             break;
+    //         }
+    //     }
 
-        if (!reused)
-        {
-            theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            specialBullets.Add(theBullet);
-        }
+    //     if (!reused)
+    //     {
+    //         theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+    //         specialBullets.Add(theBullet);
+    //     }
 
-        theBullet.GetComponent<Bullet>().target = mousePos;
-        theBullet.GetComponent<Bullet>().Reset();
-        theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
-    }
+    //     theBullet.GetComponent<Bullet>().target = mousePos;
+    //     theBullet.GetComponent<Bullet>().Reset();
+    //     theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+    // }
 
-    IEnumerator SpecialSkillColling()//스킬 쿨타임
-    {
-        while (true)
-        {
-            if (spcialCurrectTime == spcialBulletCooldown)
-            {
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
-            spcialCurrectTime++;
-            // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
-        }
-        spcialCurrectTime = 1;
-        isSpecialATKable = true;
-    }
+    // IEnumerator SpecialSkillColling()//스킬 쿨타임
+    // {
+    //     while (true)
+    //     {
+    //         if (spcialCurrectTime == spcialBulletCooldown)
+    //         {
+    //             break;
+    //         }
+    //         yield return new WaitForSeconds(0.1f);
+    //         spcialCurrectTime++;
+    //         // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+    //     }
+    //     spcialCurrectTime = 1;
+    //     isSpecialATKable = true;
+    // }
 
     void GameOver()//게임 오버
     {
