@@ -250,6 +250,7 @@ public class PlayerStat : MonoBehaviour
             theBullet.GetComponent<Bullet>().target = mousePos;
             theBullet.GetComponent<Bullet>().Reset();
             theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+            theBullet.GetComponent<Bullet>().GM = GM;
 
         flag:
             yield return new WaitForSeconds(bulletCooldown);

@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     }
     public void UpgradeOn()//UpgradeScreen활성화
     {
-        if(upgrades.Count == 0)
+        if (upgrades.Count == 0)
         {
             EndFinalUpgrade();
             return;
@@ -183,5 +183,12 @@ public class GameManager : MonoBehaviour
         }
         PauseTime(0);
         upgrades[0]();
+    }
+
+    public void DealDamage(GameObject enemy, int ATK, int weight = 1)//대미지를 가하는 메서드
+    {
+        enemy.GetComponent<EnemyStat>().HP.TakeDamage(ATK * weight);
+        enemy.GetComponent<EnemyStat>().DetectDamage();
+        // Debug.Log($"{gameObject.name} > {enemy.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {enemy.GetComponent<EnemyStat>().HP.Current}");
     }
 }
