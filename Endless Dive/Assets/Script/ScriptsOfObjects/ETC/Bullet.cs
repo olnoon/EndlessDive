@@ -10,8 +10,7 @@ public class Bullet : MonoBehaviour
     Coroutine deSpawnRoutine;
     public SingleStatRuntime ATK;
     Rigidbody2D rb;
-    [SerializeField] BuffKind buffKind;
-    [SerializeField] float buffDuration;
+    [SerializeField] BuffSO buffSO;
     public GameManager GM;
 
     void Awake()
@@ -44,12 +43,12 @@ public class Bullet : MonoBehaviour
                 StopCoroutine(deSpawnRoutine);
                 deSpawnRoutine = null;
             }
-            
+
             GM.DealDamage(collision.gameObject, ATK.FinalValue);
 
-            if (buffDuration > 0)
+            if (buffSO != null)
             {
-                // collision.gameObject.GetComponent<EnemyStat>().StartPoissonRoutine(gameObject, ATK.FinalValue, buffDuration);
+                collision.gameObject.AddComponent<AbnormalStatus>().buffSetSO = Instantiate(buffSO);
             }
         }
     }

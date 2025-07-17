@@ -151,8 +151,8 @@ MonoBehaviour:
   target: {x: 0, y: 0}
   spendingTime: 1
   direction: {x: 0, y: 0}
-  buffKind: 3
-  buffDuration: 5
+  buffSO: {fileID: 11400000, guid: 77e2473e31df66c46a6fe661d859ecc9, type: 2}
+  GM: {fileID: 0}
 --- !u!50 &-6389844440021542426
 Rigidbody2D:
   serializedVersion: 5

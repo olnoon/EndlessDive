@@ -35,7 +35,7 @@ public class EnemyStat : MonoBehaviour
 
     void Update()
     {
-        if (HP.Current <= 0)//사망 판정
+        if (HP.Current <= 0)//사망 판정 후 확률에 따라 오브를 생성시킴, 또한 미션에 필요한 오브젝트인지 판단하는 메서드를 실행시킴
         {
             GetComponent<EnemyMove>().state = State.Death;
             int probability = Random.Range(0, 101);
@@ -60,7 +60,7 @@ public class EnemyStat : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerStat>() != null)//대미지 주는 용도
+        if (collision.gameObject.GetComponent<PlayerStat>() != null)//lastAttackTime과 델타타임을 비교한 후 대미지 주는 용도
         {
             if (Time.time - lastAttackTime >= attackCooldown)
             {

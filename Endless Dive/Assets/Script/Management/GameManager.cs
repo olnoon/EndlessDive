@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         GiveMainMission();
     }
 
-    IEnumerator SpawnTempEnemy()
+    IEnumerator SpawnTempEnemy()//임시로 만든 SummonEnemy 반복시켜주는 코루틴
     {
         while (true)
         {
@@ -39,9 +39,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SummonEnemy(Vector2 pos, EnemyKind kind, int num)
+    public void SummonEnemy(Vector2 pos, EnemyKind kind, int num)//생성위치, 적 종류, 갯수를 받아서 갯수만큼 생성위치에 알맞은 적의 종류를 생성 혹은 재사용하는 함수
     {
-        //생성위치, 적 종류, 갯수를 받아서 갯수만큼 생성위치에 알맞은 적의 종류를 생성 혹은 재사용하는 함수
         for (int i = 0; i < num; i++)
         {
             bool reused = false;
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void levelUP()//원형 아이콘 추가
+    public void levelUP()//원형 아이콘 추가 및 재사용 하는 함수
     {
         foreach (Transform child in lvlParent.transform)
         {
@@ -87,7 +86,7 @@ public class GameManager : MonoBehaviour
         }
         Instantiate(lvlDisplay, Vector2.zero, Quaternion.identity, lvlParent.transform);
     }
-    public void UpgradeOn()//UpgradeScreen활성화
+    public void UpgradeOn()//UpgradeScreen활성화, 레벨 아이콘이 없을시 미션 초기화
     {
         if (upgrades.Count == 0)
         {
@@ -111,7 +110,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isStop;
     }
 
-    public void GenerateOrb(GameObject enemy, OrbKind orbKind)//적 사망시 경험치 혹은 체력 오브를 생성함
+    public void GenerateOrb(GameObject enemy, OrbKind orbKind)//적 사망시 경험치 혹은 체력 오브를 생성/재사용함
     {
         bool reused = false;
 

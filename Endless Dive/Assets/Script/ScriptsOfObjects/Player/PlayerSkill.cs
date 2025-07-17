@@ -150,7 +150,7 @@ public class PlayerSkill : MonoBehaviour
     }
 
 
-    void SpellSkill()//강한 탄환 발사하는 함수
+    void SpellSkill()//Skill 탄환 생성/재사용 및 불렛 스크립트의 변수들을 초기화 시켜주는 함수
     {
         isSpecialATKable = false;
 
@@ -182,6 +182,7 @@ public class PlayerSkill : MonoBehaviour
         theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
         theBullet.GetComponent<Bullet>().Reset();
         theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(GetComponent<PlayerStat>().ATK.FinalValue);
+        theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 
     IEnumerator SpecialSkillColling()//스킬 쿨타임

@@ -11,6 +11,7 @@ public class PlayerStat : MonoBehaviour
     public SingleStatRuntime ATK;
     public RatioStatRuntime Cri;
     public RatioStatRuntime Dam;
+    public List<Coroutine> buffs;
     public GameObject bulletPrefab;
     public GameObject specialBulletPrefab;
     public GameObject targetEnemy;
@@ -19,8 +20,6 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] float bulletCooldown = 0.5f;
     public Transform bulletSpawnPoint;
     public int spcialBulletCooldown = 10;//단위 0.1초
-    [SerializeField] int spcialCurrectTime = 1;//단위 0.1초
-    [SerializeField] bool isSpecialATKable = true;
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
     [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
     [SerializeField] bool isToggleATK = true;
@@ -97,56 +96,6 @@ public class PlayerStat : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    // void SpellSkill()//강한 탄환 발사하는 함수
-    // {
-    //     isSpecialATKable = false;
-
-    //     StartCoroutine(SpecialSkillColling());
-
-    //     GameObject theBullet = null;
-
-    //     bool reused = false;
-
-    //     foreach (GameObject bullet in specialBullets)
-    //     {
-    //         var move = bullet.GetComponent<Bullet>();
-    //         if (!bullet.activeSelf)
-    //         {
-    //             theBullet = bullet;
-    //             move.transform.position = bulletSpawnPoint.position;
-    //             bullet.SetActive(true);
-    //             reused = true;
-    //             break;
-    //         }
-    //     }
-
-    //     if (!reused)
-    //     {
-    //         theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-    //         specialBullets.Add(theBullet);
-    //     }
-
-    //     theBullet.GetComponent<Bullet>().target = mousePos;
-    //     theBullet.GetComponent<Bullet>().Reset();
-    //     theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
-    // }
-
-    // IEnumerator SpecialSkillColling()//스킬 쿨타임
-    // {
-    //     while (true)
-    //     {
-    //         if (spcialCurrectTime == spcialBulletCooldown)
-    //         {
-    //             break;
-    //         }
-    //         yield return new WaitForSeconds(0.1f);
-    //         spcialCurrectTime++;
-    //         // SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
-    //     }
-    //     spcialCurrectTime = 1;
-    //     isSpecialATKable = true;
-    // }
-
     void GameOver()//게임 오버
     {
         Debug.Log("GameOver");
@@ -215,7 +164,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    IEnumerator TriggerBullet()//Bullet생성 및 재사용
+    IEnumerator TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴
     {
         while (true)
         {

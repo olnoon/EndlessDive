@@ -16,7 +16,7 @@ public class CameraMove : MonoBehaviour
         minY = player.GetComponent<PlayerMoveSet>().minY + 4.37f;
         maxY = player.GetComponent<PlayerMoveSet>().maxY - 4.37f;
     }
-    void LateUpdate()//플레이어 위치로 부드럽게 이동
+    void LateUpdate()//제한된 위치 안에서 플레이어 위치로 부드럽게 이동
     {
         Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
