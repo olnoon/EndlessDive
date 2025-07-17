@@ -37,7 +37,7 @@ public class PlayerSkill : MonoBehaviour
         StartCoroutine(SpecialSkillColling());
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (skillType == SkillType.Gether)
         {
