@@ -10,11 +10,10 @@ public enum OrbKind
 
 public class OrbScript : MonoBehaviour
 {
-    Coroutine deSpawnRoutine;
-    public OrbKind orbKind;
-    public bool isFinded;
-    public GameObject player;
-    public float duration = 1f;
+    Coroutine deSpawnRoutine;//디스폰루틴이 충돌되는 걸 방지하기 위한 루틴
+    public OrbKind orbKind;//오브의 종류
+    public bool isFinded;//발견상태의 여부
+    public GameObject player;//해당 오브젝트가 점점 빨라지는 속도로 다가갈 플레이어
 
     void Awake()
     {
@@ -39,7 +38,7 @@ public class OrbScript : MonoBehaviour
         StartCoroutine(MoveTowardPlayerRoutine());
     }
 
-    IEnumerator MoveTowardPlayerRoutine()
+    IEnumerator MoveTowardPlayerRoutine()//플레이어에게 다가가며 플레이어의 속도를 넘을 때 까지 가속해줌
     {
         float acceleration = 5f;
         float currentSpeed = 0f;

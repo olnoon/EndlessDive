@@ -51,13 +51,13 @@ public class UpgradeSelect : MonoBehaviour
 
     public void UpgradeATK()//공격력 업그레이드
     {
-        Debug.Log($"공격력(업글 전) : {player.GetComponent<PlayerStat>().ATK.FinalValue}");
+        // Debug.Log($"공격력(업글 전) : {player.GetComponent<PlayerStat>().ATK.FinalValue}");
         player.GetComponent<PlayerStat>().ATK.AddModifier(new StatModifier(1, StatModType.Flat, this));
-        Debug.Log($"공격력(업글 후) :  {player.GetComponent<PlayerStat>().ATK.FinalValue}");
+        // Debug.Log($"공격력(업글 후) :  {player.GetComponent<PlayerStat>().ATK.FinalValue}");
         Complete();
     }
 
-    void Complete()//해당 오브젝트 비활성화
+    void Complete()//해당 오브젝트 비활성화 및 다음 업그레이드 선택지를 활성화 시켜 줌
     {
         transform.parent.gameObject.SetActive(false);
         GM.UpgradeOn();

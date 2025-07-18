@@ -4,18 +4,17 @@ using System.Collections;
 
 public class EnemyStat : MonoBehaviour
 {
-    public PlayerStatsSetSO stat;
-    public GaugeStatRuntime HP;
-    public SingleStatRuntime ATK;
-    public RatioStatRuntime Cri;
-    public RatioStatRuntime Dam;
-    public float attackCooldown = 1.0f;
-    private float lastAttackTime;
-    GameManager GM;
-    [SerializeField] GameObject HPBarBackground;
-    [SerializeField] Image HPBarFilled;
-    [SerializeField] Text HPtext;
-    public Coroutine buffing;
+    public PlayerStatsSetSO stat;//플레이어 스텟 초깃값
+    public GaugeStatRuntime HP;//플레이어 체력
+    public SingleStatRuntime ATK;//플레이어 공격력
+    public RatioStatRuntime Cri;//크리티컬 대미지
+    public RatioStatRuntime Dam;//크리티컬 확률
+    public float attackCooldown = 1.0f;//공격력 쿨타임
+    private float lastAttackTime;//현재 공격력 쿨타임
+    GameManager GM;//게임매니저
+    [SerializeField] GameObject HPBarBackground;//체력바 배경
+    [SerializeField] Image HPBarFilled;//체력바
+    [SerializeField] Text HPtext;//체력 텍스트
 
     void Awake()
     {

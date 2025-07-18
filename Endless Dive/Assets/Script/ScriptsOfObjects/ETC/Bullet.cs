@@ -4,14 +4,14 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    public Vector2 target;
+    public Vector2 target;//이동할 위치
     [SerializeField] int spendingTime;//target 까지 가는데 걸리는 시간
-    [SerializeField] Vector2 direction;
-    Coroutine deSpawnRoutine;
-    public SingleStatRuntime ATK;
-    Rigidbody2D rb;
-    [SerializeField] BuffSO buffSO;
-    public GameManager GM;
+    [SerializeField] Vector2 direction;//이동할 방향
+    Coroutine deSpawnRoutine;//디스폰루틴이 충돌되는 걸 방지하기 위한 루틴
+    public SingleStatRuntime ATK;//공격력
+    Rigidbody2D rb;//리지드바디
+    [SerializeField] BuffSO buffSO;//버프 초깃값
+    public GameManager GM;//게임메니저
 
     void Awake()
     {
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")//적과의 충돌 판정으로 대미지
+        if (collision.gameObject.tag == "Enemy")//적과의 충돌 판정으로 대미지를 주고 디스폰 루틴을 초기화 시켜줌, 또한 버프/디버프가 있다면 걸어줌
         {
             this.gameObject.SetActive(false);
             transform.DOKill();

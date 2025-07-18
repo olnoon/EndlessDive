@@ -36,7 +36,7 @@ public class PlayerMoveSet : MonoBehaviour
         transform.localScale = toSize;
     }
 
-    void Move()//플레이어 움직임 제어
+    void Move()//플레이어 움직임을 WASD에 따라 제어
     {
         float xSpeed = 0;
         float ySpeed = 0;

@@ -10,8 +10,7 @@ public class PlayerStat : MonoBehaviour
     public GaugeStatRuntime HP;//체력
     public SingleStatRuntime ATK;//공격력
     public RatioStatRuntime Cri;//크리티컬 확률
-    public RatioStatRuntime Dam;//크리티컬 대미진
-    public List<Coroutine> buffs;//?
+    public RatioStatRuntime Dam;//크리티컬 대미지
     public GameObject bulletPrefab;//불렛 프리펩
     public GameObject specialBulletPrefab;//특별탄환 프리펩
     public GameObject targetEnemy;//타겟팅중인 적
@@ -142,7 +141,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    IEnumerator FindOrb()//0.2초 마다 주변의 오브들을 찾음
+    IEnumerator FindOrb()//0.2초 마다 gainRange안의 오브들을 찾음, 체력오브이고 최대체력이면 발견됨 상태로 만들지 않음
     {
         while (true)
         {

@@ -51,7 +51,7 @@ public class AbnormalStatus : MonoBehaviour
         Destroy(this);
     }
 
-    public IEnumerator DamageToPlayerStat()//repeatCount가 0이 될때 까지 버프/디버프를 주는 while문을 실행후 0이 되면 해당스크립트 삭제
+    public IEnumerator DamageToPlayerStat()//repeatCount가 0이 될때 까지 버프/디버프를 주는 while문을 실행후 0이 되면 해당 스크립트 삭제
     {
         while (repeatCount > 0)
         {

@@ -105,18 +105,19 @@ public class PlayerSkill : MonoBehaviour
     }
 
     
-    void Gether()//광물 캐기
+    void Gether()//, , , 델타 타임과 비교해서 
     {
-        if (GetComponent<PlayerMoveSet>().mineral == null)
+        if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
             GetComponent<PlayerStat>().isDisableATK = false;
             return;
         }
 
-        GameObject mineral = GetComponent<PlayerMoveSet>().mineral;
+        GameObject mineral = GetComponent<PlayerMoveSet>().mineral;//로컬 변수 미네랄에 플레이어무브셋의 미네랄을 할당
         
-        GetComponent<PlayerStat>().isDisableATK = true;
-        if (Time.time - getherCooldown >= lastGetherTime)
+        GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
+
+        if (Time.time - getherCooldown >= lastGetherTime)//델타 타임과 getherCooldown을 비교해서 lastGetherTime보다 크면 광물을 채굴 시킴
         {
             lastGetherTime = Time.time;
             GetComponent<PlayerStat>().mineralNum++;
@@ -200,5 +201,4 @@ public class PlayerSkill : MonoBehaviour
         spcialCurrectTime = 1;
         isSpecialATKable = true;
     }
-
 }

@@ -13,17 +13,17 @@ public enum EnemyKind
 }
 public class EnemyMove : MonoBehaviour
 {
-    public State state;
-    public EnemyKind kind;
-    public SingleStatRuntime speed;
-    public float minX = -10f;
-    public float maxX = 10f;
-    public float minY = -5f;
-    public float maxY = 5f;
-    [SerializeField] bool isKnockAble = true;
-    [SerializeField] float knockbackPower;
-    public GameObject player;
-    [SerializeField] Rigidbody2D rb;
+    public State state;//적의 현재 상태
+    public EnemyKind kind;//적의 종류
+    public SingleStatRuntime speed;//속도
+    public float minX = -10f;//움직일 수 있는 곳 제한(X의 최솟값)
+    public float maxX = 10f;//움직일 수 있는 곳 제한(X의 최댓값)
+    public float minY = -5f;//움직일 수 있는 곳 제한(y의 최솟값)
+    public float maxY = 5f;//움직일 수 있는 곳 제한(y의 최댓값)
+    [SerializeField] bool isKnockAble = true;//넉백 가능/불가능 여부
+    [SerializeField] float knockbackPower;//넉백을 얼마나 시킬지의 수치
+    public GameObject player;//감지되고 다가갈 플레이어
+    [SerializeField] Rigidbody2D rb;//리지드바디
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class EnemyMove : MonoBehaviour
         Move();
     }
 
-    public void Revive(Vector2 spawnPos)//재사용시 상태, 위치등을 초기화 시켜주는 함수
+    public void Revive(Vector2 spawnPos)//재사용시 상태, 위치 등을 초기화 시켜주는 함수
     {
         GetComponent<EnemyStat>().Revive();
         speed = new SingleStatRuntime(GetComponent<EnemyStat>().stat.speed.FinalValue);
@@ -48,7 +48,7 @@ public class EnemyMove : MonoBehaviour
         SetKnockBack();
     }
 
-    void Move()//움직임 제어
+    void Move()//움직임 제어(플레이어와 해당 오브젝트 사이의 방향을 알아내서 해당 방향으로 향함)
     {
         Vector2 currentPos = rb.position;
         Vector2 targetPos = player.transform.position;

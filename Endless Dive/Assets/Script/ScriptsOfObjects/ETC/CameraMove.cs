@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-    public float minX;
-    public float maxX = 10f;
-    public float minY = -5f;
-    public float maxY = 5f;
+    [SerializeField] GameObject player;//플레이어
+    public float minX;//갈 수 있는 x방향 최솟값
+    public float maxX = 10f;//갈 수 있는 x방향 최댓값
+    public float minY = -5f;//갈 수 있는 y방향 최솟값
+    public float maxY = 5f;//갈 수 있는 y방향 최댓값
 
     void Awake()
     {

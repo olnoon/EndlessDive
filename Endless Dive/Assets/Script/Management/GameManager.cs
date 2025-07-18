@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GiveMainMission()//미션을 줌
+    public void GiveMainMission()//미션타겟을 에너미 카인드와 수량을 정해서 미션을 주고 미션텍스트의 텍스틀 변경 시켜 줌
     {
         missionTarget = EnemyKind.A;
         currentMissionNum = 0;
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CompleteMission()//upgrades에 UpgradeOn함수를 구독해 줌, 또한 레벨 초기화
+    void CompleteMission()//upgrades에 UpgradeOn함수를 구독해 주며 레벨이 0보다 작다고 판단시 건너 뜀, 또한 레벨 초기화
     {
         upgrades = new List<Action>();
         foreach (GameObject enemy in enemies)
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         upgrades[0]();
     }
 
-    public void DealDamage(GameObject enemy, int ATK, int weight = 1)//대미지를 가하는 메서드
+    public void DealDamage(GameObject enemy, int ATK, int weight = 1)//에너미 게임 오브젝트에게 대미지를 가하는 메서드
     {
         enemy.GetComponent<EnemyStat>().HP.TakeDamage(ATK * weight);
         enemy.GetComponent<EnemyStat>().DetectDamage();
