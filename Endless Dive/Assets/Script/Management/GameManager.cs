@@ -6,21 +6,21 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public List<GameObject> enemies;
-    public List<GameObject> orbs;
+    public List<GameObject> enemies;//필드에 나와있는 활성화/비활성화 되어있는 모든 적들
+    public List<GameObject> orbs;//필드에 나와있는 활성화/비활성화 되어있는 모든 오브들
 
-    public List<GameObject> enemyPrefabs;
+    public List<GameObject> enemyPrefabs;//적의 프리팹들
 
-    public GameObject UpgradeScreen;
+    public GameObject UpgradeScreen;//업그레이드 선택창
 
-    public GameObject orbPrefab;
-    public GameObject lvlParent;
-    public GameObject lvlDisplay;
-    public EnemyKind missionTarget;
-    public int missionNum;
-    public int currentMissionNum;
-    public Text missionText;
-    public List<Action> upgrades;
+    public GameObject orbPrefab;//오브의 프리팹
+    public GameObject lvlParent;//레벨을 표시하는 동그란 UI들의 부모 오브젝트
+    public GameObject lvlDisplay;//레벨을 표시하는 동그란 UI의 프리팹
+    public EnemyKind missionTarget;//미션에서 필요로 하는 적의 종류
+    public int missionNum;//미션에서 필요로 하는 적의 갯수
+    public int currentMissionNum;//현재 잡은 미션에서 필요로 하는 적의 갯수
+    public Text missionText;//미션현황을 보여주는 텍스트
+    public List<Action> upgrades;//업그레이드할 갯수
     void Start()
     {
         StartCoroutine(SpawnTempEnemy());

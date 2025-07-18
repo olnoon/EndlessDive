@@ -12,7 +12,7 @@ public enum BuffToWhat
 
 public class BuffZone : MonoBehaviour
 {
-    BuffSO buffSO;
+    BuffSO buffSO;//해당 스크립트의 변수들의 초깃값을 갖고 있는 SO
 
     void OnTriggerEnter2D(Collider2D collision)//AbnormalStatus스크립트를 추가 시켜줌
     {

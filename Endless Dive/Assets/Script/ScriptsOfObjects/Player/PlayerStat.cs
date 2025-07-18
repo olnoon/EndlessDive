@@ -6,17 +6,17 @@ using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
-    public PlayerStatsSetSO stat;
-    public GaugeStatRuntime HP;
-    public SingleStatRuntime ATK;
-    public RatioStatRuntime Cri;
-    public RatioStatRuntime Dam;
-    public List<Coroutine> buffs;
-    public GameObject bulletPrefab;
-    public GameObject specialBulletPrefab;
-    public GameObject targetEnemy;
-    public float findEnemyRange;
-    public GameManager GM;
+    public PlayerStatsSetSO stat;//스탯의 초깃값
+    public GaugeStatRuntime HP;//체력
+    public SingleStatRuntime ATK;//공격력
+    public RatioStatRuntime Cri;//크리티컬 확률
+    public RatioStatRuntime Dam;//크리티컬 대미진
+    public List<Coroutine> buffs;//?
+    public GameObject bulletPrefab;//불렛 프리펩
+    public GameObject specialBulletPrefab;//특별탄환 프리펩
+    public GameObject targetEnemy;//타겟팅중인 적
+    public float findEnemyRange;//적 타겟팅 범위
+    public GameManager GM;//게임메니저
     [SerializeField] float bulletCooldown = 0.5f;
     public Transform bulletSpawnPoint;
     public int spcialBulletCooldown = 10;//단위 0.1초

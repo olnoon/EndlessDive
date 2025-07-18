@@ -12,21 +12,21 @@ public enum SkillType
 }
 public class PlayerSkill : MonoBehaviour
 {
-    [SerializeField] KeyCode key;
-    [SerializeField] SkillType skillType;
-    [SerializeField] SkillType skillType2;
-    [SerializeField] bool isSpecialATKable = true;
-    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
-    public GameObject bulletPrefab;
-    public GameObject specialBulletPrefab;
-    [SerializeField] Transform bulletSpawnPoint;
-    [SerializeField] int spcialBulletCooldown;//단위 0.1초
-    [SerializeField] int spcialCurrectTime = 1;//단위 0.1초
-    public float getherCooldown = 1.0f;
-    float lastGetherTime;
-    [SerializeField] bool isGetKey;
-    [SerializeField] bool isGetKey2;
-    [SerializeField] Text SkilCooltext;
+    [SerializeField] KeyCode key;//스킬의 키코드
+    [SerializeField] SkillType skillType;//1번째 스킬의 스킬타입
+    [SerializeField] SkillType skillType2;//2번째 스킬의 스킬타입
+    [SerializeField] bool isSpecialATKable = true;//쿨타임 지났는지의 여부
+    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();//활성화/비활성화된 필드의 모든 특별탄환들
+    public GameObject bulletPrefab;//발사될 불렛의 프리팹
+    public GameObject specialBulletPrefab;//발사될 트별불렛의 프리팹
+    [SerializeField] Transform bulletSpawnPoint;//불렛 스폰위치
+    [SerializeField] int spcialBulletCooldown;//쿨타임(단위 0.1초)
+    [SerializeField] int spcialCurrectTime = 1;//현재 지난 쿨타임(단위 0.1초)
+    public float getherCooldown = 1.0f;//채굴 쿨타임
+    float lastGetherTime;//남은 채굴 쿨타임
+    [SerializeField] bool isGetKey;//첫번째 스킬에서 키가 눌려있을 때 스킬을 실행시킬지의 여부
+    [SerializeField] bool isGetKey2;//두번째 스킬에서 키가 눌려있을 때 스킬을 실행시킬지의 여부
+    [SerializeField] Text SkilCooltext;//스킬 쿨타임을 보여주는 텍스트
 
     void Start()
     {

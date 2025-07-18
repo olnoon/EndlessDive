@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PlayerMoveSet : MonoBehaviour
 {
-    public SingleStatRuntime speed;
-    [SerializeField] Rigidbody2D rb;
-    public float minX = -10f;
-    public float maxX = 10f;
-    public float minY = -5f;
-    public float maxY = 5f;
-    public GameObject mineral;
+    public SingleStatRuntime speed;//이동속도
+    [SerializeField] Rigidbody2D rb;//리지드바디
+    public float minX = -10f;//X좌표 최소제한
+    public float maxX = 10f;//X좌표 최대제한
+    public float minY = -5f;//Y좌표 최소제한
+    public float maxY = 5f;//Y좌표 최대제한
+    public GameObject mineral;//타겟팅된 미네랄
 
     void Awake()
     {

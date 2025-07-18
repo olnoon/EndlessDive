@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class UpgradeOption
 {
-    public Action action;
-    public string name;
-    public string description;
+    public Action action;//선택했을 때 실행될 함수
+    public string name;//선택지 이름
+    public string description;//선택지 설명
 
     public UpgradeOption(Action action, string name, string description)
     {
@@ -19,9 +19,9 @@ public class UpgradeOption
 
 public class UpgradeSelect : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-    List<UpgradeOption> choices;
-    public GameManager GM;
+    [SerializeField] GameObject player;//플레이어
+    List<UpgradeOption> choices;//선택지들
+    public GameManager GM;//게임메니저
 
     void Awake()
     {
