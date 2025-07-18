@@ -8,7 +8,9 @@ public class PlayerStat : MonoBehaviour
 {
     public PlayerStatsSetSO stat;//스탯의 초깃값
     public GaugeStatRuntime HP;//체력
-    public SingleStatRuntime ATK;//공격력
+    public RatioStatRuntime ATK;//공격력
+    public SingleStatRuntime phyATK;//물리 기반 공격력
+    public SingleStatRuntime EnATK;//에너지 기반 공격력
     public RatioStatRuntime Cri;//크리티컬 확률
     public RatioStatRuntime Dam;//크리티컬 대미지
     public GameObject bulletPrefab;//불렛 프리펩
@@ -42,12 +44,13 @@ public class PlayerStat : MonoBehaviour
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         XPtext.text = $"{currentXp}/{maxXp}";
-        // StartCoroutine(SpecialSkillColling());
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
-        ATK = new SingleStatRuntime(stat.atk.FinalValue);
+        ATK = new RatioStatRuntime(stat.atk.FinalRatio);
+        phyATK = new SingleStatRuntime(stat.phyAtk.FinalValue);
+        EnATK = new SingleStatRuntime(stat.enAtk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
-        Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
+        Dam = new RatioStatRuntime(stat.catK.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
     }
@@ -145,7 +148,7 @@ public class PlayerStat : MonoBehaviour
     {
         while (true)
         {
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, gainRange, LayerMask.GetMask("Orb"));
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, gainRange * stat.mining.FinalRatio, LayerMask.GetMask("Orb"));
             foreach (var hitCollider in hitColliders)
             {
                 if (GM.orbs.Contains(hitCollider.gameObject) && hitCollider.gameObject.activeSelf)
@@ -197,7 +200,9 @@ public class PlayerStat : MonoBehaviour
             CalculateMouseCoord();
             theBullet.GetComponent<Bullet>().target = mousePos;
             theBullet.GetComponent<Bullet>().Reset();
-            theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(ATK.FinalValue);
+            theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(ATK.FinalRatio);
+            theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(phyATK.FinalValue);
+            theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(EnATK.FinalValue);
             theBullet.GetComponent<Bullet>().GM = GM;
 
         flag:

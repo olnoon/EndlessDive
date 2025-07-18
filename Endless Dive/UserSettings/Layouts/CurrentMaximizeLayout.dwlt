@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 4590
+  controlID: 6074
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 4591
+  controlID: 6075
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 4592
+  controlID: 6076
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -243,10 +243,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 6.3333435}
-      m_SelectedIDs: 9a6fffff
-      m_LastClickedID: -36966
-      m_ExpandedIDs: f6faffff
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 6aa1ffff
+      m_LastClickedID: -24214
+      m_ExpandedIDs: 56a4ffff24afffff42b2ffff0ecdffff08fbffff08af0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -884,7 +884,7 @@ MonoBehaviour:
       sizeOverridden: 0
     m_ContainerData:
     - containerId: overlay-toolbar__top
-      scrollOffset: 0
+      scrollOffset: 54
     - containerId: overlay-toolbar__left
       scrollOffset: 0
     - containerId: overlay-container--left
@@ -909,9 +909,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 6.8433595, y: 5.783068, z: -0.13945925}
+    m_Target: {x: -7.372716, y: -4.356707, z: 0.412905}
     speed: 2
-    m_Value: {x: 6.8433595, y: 5.783068, z: -0.13945925}
+    m_Value: {x: -7.372716, y: -4.356707, z: 0.412905}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -961,9 +961,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 14.011254
+    m_Target: 0.9181511
     speed: 2
-    m_Value: 14.011254
+    m_Value: 0.9181511
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -1016,14 +1016,14 @@ MonoBehaviour:
     y: 312.66666
     width: 868.6667
     height: 268.66666
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
   - {fileID: 12}
   - {fileID: 13}
-  m_Selected: 2
+  m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Script/BuffTypes/SO
+    - Assets/Script/StatTypes/SO
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1082,17 +1082,17 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Script/BuffTypes/SO
+  - Assets/Script/StatTypes/SO
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\syndy\\Desktop\\Spacewar\\\uBCF4\uB0B4\uAE30\\EndlessDive\\Endless
     Dive"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: fabb0000
-    m_LastClickedID: 48122
-    m_ExpandedIDs: 000000007eb1000080b1000082b1000084b1000086b1000088b100008ab1000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 277.33334}
+    m_SelectedIDs: aab30000
+    m_LastClickedID: 45994
+    m_ExpandedIDs: 0000000082b1000084b1000086b100008ab100008cb100008eb10000a2b3000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007eb1000080b1000082b1000084b1000086b1000088b100008ab1000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000082b1000084b1000086b100008ab100008cb100008eb10000a2b3000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1147,8 +1147,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 029effff
-    m_LastClickedInstanceID: -25086
+    m_SelectedInstanceIDs: 6aa1ffff
+    m_LastClickedInstanceID: -24214
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000dcb30000ecb3000096b00000eee90100dcb0000000000000
     m_RenameOverlay:

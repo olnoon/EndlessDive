@@ -99,13 +99,13 @@ public class PlayerSkill : MonoBehaviour
                 SkillB();
                 break;
             case SkillType.Gether:
-                Gether();
+                MineMineral();
                 break;
         }
     }
 
     
-    void Gether()//, , , 델타 타임과 비교해서 
+    void MineMineral()
     {
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
@@ -182,7 +182,9 @@ public class PlayerSkill : MonoBehaviour
 
         theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
         theBullet.GetComponent<Bullet>().Reset();
-        theBullet.GetComponent<Bullet>().ATK = new SingleStatRuntime(GetComponent<PlayerStat>().ATK.FinalValue);
+        theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(GetComponent<PlayerStat>().ATK.FinalRatio);
+        theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(GetComponent<PlayerStat>().phyATK.FinalValue);
+        theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(GetComponent<PlayerStat>().EnATK.FinalValue);
         theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 

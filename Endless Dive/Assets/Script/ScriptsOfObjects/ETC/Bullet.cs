@@ -8,7 +8,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] int spendingTime;//target 까지 가는데 걸리는 시간
     [SerializeField] Vector2 direction;//이동할 방향
     Coroutine deSpawnRoutine;//디스폰루틴이 충돌되는 걸 방지하기 위한 루틴
-    public SingleStatRuntime ATK;//공격력
+    public RatioStatRuntime ATK;//공격력
+    public SingleStatRuntime phyATK;//물리 기반 공격력
+    public SingleStatRuntime EnATK;//에너지 기반 공격력
     Rigidbody2D rb;//리지드바디
     [SerializeField] BuffSO buffSO;//버프 초깃값
     public GameManager GM;//게임메니저
@@ -44,7 +46,7 @@ public class Bullet : MonoBehaviour
                 deSpawnRoutine = null;
             }
 
-            GM.DealDamage(collision.gameObject, ATK.FinalValue);
+            GM.DealDamage(collision.gameObject, phyATK.FinalValue);//TODO 임시로 phyATK로 했지만 계산식을 적용시키던지 해야 함
 
             if (buffSO != null)
             {

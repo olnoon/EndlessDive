@@ -26,9 +26,9 @@ public class EnemyStat : MonoBehaviour
     public void Revive()//부활 시킬 때 해당 오브젝트의 변수들을 초기화 시켜주는 메서드
     {
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
-        ATK = new SingleStatRuntime(stat.atk.FinalValue);
+        // ATK = new SingleStatRuntime(stat.atk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
-        Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
+        // Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
         DetectDamage();
     }
 
