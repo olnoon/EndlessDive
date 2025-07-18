@@ -875,7 +875,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat: {fileID: 11400000, guid: 36850da81b3b4d549b513c2a6c8dd092, type: 2}
   bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}
-  specialBulletPrefab: {fileID: 2525984864775521835, guid: 26428746a93c34942a9c079b37b6f085, type: 3}
   targetEnemy: {fileID: 0}
   findEnemyRange: 5
   GM: {fileID: 0}
@@ -883,7 +882,6 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 0}
   spcialBulletCooldown: 5
   bullets: []
-  specialBullets: []
   isToggleATK: 1
   isDisableATK: 0
   currentLvl: 0
@@ -948,19 +946,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 324
-  skillType: 0
-  skillType2: 3
   isSpecialATKable: 1
-  specialBullets: []
-  bulletPrefab: {fileID: 0}
-  specialBulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
-  spcialBulletCooldown: 0
-  spcialCurrectTime: 1
-  getherCooldown: 1
-  isGetKey: 0
-  isGetKey2: 0
-  SkilCooltext: {fileID: 446041809}
+  skillCoolingTimer: 0
+  skillCharges: 0
+  SkillCooltext: {fileID: 0}
+  casUse: 0
+  skillSO: {fileID: 11400000, guid: 15c4970d60c2e7a4a9976cb7e555d1d5, type: 2}
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -968,25 +960,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384228389}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 304
-  skillType: 2
-  skillType2: 3
   isSpecialATKable: 1
-  specialBullets: []
-  bulletPrefab: {fileID: 0}
-  specialBulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
-  spcialBulletCooldown: 0
-  spcialCurrectTime: 1
-  getherCooldown: 1
-  isGetKey: 0
-  isGetKey2: 0
-  SkilCooltext: {fileID: 1000842527}
+  skillCoolingTimer: 0
+  skillCharges: 0
+  SkillCooltext: {fileID: 0}
+  casUse: 0
+  skillSO: {fileID: 0}
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,25 +980,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384228389}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 32
-  skillType: 1
-  skillType2: 3
   isSpecialATKable: 1
-  specialBullets: []
-  bulletPrefab: {fileID: 0}
-  specialBulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
-  spcialBulletCooldown: 0
-  spcialCurrectTime: 1
-  getherCooldown: 1
-  isGetKey: 1
-  isGetKey2: 0
-  SkilCooltext: {fileID: 85630788}
+  skillCoolingTimer: 0
+  skillCharges: 0
+  SkillCooltext: {fileID: 0}
+  casUse: 0
+  skillSO: {fileID: 0}
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,7 +2150,6 @@ RectTransform:
   m_Children:
   - {fileID: 594369624}
   - {fileID: 1558245525}
-  - {fileID: 1069129346}
   m_Father: {fileID: 1822024638}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -12172,68 +12151,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1069129345
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1069129346}
-  - component: {fileID: 1069129347}
-  m_Layer: 0
-  m_Name: LevelParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1069129346
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069129345}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 711804224}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 505.58002, y: 3.9099998}
-  m_SizeDelta: {x: 554.9, y: 72.24}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1069129347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069129345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 3
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &1135284679
 GameObject:
   m_ObjectHideFlags: 0
@@ -12725,8 +12642,7 @@ MonoBehaviour:
   - {fileID: 4363925063115173746, guid: 91eef525bdf532a45a4c4cd0af072135, type: 3}
   UpgradeScreen: {fileID: 222731905}
   orbPrefab: {fileID: 7617711883690222224, guid: feb2db9f62ee6da44aed197f1600896b, type: 3}
-  lvlParent: {fileID: 1069129345}
-  lvlDisplay: {fileID: 1130389541031418492, guid: 85420c07bcff10f43925a192267b4b0d, type: 3}
+  lvlText: {fileID: 714053975}
   missionTarget: 0
   missionNum: 0
   currentMissionNum: 0

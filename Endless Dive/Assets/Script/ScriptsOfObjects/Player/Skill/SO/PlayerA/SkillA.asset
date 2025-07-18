@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd23c191e5ff2f4ba7111577e988db8, type: 3}
+  m_Name: SkillA
+  m_EditorClassIdentifier: 
+  skillName: SkillA
+  skillLvl: 0
+  isGetKey: 0
+  skillCooldown_Origin: 0
+  skillCooldown_Now: 0
+  skillRepeat_Origin: 0
+  skillRepeat_Now: 0
+  skillRepeatCooldown_Origin: 0
+  skillRepeatCooldown_Now: 0
+  skillMaxCharges_Origin: 0
+  skillMaxCharges_Now: 0
+  skillType: 0
+  bulletPrefab: {fileID: 0}

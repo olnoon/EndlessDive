@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public enum SkillType
 {
@@ -10,47 +11,40 @@ public enum SkillType
     NewSkill,
     NewSkill2
 }
+
 public class PlayerSkill : MonoBehaviour
 {
     [SerializeField] KeyCode key;//스킬의 키코드
-    [SerializeField] SkillType skillType;//1번째 스킬의 스킬타입
-    [SerializeField] SkillType skillType2;//2번째 스킬의 스킬타입
     [SerializeField] bool isSpecialATKable = true;//쿨타임 지났는지의 여부
-    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();//활성화/비활성화된 필드의 모든 특별탄환들
-    public GameObject bulletPrefab;//발사될 불렛의 프리팹
-    public GameObject specialBulletPrefab;//발사될 트별불렛의 프리팹
     [SerializeField] Transform bulletSpawnPoint;//불렛 스폰위치
-    [SerializeField] int spcialBulletCooldown;//쿨타임(단위 0.1초)
-    [SerializeField] int spcialCurrectTime = 1;//현재 지난 쿨타임(단위 0.1초)
-    public float getherCooldown = 1.0f;//채굴 쿨타임
-    float lastGetherTime;//남은 채굴 쿨타임
-    [SerializeField] bool isGetKey;//첫번째 스킬에서 키가 눌려있을 때 스킬을 실행시킬지의 여부
-    [SerializeField] bool isGetKey2;//두번째 스킬에서 키가 눌려있을 때 스킬을 실행시킬지의 여부
-    [SerializeField] Text SkilCooltext;//스킬 쿨타임을 보여주는 텍스트
+    [SerializeField] float skillCoolingTimer;//스킬의 남은 쿨타임
+    [SerializeField] int skillCharges;//스킬의 남은 충전 횟수
+    [SerializeField] Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
+    [SerializeField] bool casUse;//스킬 사용 가능 여부
+    [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO
+    [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO
+    public List<GameObject> Bullets;
+
 
     void Start()
     {
-        bulletPrefab = GetComponent<PlayerStat>().bulletPrefab;
-        specialBulletPrefab = GetComponent<PlayerStat>().specialBulletPrefab;
-        bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
-        spcialBulletCooldown = GetComponent<PlayerStat>().spcialBulletCooldown;
-        StartCoroutine(SpecialSkillColling());
+        skillSOs = new List<SkillSO>(skillSOSets);
     }
 
     void Update()
     {
-        if (skillType == SkillType.Gether)
+        if (skillSOs[0].skillType == SkillType.Gether)
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(KeyCode.Space))
             {
                 GetComponent<PlayerStat>().isDisableATK = false;
             }
         }
-        if (!isGetKey && Input.GetKeyDown(key) && Time.timeScale != 0)
+        if (!skillSOs[0].isGetKey && Input.GetKeyDown(key) && Time.timeScale != 0)
         {
             DetermineSkill();
         }
-        else if (isGetKey && Input.GetKey(key) && Time.timeScale != 0)
+        else if (skillSOs[0].isGetKey && Input.GetKey(key) && Time.timeScale != 0)
         {
             DetermineSkill();
         }
@@ -63,19 +57,19 @@ public class PlayerSkill : MonoBehaviour
 
     void ChangeSkillOneTwo()//첫번째 스킬과 두번째 스킬을 체인지
     {
-        SkillType Temp = skillType;
-        bool isGetKeyTemp = isGetKey;
+        // SkillType Temp = skillType;
+        // bool isGetKeyTemp = isGetKey;
 
-        skillType = skillType2;
-        isGetKey = isGetKey2;
-        
-        skillType2 = Temp;
-        isGetKey2 = isGetKeyTemp;
+        // skillType = skillType2;
+        // isGetKey = isGetKey2;
+
+        // skillType2 = Temp;
+        // isGetKey2 = isGetKeyTemp;
     }
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단
     {
-        switch (skillType)
+        switch (skillSOs[0].skillType)
         {
             case SkillType.Poison:
                 if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
@@ -104,7 +98,7 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
-    
+
     void MineMineral()
     {
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
@@ -114,12 +108,12 @@ public class PlayerSkill : MonoBehaviour
         }
 
         GameObject mineral = GetComponent<PlayerMoveSet>().mineral;//로컬 변수 미네랄에 플레이어무브셋의 미네랄을 할당
-        
+
         GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
 
-        if (Time.time - getherCooldown >= lastGetherTime)//델타 타임과 getherCooldown을 비교해서 lastGetherTime보다 크면 광물을 채굴 시킴
+        if (Time.time - skillSOs[0].skillCooldown_Now >= skillCoolingTimer)//델타 타임과 getherCooldown을 비교해서 lastGetherTime보다 크면 광물을 채굴 시킴
         {
-            lastGetherTime = Time.time;
+            skillCoolingTimer = Time.time;
             GetComponent<PlayerStat>().mineralNum++;
             mineral.GetComponent<Mineral>().Gathered();
             Debug.Log($"{mineral} 캐는 중");
@@ -137,7 +131,7 @@ public class PlayerSkill : MonoBehaviour
 
         StartCoroutine(SpecialSkillColling());
     }
-    
+
     void SkillB()
     {
         if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
@@ -161,7 +155,7 @@ public class PlayerSkill : MonoBehaviour
 
         bool reused = false;
 
-        foreach (GameObject bullet in specialBullets)
+        foreach (GameObject bullet in Bullets)
         {
             var move = bullet.GetComponent<Bullet>();
             if (!bullet.activeSelf)
@@ -176,8 +170,8 @@ public class PlayerSkill : MonoBehaviour
 
         if (!reused)
         {
-            theBullet = Instantiate(specialBulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            specialBullets.Add(theBullet);
+            theBullet = Instantiate(skillSOs[0].bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            Bullets.Add(theBullet);
         }
 
         theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
@@ -192,15 +186,15 @@ public class PlayerSkill : MonoBehaviour
     {
         while (true)
         {
-            if (spcialCurrectTime == spcialBulletCooldown)
+            if (skillCoolingTimer == skillSOs[0].skillCooldown_Now)
             {
                 break;
             }
             yield return new WaitForSeconds(0.1f);
-            spcialCurrectTime++;
-            SkilCooltext.text = $"{spcialCurrectTime}/{spcialBulletCooldown}";
+            skillCoolingTimer++;
+            SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
         }
-        spcialCurrectTime = 1;
+        skillCoolingTimer = 1;
         isSpecialATKable = true;
     }
 }

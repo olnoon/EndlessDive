@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+//TODO 기본 공격 플레이어스킬로 이동시키기
 public class PlayerStat : MonoBehaviour
 {
     public PlayerStatsSetSO stat;//스탯의 초깃값
@@ -14,7 +15,6 @@ public class PlayerStat : MonoBehaviour
     public RatioStatRuntime Cri;//크리티컬 확률
     public RatioStatRuntime Dam;//크리티컬 대미지
     public GameObject bulletPrefab;//불렛 프리펩
-    public GameObject specialBulletPrefab;//특별탄환 프리펩
     public GameObject targetEnemy;//타겟팅중인 적
     public float findEnemyRange;//적 타겟팅 범위
     public GameManager GM;//게임메니저
@@ -22,7 +22,6 @@ public class PlayerStat : MonoBehaviour
     public Transform bulletSpawnPoint;
     public int spcialBulletCooldown = 10;//단위 0.1초
     [SerializeField] List<GameObject> bullets = new List<GameObject>();
-    [SerializeField] List<GameObject> specialBullets = new List<GameObject>();
     [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
     public int currentLvl;

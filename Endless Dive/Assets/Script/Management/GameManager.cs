@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject UpgradeScreen;//업그레이드 선택창
 
     public GameObject orbPrefab;//오브의 프리팹
-    public GameObject lvlParent;//레벨을 표시하는 동그란 UI들의 부모 오브젝트
-    public GameObject lvlDisplay;//레벨을 표시하는 동그란 UI의 프리팹
+    public Text lvlText;//레벨을 표시하는 UI
     public EnemyKind missionTarget;//미션에서 필요로 하는 적의 종류
     public int missionNum;//미션에서 필요로 하는 적의 갯수
     public int currentMissionNum;//현재 잡은 미션에서 필요로 하는 적의 갯수
@@ -76,15 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void levelUP()//원형 아이콘 추가 및 재사용 하는 함수
     {
-        foreach (Transform child in lvlParent.transform)
-        {
-            if (!child.gameObject.activeSelf)
-            {
-                child.gameObject.SetActive(true);
-                return;
-            }
-        }
-        Instantiate(lvlDisplay, Vector2.zero, Quaternion.identity, lvlParent.transform);
+        lvlText.text = "1";
     }
     public void UpgradeOn()//UpgradeScreen활성화, 레벨 아이콘이 없을시 미션 초기화
     {
@@ -163,22 +154,15 @@ public class GameManager : MonoBehaviour
         {
             enemy.SetActive(false);
         }
-        for (int i = 0; i < lvlParent.transform.childCount; i++)
+        for (int i = 0; i < FindAnyObjectByType<PlayerStat>().currentLvl; i++)
         {
-            if (lvlParent.transform.GetChild(i).gameObject.activeSelf)
-            {
-                upgrades.Add(UpgradeOn);
-            }
+            upgrades.Add(UpgradeOn);
         }
         if (upgrades.Count <= 0)
         {
             Debug.Log("미션완료, 레벨 낮아서 업그레이드 불가");
             GiveMainMission();
             return;
-        }
-        foreach (Transform child in lvlParent.transform)
-        {
-            child.gameObject.SetActive(false);
         }
         PauseTime(0);
         upgrades[0]();
