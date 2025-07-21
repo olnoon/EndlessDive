@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   kind: 1
+  basicSpeed: 1
   minX: -10
   maxX: 10
   minY: -5

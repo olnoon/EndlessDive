@@ -15,7 +15,8 @@ public class EnemyMove : MonoBehaviour
 {
     public State state;//적의 현재 상태
     public EnemyKind kind;//적의 종류
-    public RatioStatRuntime speed;//속도
+    public float basicSpeed;//기본 이동속도
+    public RatioStatRuntime SPD;//이동 속도에 영향을 주는 능력치
     public float minX = -10f;//움직일 수 있는 곳 제한(X의 최솟값)
     public float maxX = 10f;//움직일 수 있는 곳 제한(X의 최댓값)
     public float minY = -5f;//움직일 수 있는 곳 제한(y의 최솟값)
@@ -29,7 +30,6 @@ public class EnemyMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
-        speed = new RatioStatRuntime(GetComponent<EnemyStat>().stat.speed.FinalRatio);
         SetKnockBack();
     }
 
@@ -41,7 +41,6 @@ public class EnemyMove : MonoBehaviour
     public void Revive(Vector2 spawnPos)//재사용시 상태, 위치 등을 초기화 시켜주는 함수
     {
         GetComponent<EnemyStat>().Revive();
-        speed = new RatioStatRuntime(GetComponent<EnemyStat>().stat.speed.FinalRatio);
         transform.position = spawnPos;
         state = State.Normal;
         gameObject.SetActive(true);
@@ -54,7 +53,9 @@ public class EnemyMove : MonoBehaviour
         Vector2 targetPos = player.transform.position;
         Vector2 dir = (targetPos - currentPos).normalized;
         
-        rb.MovePosition(currentPos + dir * speed.FinalRatio * Time.fixedDeltaTime);
+        float FinalSpeed = SPD != null ? basicSpeed * SPD.FinalRatio: basicSpeed;
+
+        rb.MovePosition(currentPos + dir * FinalSpeed * Time.fixedDeltaTime);
     }
 
     void SetKnockBack()//넉백 설정

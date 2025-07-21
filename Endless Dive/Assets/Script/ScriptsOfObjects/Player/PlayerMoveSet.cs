@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerMoveSet : MonoBehaviour
 {
-    public RatioStatRuntime speed;//이동속도
+    public float basicSpeed;//기본 이동속도
+    public RatioStatSO SPD;//이동 속도에 영향을 주는 능력치
     [SerializeField] Rigidbody2D rb;//리지드바디
     public float minX = -10f;//X좌표 최소제한
     public float maxX = 10f;//X좌표 최대제한
@@ -13,7 +14,6 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Awake()
     {
-        speed = new RatioStatRuntime(GetComponent<PlayerStat>().stat.speed.FinalRatio);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -68,7 +68,10 @@ public class PlayerMoveSet : MonoBehaviour
         }
 
         Vector2 moveDir = new Vector2(xSpeed, ySpeed).normalized;
-        Vector2 targetPos = rb.position + moveDir * speed.FinalRatio * Time.fixedDeltaTime;
+
+        float FinalSpeed = SPD != null ? basicSpeed * SPD.FinalRatio: basicSpeed;
+
+        Vector2 targetPos = rb.position + moveDir * FinalSpeed * Time.fixedDeltaTime;
 
         float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
         float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);

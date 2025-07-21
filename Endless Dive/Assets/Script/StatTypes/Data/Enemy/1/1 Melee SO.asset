@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8318a541f70d83645a4051753e10d074, type: 3}
-  m_Name: A CriDam SO
+  m_Name: 1 Melee SO
   m_EditorClassIdentifier: 
-  baseRatio: 1
+  baseRatio: 0
   bonusFlat: 0
   bonusRate: 0
   tempRatio: 0

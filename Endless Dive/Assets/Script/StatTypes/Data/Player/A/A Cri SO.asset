@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8318a541f70d83645a4051753e10d074, type: 3}
   m_Name: A Cri SO
   m_EditorClassIdentifier: 
-  baseRatio: 0
+  baseRatio: 1
   bonusFlat: 0
   bonusRate: 0
   tempRatio: 0

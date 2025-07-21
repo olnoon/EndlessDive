@@ -7,13 +7,19 @@ using UnityEngine.UI;
 //TODO 기본 공격 플레이어스킬로 이동시키기
 public class PlayerStat : MonoBehaviour
 {
-    public PlayerStatsSetSO stat;//스탯의 초깃값
-    public GaugeStatRuntime HP;//체력
-    public RatioStatRuntime ATK;//공격력
-    public SingleStatRuntime phyATK;//물리 기반 공격력
-    public SingleStatRuntime EnATK;//에너지 기반 공격력
-    public RatioStatRuntime Cri;//크리티컬 확률
-    public RatioStatRuntime Dam;//크리티컬 대미지
+    public SingleStatSO Level;//레벨
+    public PlayerStatsSetSO stat;//플레이어 스텟 초깃값
+    public GaugeStatRuntime HP;//플레이어 체력
+    public RatioStatRuntime ATK;//모든 공격력에 영향을 주는 능력치
+    public SingleStatRuntime phyAtk;//물리 기반 공격력
+    public SingleStatRuntime enAtk;//에너지 기반 공격력
+    public RatioStatRuntime Cri;//크리티컬 대미지
+    public RatioStatRuntime Dam;//크리티컬 확률
+    public RatioStatRuntime Dex;// 쿨타임 감소에 영향을 주는 능력치
+    public RatioStatRuntime MeleeRange;// 근접 공격 사거리에 영향을 주는 능력치
+    public SingleStatRuntime ARM;// 받는 피해를 줄이는 방어력 스탯
+    public RatioStatRuntime PickupRange;// 아이템을 자동으로 줍는 거리 범위
+    public RatioStatRuntime Mining;// 자원 채굴 효율 또는 채굴량에 영향을 주는 능력치
     public GameObject bulletPrefab;//불렛 프리펩
     public GameObject targetEnemy;//타겟팅중인 적
     public float findEnemyRange;//적 타겟팅 범위
@@ -46,10 +52,15 @@ public class PlayerStat : MonoBehaviour
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new RatioStatRuntime(stat.atk.FinalRatio);
-        phyATK = new SingleStatRuntime(stat.phyAtk.FinalValue);
-        EnATK = new SingleStatRuntime(stat.enAtk.FinalValue);
+        phyAtk = new SingleStatRuntime(stat.phyAtk.FinalValue);
+        enAtk = new SingleStatRuntime(stat.enAtk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
         Dam = new RatioStatRuntime(stat.catK.FinalRatio);
+        Dex = new RatioStatRuntime(stat.dex.FinalRatio);
+        MeleeRange = new RatioStatRuntime(stat.meleeRange.FinalRatio);
+        ARM = new SingleStatRuntime(stat.ARM.FinalValue);
+        PickupRange = new RatioStatRuntime(stat.pickupRange.FinalRatio);
+        Mining = new RatioStatRuntime(stat.mining.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
     }
@@ -200,8 +211,8 @@ public class PlayerStat : MonoBehaviour
             theBullet.GetComponent<Bullet>().target = mousePos;
             theBullet.GetComponent<Bullet>().Reset();
             theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(ATK.FinalRatio);
-            theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(phyATK.FinalValue);
-            theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(EnATK.FinalValue);
+            theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(phyAtk.FinalValue);
+            theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(enAtk.FinalValue);
             theBullet.GetComponent<Bullet>().GM = GM;
 
         flag:

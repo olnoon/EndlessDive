@@ -6,11 +6,20 @@ public class EnemyStat : MonoBehaviour
 {
     public PlayerStatsSetSO stat;//플레이어 스텟 초깃값
     public GaugeStatRuntime HP;//플레이어 체력
-    public SingleStatRuntime ATK;//플레이어 공격력
+    public RatioStatRuntime ATK;//모든 공격력에 영향을 주는 능력치
+    public SingleStatRuntime phyAtk;//물리 기반 공격력
+    public SingleStatRuntime enAtk;//에너지 기반 공격력
     public RatioStatRuntime Cri;//크리티컬 대미지
     public RatioStatRuntime Dam;//크리티컬 확률
+    public RatioStatRuntime Dex;// 쿨타임 감소에 영향을 주는 능력치
+    public RatioStatRuntime MeleeRange;// 근접 공격 사거리에 영향을 주는 능력치
+    public SingleStatRuntime ARM;// 받는 피해를 줄이는 방어력 스탯
+    public RatioStatRuntime PickupRange;// 아이템을 자동으로 줍는 거리 범위
+    public RatioStatRuntime Mining;// 자원 채굴 효율 또는 채굴량에 영향을 주는 능력치
+
     public float attackCooldown = 1.0f;//공격력 쿨타임
     private float lastAttackTime;//현재 공격력 쿨타임
+    
     GameManager GM;//게임매니저
     [SerializeField] GameObject HPBarBackground;//체력바 배경
     [SerializeField] Image HPBarFilled;//체력바
@@ -26,9 +35,16 @@ public class EnemyStat : MonoBehaviour
     public void Revive()//부활 시킬 때 해당 오브젝트의 변수들을 초기화 시켜주는 메서드
     {
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
-        // ATK = new SingleStatRuntime(stat.atk.FinalValue);
+        ATK = new RatioStatRuntime(stat.atk.FinalRatio);
+        phyAtk = new SingleStatRuntime(stat.phyAtk.FinalValue);
+        enAtk = new SingleStatRuntime(stat.enAtk.FinalValue);
         Cri = new RatioStatRuntime(stat.cri.FinalRatio);
-        // Dam = new RatioStatRuntime(stat.criDam.FinalRatio);
+        Dam = new RatioStatRuntime(stat.catK.FinalRatio);
+        Dex = new RatioStatRuntime(stat.dex.FinalRatio);
+        MeleeRange = new RatioStatRuntime(stat.meleeRange.FinalRatio);
+        ARM = new SingleStatRuntime(stat.ARM.FinalValue);
+        PickupRange = new RatioStatRuntime(stat.pickupRange.FinalRatio);
+        Mining = new RatioStatRuntime(stat.mining.FinalRatio);
         DetectDamage();
     }
 
@@ -63,7 +79,7 @@ public class EnemyStat : MonoBehaviour
         {
             if (Time.time - lastAttackTime >= attackCooldown)
             {
-                collision.gameObject.GetComponent<PlayerStat>().HP.TakeDamage(ATK.FinalValue);
+                collision.gameObject.GetComponent<PlayerStat>().HP.TakeDamage(phyAtk.FinalValue);
                 // Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue}의 대미지. 남은 HP {collision.gameObject.GetComponent<PlayerStat>().HP.Current}");
                 lastAttackTime = Time.time;
             }

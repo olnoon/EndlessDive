@@ -4,7 +4,7 @@
 public class PlayerStatsSetSO : ScriptableObject
 {
     [Header("레벨 (Level)")]
-    public RatioStatSO Level;
+    public SingleStatSO Level;
     [Header("체력 (HP)")]
     public GaugeStatSO hp;
 
@@ -31,9 +31,6 @@ public class PlayerStatsSetSO : ScriptableObject
 
     [Header("방어력 (ARM)")]
     public SingleStatSO ARM;
-
-    [Header("속도 (Speed)")]
-    public RatioStatSO speed;
     
     [Header("아이템 획득 범위 (PickupRange)")]
     public RatioStatSO pickupRange;

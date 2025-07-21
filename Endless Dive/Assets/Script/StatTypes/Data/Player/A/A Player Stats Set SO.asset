@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0977330f2d94e09459f8d718890733df, type: 3}
   m_Name: A Player Stats Set SO
   m_EditorClassIdentifier: 
+  Level: {fileID: 11400000, guid: 415e6c07e9385904b99c971ee82bf693, type: 2}
   hp: {fileID: 11400000, guid: 8e2eeb49c8060364785ee919886881f6, type: 2}
-  atk: {fileID: 11400000, guid: 3c197219d5db3484081bda9ca0e9d1f9, type: 2}
-  speed: {fileID: 11400000, guid: 3898ee1e049c8e844b29df8ea5b88bf8, type: 2}
+  atk: {fileID: 11400000, guid: 00dcd1066b897944896526e4aa42b81f, type: 2}
+  phyAtk: {fileID: 11400000, guid: c9ca1b7a4f3fff94f9bc324621a58361, type: 2}
+  enAtk: {fileID: 11400000, guid: 2aa636c0531f1734489d03ed444ed12c, type: 2}
   cri: {fileID: 11400000, guid: f2347ff2276ee9344b0ae8270597fa10, type: 2}
-  criDam: {fileID: 11400000, guid: 5ab90b85b3e070146ab4e13905ce9c71, type: 2}
+  catK: {fileID: 11400000, guid: 0ad4c0a9ba7a4914ea96ad8b10f71f80, type: 2}
+  dex: {fileID: 11400000, guid: 40113258e777dfa4a9b44059f4a3d941, type: 2}
+  meleeRange: {fileID: 11400000, guid: 5cf0519ba6d71c649823bf853e0bc2ac, type: 2}
+  ARM: {fileID: 11400000, guid: 9e005cffdeb0a43408d0838f78171f6e, type: 2}
+  speed: 2
+  pickupRange: {fileID: 11400000, guid: 669539abe1e54cf49a8671ac365d40f7, type: 2}
+  mining: {fileID: 11400000, guid: 770bcdfe9282cfa47a43bda4c263c71f, type: 2}

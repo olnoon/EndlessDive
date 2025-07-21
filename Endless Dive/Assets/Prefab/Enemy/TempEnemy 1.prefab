@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   kind: 0
+  basicSpeed: 1
   minX: -10
   maxX: 10
   minY: -5
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2351b6f3d3c0c54db6bed657b73262a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: {fileID: 11400000, guid: c7f0ec0e0209932428582a026dcde412, type: 2}
+  stat: {fileID: 11400000, guid: e3efd86b9eb273049bf76e82d806b8bd, type: 2}
   attackCooldown: 1
   HPBarBackground: {fileID: 8708537799495011718}
   HPBarFilled: {fileID: 1871733667250172123}

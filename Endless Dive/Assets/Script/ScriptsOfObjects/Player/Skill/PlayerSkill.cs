@@ -20,10 +20,11 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] float skillCoolingTimer;//스킬의 남은 쿨타임
     [SerializeField] int skillCharges;//스킬의 남은 충전 횟수
     [SerializeField] Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
-    [SerializeField] bool casUse;//스킬 사용 가능 여부
-    [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO
-    [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO
-    public List<GameObject> Bullets;
+    [SerializeField] bool canUse;//스킬 사용 가능 여부
+    [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
+    [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
+    public List<GameObject> Bullets;//필드에 나와있는 탄환들(재사용을 위한)
+    Action skillEffect;
 
 
     void Start()
@@ -33,6 +34,11 @@ public class PlayerSkill : MonoBehaviour
 
     void Update()
     {
+        if (!canUse)
+        {
+            return;
+        }
+        canUse = false;
         if (skillSOs[0].skillType == SkillType.Gether)
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(KeyCode.Space))
@@ -76,28 +82,39 @@ public class PlayerSkill : MonoBehaviour
                 {
                     break;
                 }
-                SpellSkill();
+                skillEffect = SpellSkill;
                 break;
             case SkillType.NewSkill:
                 if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
                 {
                     break;
                 }
-                SkillA();
+                skillEffect = SkillA;
                 break;
             case SkillType.NewSkill2:
                 if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
                 {
                     break;
                 }
-                SkillB();
+                skillEffect = SkillB;
                 break;
             case SkillType.Gether:
-                MineMineral();
+                skillEffect = MineMineral;
                 break;
         }
+        StartCoroutine(RepeatSkill());
     }
 
+    IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
+    {
+        int RepeatNum = skillSOs[0].skillRepeat_Now;
+        while (RepeatNum > 0)
+        {
+            skillEffect();
+            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+            RepeatNum--;
+        }
+    }
 
     void MineMineral()
     {
@@ -177,8 +194,8 @@ public class PlayerSkill : MonoBehaviour
         theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
         theBullet.GetComponent<Bullet>().Reset();
         theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(GetComponent<PlayerStat>().ATK.FinalRatio);
-        theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(GetComponent<PlayerStat>().phyATK.FinalValue);
-        theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(GetComponent<PlayerStat>().EnATK.FinalValue);
+        theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(GetComponent<PlayerStat>().phyAtk.FinalValue);
+        theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(GetComponent<PlayerStat>().enAtk.FinalValue);
         theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 
