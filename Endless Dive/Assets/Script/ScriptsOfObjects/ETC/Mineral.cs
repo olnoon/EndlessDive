@@ -30,7 +30,7 @@ public class Mineral : MonoBehaviour
         if (getherer.GetComponent<PlayerStat>() != null)
         {
             getherer.GetComponent<PlayerStat>().mineralNum++;
-            getherer.GetComponent<PlayerStat>().addXP();
+            // getherer.GetComponent<PlayerStat>().addXP();
         }
         quantityBarFilled.fillAmount = (float)currectQuantity / totalQuantity;
         quantityText.text = $"{currectQuantity}/{totalQuantity}";

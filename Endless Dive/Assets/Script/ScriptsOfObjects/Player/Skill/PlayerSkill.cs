@@ -8,7 +8,7 @@ public enum SkillType
 {
     Basic,
     Poison,
-    Gether,
+    Mine,
     NewSkill,
     NewSkill2
 }
@@ -16,12 +16,12 @@ public enum SkillType
 public class PlayerSkill : MonoBehaviour
 {
     [SerializeField] KeyCode key;//스킬의 키코드
-    [SerializeField] bool isSpecialATKable = true;//쿨타임 지났는지의 여부
     [SerializeField] Transform bulletSpawnPoint;//불렛 스폰위치
     [SerializeField] float skillCoolingTimer;//스킬의 남은 쿨타임
     [SerializeField] int skillCharges;//스킬의 남은 충전 횟수
     [SerializeField] Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
-    [SerializeField] bool canUse;//스킬 사용 가능 여부
+    [SerializeField] bool canUse = true;//스킬 사용 가능 여부
+    [SerializeField] bool isCooling;//스킬 쿨타임 가능 여부
     [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
     [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
     public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
@@ -30,7 +30,9 @@ public class PlayerSkill : MonoBehaviour
 
     void Start()
     {
+        bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
         skillSOs = new List<SkillSO>(skillSOSets);
+        skillCoolingTimer = skillSOs[0].skillCooldown_Now;
     }
 
     void Update()
@@ -39,14 +41,18 @@ public class PlayerSkill : MonoBehaviour
         {
             canUse = true;
         }
-        if (skillSOs[0].skillType == SkillType.Gether)
+        else
         {
-            if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(KeyCode.Space))
+            canUse = false;
+        }
+        if (skillSOs[0].skillType == SkillType.Mine)
+        {
+            if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(key))
             {
                 GetComponent<PlayerStat>().isDisableATK = false;
             }
         }
-        else if (Input.GetKeyDown(key) && Time.timeScale != 0)
+        if (Input.GetKeyDown(key) && Time.timeScale != 0)
         {
             DetermineSkill();
         }
@@ -71,38 +77,37 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
-        if (!canUse)
+        if (!canUse || isCooling)
         {
             return;
         }
-        canUse = false;
         switch (skillSOs[0].skillType)
         {
             case SkillType.Basic:
                 skillEffect = TriggerBullet;
                 break;
             case SkillType.Poison:
-                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                if (!canUse || GetComponent<PlayerStat>().isDisableATK)
                 {
                     break;
                 }
                 skillEffect = SpellSkill;
                 break;
             case SkillType.NewSkill:
-                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                if (!canUse || GetComponent<PlayerStat>().isDisableATK)
                 {
                     break;
                 }
                 skillEffect = SkillA;
                 break;
             case SkillType.NewSkill2:
-                if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+                if (!canUse || GetComponent<PlayerStat>().isDisableATK)
                 {
                     break;
                 }
                 skillEffect = SkillB;
                 break;
-            case SkillType.Gether:
+            case SkillType.Mine:
                 skillEffect = MineMineral;
                 break;
         }
@@ -112,14 +117,33 @@ public class PlayerSkill : MonoBehaviour
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
         int RepeatNum = skillSOs[0].skillRepeat_Now;
+
+        // skillEffect 미할당 방지
+        if (skillEffect == null)
+        {
+            Debug.LogWarning("skillEffect is not set!");
+            yield break;
+        }
+
         while (RepeatNum > 0)
         {
-            skillEffect();
-            skillCharges -= 1;
-            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+            // 쿨다운이 끝날 때까지 대기
+            while (isCooling)
+                yield return null;
+
+            // 키 입력 체크: 필요 없으면 제거 가능
+            if (!Input.GetKey(key))
+                break;
+
+            // 실제 효과 실행
+            skillEffect?.Invoke();
+            skillCharges--;
+
             RepeatNum--;
+
+            // 다음 반복 전 대기
+            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
         }
-        skillCoolingTimer = skillSOs[0].skillCooldown_Now;
     }
 
     void MineMineral()
@@ -130,49 +154,43 @@ public class PlayerSkill : MonoBehaviour
             return;
         }
 
-        GameObject mineral = GetComponent<PlayerMoveSet>().mineral;//로컬 변수 미네랄에 플레이어무브셋의 미네랄을 할당
-
         GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
-
-        if (Time.time - skillSOs[0].skillCooldown_Now >= skillCoolingTimer)//델타 타임과 getherCooldown을 비교해서 lastGetherTime보다 크면 광물을 채굴 시킴
-        {
-            skillCoolingTimer = Time.time;
-            GetComponent<PlayerStat>().mineralNum++;
-            mineral.GetComponent<Mineral>().Gathered();
-            Debug.Log($"{mineral} 캐는 중");
-        }
+        
+        GetComponent<PlayerStat>().mineralNum++;
+        GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Gathered();
+        Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
+        StartCoroutine(SkillCooling());
     }
 
     void SkillA()
     {
-        if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+        if (!canUse || GetComponent<PlayerStat>().isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 A발동");
         // 스킬 A의 고유 효과 실행 코드 추가 가능
-        isSpecialATKable = false;
+        canUse = false;
 
-        StartCoroutine(SpecialSkillColling());
+        StartCoroutine(SkillCooling());
     }
 
     void SkillB()
     {
-        if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
+        if (!canUse || GetComponent<PlayerStat>().isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 B발동");
         // 스킬 B의 고유 효과 실행 코드 추가 가능
-        isSpecialATKable = false;
+        canUse = false;
 
-        StartCoroutine(SpecialSkillColling());
+        StartCoroutine(SkillCooling());
     }
-
 
     void SpellSkill()//Skill 탄환 생성/재사용 및 불렛 스크립트의 변수들을 초기화 시켜주는 함수
     {
-        isSpecialATKable = false;
+        canUse = false;
 
-        StartCoroutine(SpecialSkillColling());
+        StartCoroutine(SkillCooling());
 
         GameObject theBullet = null;
 
@@ -205,23 +223,24 @@ public class PlayerSkill : MonoBehaviour
         theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 
-    IEnumerator SpecialSkillColling()//스킬 쿨타임
+    IEnumerator SkillCooling()//스킬 쿨타임
     {
+        isCooling = true;
+
+        skillCoolingTimer = skillSOs[0].skillCooldown_Now;//쿨타임 초기화
+
         while (true)
         {
-            if (skillCoolingTimer == skillSOs[0].skillCooldown_Now)
+            if (skillCoolingTimer <= 0)//쿨타임이 0일 시 브레이크
             {
                 break;
             }
             yield return new WaitForSeconds(0.1f);
-            skillCoolingTimer++;
-            SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
+            skillCoolingTimer--;//0.1초후 쿨타임에 -1
+            // SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
         }
-        skillCoolingTimer = 1;
-        isSpecialATKable = true;
+        isCooling = false;
     }
-
-    
 
     void TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴
     {
