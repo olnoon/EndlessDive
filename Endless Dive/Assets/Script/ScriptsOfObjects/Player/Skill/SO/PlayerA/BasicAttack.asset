@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9dd23c191e5ff2f4ba7111577e988db8, type: 3}
-  m_Name: SkillA
+  m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  skillName: SkillA
+  skillName: BasicAttack
   skillLvl: 0
   isGetKey: 0
-  skillCooldown_Origin: 10
-  skillCooldown_Now: 10
+  skillCooldown_Origin: 0.5
+  skillCooldown_Now: 0.5
   skillRepeat_Origin: 10
-  skillRepeat_Now: 10
-  skillRepeatCooldown_Origin: 10
-  skillRepeatCooldown_Now: 10
+  skillRepeat_Now: 99999999
+  skillRepeatCooldown_Origin: 0.5
+  skillRepeatCooldown_Now: 0.5
   skillMaxCharges_Origin: 10
   skillMaxCharges_Now: 10
-  skillType: 1
-  bulletPrefab: {fileID: 2525984864775521835, guid: 26428746a93c34942a9c079b37b6f085, type: 3}
+  skillType: 0
+  bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}

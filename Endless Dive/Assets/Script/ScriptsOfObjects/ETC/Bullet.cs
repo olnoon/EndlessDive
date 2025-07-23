@@ -47,6 +47,7 @@ public class Bullet : MonoBehaviour
             }
 
             GM.DealDamage(collision.gameObject, phyATK.FinalValue);//TODO 임시로 phyATK로 했지만 계산식을 적용시키던지 해야 함
+            Debug.Log(phyATK.FinalValue);
 
             if (buffSO != null)
             {

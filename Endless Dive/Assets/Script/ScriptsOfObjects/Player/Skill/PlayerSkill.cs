@@ -6,6 +6,7 @@ using System;
 
 public enum SkillType
 {
+    Basic,
     Poison,
     Gether,
     NewSkill,
@@ -23,7 +24,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] bool canUse;//스킬 사용 가능 여부
     [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
     [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
-    public List<GameObject> Bullets;//필드에 나와있는 탄환들(재사용을 위한)
+    public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
     Action skillEffect;
 
 
@@ -34,11 +35,10 @@ public class PlayerSkill : MonoBehaviour
 
     void Update()
     {
-        if (!canUse)
+        if (skillCharges >= 1)
         {
-            return;
+            canUse = true;
         }
-        canUse = false;
         if (skillSOs[0].skillType == SkillType.Gether)
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(KeyCode.Space))
@@ -46,11 +46,7 @@ public class PlayerSkill : MonoBehaviour
                 GetComponent<PlayerStat>().isDisableATK = false;
             }
         }
-        if (!skillSOs[0].isGetKey && Input.GetKeyDown(key) && Time.timeScale != 0)
-        {
-            DetermineSkill();
-        }
-        else if (skillSOs[0].isGetKey && Input.GetKey(key) && Time.timeScale != 0)
+        else if (Input.GetKeyDown(key) && Time.timeScale != 0)
         {
             DetermineSkill();
         }
@@ -73,10 +69,18 @@ public class PlayerSkill : MonoBehaviour
         // isGetKey2 = isGetKeyTemp;
     }
 
-    void DetermineSkill()//어떤 스킬을 실행할지 판단
+    void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
+        if (!canUse)
+        {
+            return;
+        }
+        canUse = false;
         switch (skillSOs[0].skillType)
         {
+            case SkillType.Basic:
+                skillEffect = TriggerBullet;
+                break;
             case SkillType.Poison:
                 if (!isSpecialATKable || GetComponent<PlayerStat>().isDisableATK)
                 {
@@ -111,9 +115,11 @@ public class PlayerSkill : MonoBehaviour
         while (RepeatNum > 0)
         {
             skillEffect();
+            skillCharges -= 1;
             yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
             RepeatNum--;
         }
+        skillCoolingTimer = skillSOs[0].skillCooldown_Now;
     }
 
     void MineMineral()
@@ -172,7 +178,7 @@ public class PlayerSkill : MonoBehaviour
 
         bool reused = false;
 
-        foreach (GameObject bullet in Bullets)
+        foreach (GameObject bullet in bullets)
         {
             var move = bullet.GetComponent<Bullet>();
             if (!bullet.activeSelf)
@@ -188,7 +194,7 @@ public class PlayerSkill : MonoBehaviour
         if (!reused)
         {
             theBullet = Instantiate(skillSOs[0].bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            Bullets.Add(theBullet);
+            bullets.Add(theBullet);
         }
 
         theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
@@ -213,5 +219,45 @@ public class PlayerSkill : MonoBehaviour
         }
         skillCoolingTimer = 1;
         isSpecialATKable = true;
+    }
+
+    
+
+    void TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴
+    {
+        GameObject theBullet = null;
+
+        bool reused = false;
+
+        if (GetComponent<PlayerStat>().isDisableATK)
+        {
+            return;
+        }
+
+        foreach (GameObject bullet in bullets)
+        {
+            var move = bullet.GetComponent<Bullet>();
+            if (!bullet.activeSelf)
+            {
+                theBullet = bullet;
+                move.transform.position = bulletSpawnPoint.position;
+                bullet.SetActive(true);
+                reused = true;
+                break;
+            }
+        }
+
+        if (!reused)
+        {
+            theBullet = Instantiate(skillSOs[0].bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            bullets.Add(theBullet);
+        }
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        theBullet.GetComponent<Bullet>().target = mousePos;
+        theBullet.GetComponent<Bullet>().Reset();
+        theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(GetComponent<PlayerStat>().ATK.FinalRatio);
+        theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(GetComponent<PlayerStat>().phyAtk.FinalValue);
+        theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(GetComponent<PlayerStat>().enAtk.FinalValue);
+        theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 }

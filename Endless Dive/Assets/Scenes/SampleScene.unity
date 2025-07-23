@@ -738,6 +738,7 @@ GameObject:
   - component: {fileID: 384228397}
   - component: {fileID: 384228399}
   - component: {fileID: 384228398}
+  - component: {fileID: 384228400}
   m_Layer: 8
   m_Name: TempPlayer
   m_TagString: Player
@@ -948,17 +949,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 324
+  key: 323
   isSpecialATKable: 1
-  bulletSpawnPoint: {fileID: 0}
-  skillCoolingTimer: 0
-  skillCharges: 0
+  bulletSpawnPoint: {fileID: 197016563}
+  skillCoolingTimer: 1
+  skillCharges: 1
   SkillCooltext: {fileID: 0}
-  canUse: 0
+  canUse: 1
   skillSOSets:
-  - {fileID: 11400000, guid: 15c4970d60c2e7a4a9976cb7e555d1d5, type: 2}
+  - {fileID: 11400000, guid: 30e101a90d82efd49a5179047b67daa4, type: 2}
   skillSOs: []
-  Bullets: []
+  bullets: []
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,7 +981,7 @@ MonoBehaviour:
   canUse: 0
   skillSOSets: []
   skillSOs: []
-  Bullets: []
+  bullets: []
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,7 +1003,30 @@ MonoBehaviour:
   canUse: 0
   skillSOSets: []
   skillSOs: []
-  Bullets: []
+  bullets: []
+--- !u!114 &384228400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384228389}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc11a4d3e97aec74c962b6d62a1e3344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 324
+  isSpecialATKable: 1
+  bulletSpawnPoint: {fileID: 0}
+  skillCoolingTimer: 0
+  skillCharges: 0
+  SkillCooltext: {fileID: 0}
+  canUse: 0
+  skillSOSets:
+  - {fileID: 11400000, guid: 15c4970d60c2e7a4a9976cb7e555d1d5, type: 2}
+  skillSOs: []
+  bullets: []
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0

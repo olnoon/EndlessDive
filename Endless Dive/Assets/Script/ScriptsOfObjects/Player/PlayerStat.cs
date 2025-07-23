@@ -24,10 +24,8 @@ public class PlayerStat : MonoBehaviour
     public GameObject targetEnemy;//타겟팅중인 적
     public float findEnemyRange;//적 타겟팅 범위
     public GameManager GM;//게임메니저
-    [SerializeField] float bulletCooldown = 0.5f;
     public Transform bulletSpawnPoint;
     public int spcialBulletCooldown = 10;//단위 0.1초
-    [SerializeField] List<GameObject> bullets = new List<GameObject>();
     [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
     public int currentLvl;
@@ -69,7 +67,6 @@ public class PlayerStat : MonoBehaviour
     {
         StartCoroutine("FindEnemy");
         StartCoroutine("FindOrb");
-        StartCoroutine("TriggerBullet");
     }
 
     void Update()
@@ -173,50 +170,6 @@ public class PlayerStat : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.2f);
-        }
-    }
-
-    IEnumerator TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴
-    {
-        while (true)
-        {
-            GameObject theBullet = null;
-
-            bool reused = false;
-
-            if (isDisableATK || !isToggleATK)
-            {
-                goto flag;
-            }
-
-            foreach (GameObject bullet in bullets)
-            {
-                var move = bullet.GetComponent<Bullet>();
-                if (!bullet.activeSelf)
-                {
-                    theBullet = bullet;
-                    move.transform.position = bulletSpawnPoint.position;
-                    bullet.SetActive(true);
-                    reused = true;
-                    break;
-                }
-            }
-
-            if (!reused)
-            {
-                theBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-                bullets.Add(theBullet);
-            }
-            CalculateMouseCoord();
-            theBullet.GetComponent<Bullet>().target = mousePos;
-            theBullet.GetComponent<Bullet>().Reset();
-            theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(ATK.FinalRatio);
-            theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(phyAtk.FinalValue);
-            theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(enAtk.FinalValue);
-            theBullet.GetComponent<Bullet>().GM = GM;
-
-        flag:
-            yield return new WaitForSeconds(bulletCooldown);
         }
     }
 }
