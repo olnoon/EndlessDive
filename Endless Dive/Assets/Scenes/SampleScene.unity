@@ -951,7 +951,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 197016563}
   skillCoolingTimer: 1
   skillCharges: 1
-  SkillCooltext: {fileID: 0}
+  SkillCooltext: {fileID: 446041809}
   canUse: 1
   isCooling: 0
   skillSOSets:
