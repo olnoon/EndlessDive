@@ -160,8 +160,7 @@ public class PlayerSkill : MonoBehaviour
 
         GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
         
-        GetComponent<PlayerStat>().mineralNum++;
-        GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Gathered();
+        GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Mined();
         Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
     }
 

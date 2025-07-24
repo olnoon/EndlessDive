@@ -32,6 +32,7 @@ public class PlayerStat : MonoBehaviour
     public int maxXp;
     public int currentXp;
     public int mineralNum;
+    public Text mineralText;
     [SerializeField] GameObject HPBarBackground;
     [SerializeField] Image HPBarFilled;
     [SerializeField] Text HPtext;
