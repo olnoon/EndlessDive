@@ -46,6 +46,8 @@ public class PlayerStat : MonoBehaviour
         mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
+        
+        stat.InitializeFromSelf();
         XPtext.text = $"{currentXp}/{maxXp}";
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);

@@ -18,7 +18,7 @@ public class CharacterData
     public int character_id;    // 고유 ID
     public string name;         // 이름
     public string description;  // 설명
-    public float ch_HP_base;    // 기본 체력
+    public int ch_HP_base;    // 기본 체력
     public float ch_ATK_base;   // 공격력
     public int ch_PhyATK_base;  // 물리 공격력
     public int ch_EnATK_base;   // 에너지 공격력
