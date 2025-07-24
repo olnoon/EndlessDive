@@ -1,0 +1,197 @@
+{
+  "character_table": [
+    {
+      "character_id": 10000,
+      "ch_HP_base": 100.0,
+      "ch_ATK_base": 0.0,
+      "ch_PhyATK_base": 0,
+      "ch_EnATK_base": 0,
+      "ch_CRI_base": 0.05,
+      "ch_CATK_base": 1.0,
+      "ch_DEX_base": 1.0,
+      "ch_MeleeRange_base": 1.0,
+      "ch_ARM_base": 0,
+      "ch_SPD_base": 1.0,
+      "ch_PickupRange_base": 1.0,
+      "ch_Mining_base": 1.0,
+      "ch_skill_main": 1000000,
+      "ch_skill_sub": 1000001,
+      "ch_skill_special": 1000002,
+      "ch_skill_mine": 1000003,
+      "ch_sprite_portrait": "Sprites\\Characters\\Portraits\\Stella",
+      "ch_sprite_battle": "Sprites\\Characters\\Battles\\Stella_battle",
+      "ch_ui_icon": "UI\\Characters\\Icons\\Stella_icon"
+    },
+    {
+      "character_id": 10001,
+      "ch_HP_base": 100.0,
+      "ch_ATK_base": 0.0,
+      "ch_PhyATK_base": 0,
+      "ch_EnATK_base": 0,
+      "ch_CRI_base": 0.05,
+      "ch_CATK_base": 1.0,
+      "ch_DEX_base": 1.0,
+      "ch_MeleeRange_base": 1.0,
+      "ch_ARM_base": 0,
+      "ch_SPD_base": 1.0,
+      "ch_PickupRange_base": 1.0,
+      "ch_Mining_base": 1.0,
+      "ch_skill_main": 1000100,
+      "ch_skill_sub": 1000101,
+      "ch_skill_special": 1000102,
+      "ch_skill_mine": 1000103,
+      "ch_sprite_portrait": "Sprites\\Characters\\Portraits\\Mars",
+      "ch_sprite_battle": "Sprites\\Characters\\Battles\\Mars_battle",
+      "ch_ui_icon": "UI\\Characters\\Icons\\Mars_icon"
+    },
+    {
+      "character_id": 10002,
+      "ch_HP_base": 100.0,
+      "ch_ATK_base": 0.0,
+      "ch_PhyATK_base": 0,
+      "ch_EnATK_base": 0,
+      "ch_CRI_base": 0.05,
+      "ch_CATK_base": 1.0,
+      "ch_DEX_base": 1.0,
+      "ch_MeleeRange_base": 1.0,
+      "ch_ARM_base": 0,
+      "ch_SPD_base": 1.0,
+      "ch_PickupRange_base": 1.0,
+      "ch_Mining_base": 1.0,
+      "ch_skill_main": 1000200,
+      "ch_skill_sub": 1000201,
+      "ch_skill_special": 1000202,
+      "ch_skill_mine": 1000203,
+      "ch_sprite_portrait": "Sprites\\Characters\\Portraits\\Luna",
+      "ch_sprite_battle": "Sprites\\Characters\\Battles\\Luna_battle",
+      "ch_ui_icon": "UI\\Characters\\Icons\\Luna_icon"
+    }
+  ],
+  "skill_table": [
+    {
+      "skill_id": 1000000,
+      "sk_Cooldown_base": 0.4,
+      "sk_Repeat_base": 6,
+      "sk_RepeatCooldown_base": 0.1,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000001,
+      "sk_Cooldown_base": 6.0,
+      "sk_Repeat_base": 1,
+      "sk_RepeatCooldown_base": 1.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": false,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000002,
+      "sk_Cooldown_base": 4.0,
+      "sk_Repeat_base": 1,
+      "sk_RepeatCooldown_base": 1.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": false,
+      "sk_Type": "buff"
+    },
+    {
+      "skill_id": 1000003,
+      "sk_Cooldown_base": 0.2,
+      "sk_Repeat_base": 10,
+      "sk_RepeatCooldown_base": 0.5,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": false,
+      "sk_Type": "instant"
+    },
+    {
+      "skill_id": 1000100,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000101,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000102,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000103,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000201,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000202,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000203,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    },
+    {
+      "skill_id": 1000204,
+      "sk_Cooldown_base": 0.0,
+      "sk_Repeat_base": 0,
+      "sk_RepeatCooldown_base": 0.0,
+      "sk_MaxCharges_base": 1,
+      "sk_ChargeAll": true,
+      "sk_Type": "missile"
+    }
+  ],
+  "string_table": [
+    {
+      "StringID": "character_name_stella",
+      "ko": "스텔라",
+      "en": "Stella"
+    },
+    {
+      "StringID": "character_name_mars",
+      "ko": "마스",
+      "en": "Mars"
+    },
+    {
+      "StringID": "character_name_luna",
+      "ko": "루나",
+      "en": "Luna"
+    }
+  ]
+}
