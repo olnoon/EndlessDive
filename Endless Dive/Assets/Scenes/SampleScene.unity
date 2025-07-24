@@ -950,7 +950,7 @@ MonoBehaviour:
   key: 323
   bulletSpawnPoint: {fileID: 197016563}
   skillCoolingTimer: 1
-  skillCharges: 1
+  skillCharges: 999999999
   SkillCooltext: {fileID: 446041809}
   canUse: 1
   isCooling: 0
@@ -973,9 +973,9 @@ MonoBehaviour:
   key: 304
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 0
-  SkillCooltext: {fileID: 0}
-  canUse: 0
+  skillCharges: 99999999
+  SkillCooltext: {fileID: 85630788}
+  canUse: 1
   isCooling: 0
   skillSOSets:
   - {fileID: 11400000, guid: 730063e85a1f5b2458a27a519c82819b, type: 2}
@@ -997,7 +997,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
   skillCharges: 1000
-  SkillCooltext: {fileID: 0}
+  SkillCooltext: {fileID: 1000842527}
   canUse: 1
   isCooling: 0
   skillSOSets:
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   key: 324
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 0
-  SkillCooltext: {fileID: 0}
+  skillCharges: 99999999
+  SkillCooltext: {fileID: 1647858675}
   canUse: 1
   isCooling: 0
   skillSOSets:

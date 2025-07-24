@@ -137,6 +137,8 @@ public class PlayerSkill : MonoBehaviour
 
             // 실제 효과 실행
             skillEffect?.Invoke();
+            //쿨타임 돌리기
+            StartCoroutine(SkillCooling());
             skillCharges--;
 
             RepeatNum--;
@@ -159,7 +161,6 @@ public class PlayerSkill : MonoBehaviour
         GetComponent<PlayerStat>().mineralNum++;
         GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Gathered();
         Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
-        StartCoroutine(SkillCooling());
     }
 
     void SkillA()
@@ -171,7 +172,6 @@ public class PlayerSkill : MonoBehaviour
         // 스킬 A의 고유 효과 실행 코드 추가 가능
         canUse = false;
 
-        StartCoroutine(SkillCooling());
     }
 
     void SkillB()
@@ -183,15 +183,10 @@ public class PlayerSkill : MonoBehaviour
         // 스킬 B의 고유 효과 실행 코드 추가 가능
         canUse = false;
 
-        StartCoroutine(SkillCooling());
     }
 
     void SpellSkill()//Skill 탄환 생성/재사용 및 불렛 스크립트의 변수들을 초기화 시켜주는 함수
     {
-        canUse = false;
-
-        StartCoroutine(SkillCooling());
-
         GameObject theBullet = null;
 
         bool reused = false;
@@ -214,8 +209,8 @@ public class PlayerSkill : MonoBehaviour
             theBullet = Instantiate(skillSOs[0].bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullets.Add(theBullet);
         }
-
-        theBullet.GetComponent<Bullet>().target = GetComponent<PlayerStat>().mousePos;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        theBullet.GetComponent<Bullet>().target = mousePos;
         theBullet.GetComponent<Bullet>().Reset();
         theBullet.GetComponent<Bullet>().ATK = new RatioStatRuntime(GetComponent<PlayerStat>().ATK.FinalRatio);
         theBullet.GetComponent<Bullet>().phyATK = new SingleStatRuntime(GetComponent<PlayerStat>().phyAtk.FinalValue);
@@ -237,7 +232,7 @@ public class PlayerSkill : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             skillCoolingTimer--;//0.1초후 쿨타임에 -1
-            // SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
+            SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
         }
         isCooling = false;
     }

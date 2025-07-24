@@ -15,8 +15,8 @@ MonoBehaviour:
   skillName: BasicAttack
   skillLvl: 0
   isGetKey: 0
-  skillCooldown_Origin: 10
-  skillCooldown_Now: 10
+  skillCooldown_Origin: 7
+  skillCooldown_Now: 7
   skillRepeat_Origin: 10
   skillRepeat_Now: 99999999
   skillRepeatCooldown_Origin: 0.1
