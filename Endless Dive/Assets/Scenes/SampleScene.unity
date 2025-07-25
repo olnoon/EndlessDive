@@ -1050,8 +1050,7 @@ MonoBehaviour:
   HPBarFilled: {fileID: 697511294}
   HPtext: {fileID: 682534951}
   XPBarBackground: {fileID: 711804223}
-  XPBarFilled: {fileID: 594369625}
-  XPtext: {fileID: 1558245526}
+  lvltext: {fileID: 714053975}
   mousePos: {x: 0, y: 0, z: 0}
   gainRange: 10
 --- !u!70 &384228396

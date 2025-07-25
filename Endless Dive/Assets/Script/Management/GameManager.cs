@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void levelUP()//원형 아이콘 추가 및 재사용 하는 함수
     {
-        lvlText.text = "1";
+        
     }
     public void UpgradeOn()//UpgradeScreen활성화, 레벨 아이콘이 없을시 미션 초기화
     {
