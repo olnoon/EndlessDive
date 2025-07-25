@@ -166,7 +166,10 @@ public class PlayerSkill : MonoBehaviour
 
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
-            GetComponent<PlayerStat>().isDisableATK = false;
+            foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+            {
+                playerSkill.isDisableATK = false;
+            }
             return;
         }
 

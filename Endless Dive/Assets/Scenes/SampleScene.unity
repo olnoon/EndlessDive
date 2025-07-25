@@ -1115,6 +1115,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30e101a90d82efd49a5179047b67daa4, type: 2}
   skillSOs: []
   bullets: []
+  isDisableATK: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,6 +1140,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 730063e85a1f5b2458a27a519c82819b, type: 2}
   skillSOs: []
   bullets: []
+  isDisableATK: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,6 +1165,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88f9d799702db8a45a6355ac76543578, type: 2}
   skillSOs: []
   bullets: []
+  isDisableATK: 0
 --- !u!114 &384228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,6 +1190,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 15c4970d60c2e7a4a9976cb7e555d1d5, type: 2}
   skillSOs: []
   bullets: []
+  isDisableATK: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
@@ -13243,7 +13247,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1440264037}
   - component: {fileID: 1440264038}
-  - component: {fileID: 1440264039}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -13290,18 +13293,6 @@ MonoBehaviour:
   missionNum: 0
   currentMissionNum: 0
   missionText: {fileID: 859694699}
---- !u!114 &1440264039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440264036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7693586bc707c3d4e83ba735c0821e4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1440840758
 GameObject:
   m_ObjectHideFlags: 0
