@@ -131,6 +131,11 @@ public class PlayerSkill : MonoBehaviour
 
         while (RepeatNum > 0)
         {
+            if (isDisableATK)
+            {
+                yield break;
+            }
+            
             // 쿨다운이 끝날 때까지 대기
             while (isCooling)
                 yield return null;
@@ -161,7 +166,10 @@ public class PlayerSkill : MonoBehaviour
     {
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
         {
-            playerSkill.isDisableATK = true;
+            if (playerSkill != this)
+            {
+                playerSkill.isDisableATK = true;
+            }
         }
 
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌

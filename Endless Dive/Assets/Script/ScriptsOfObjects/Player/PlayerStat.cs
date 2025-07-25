@@ -63,6 +63,7 @@ public class PlayerStat : MonoBehaviour
 
         bulletSpawnPoint = transform.GetChild(0);
         lvltext.text = currentLvl.ToString();
+        mineralText.text = mineralNum.ToString();
     }
 
     void Start()
