@@ -20,11 +20,13 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] float skillCoolingTimer;//스킬의 남은 쿨타임
     [SerializeField] int skillCharges;//스킬의 남은 충전 횟수
     [SerializeField] Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
+    [SerializeField] Text SkillLvltext;//스킬 쿨타임을 보여주는 텍스트
     [SerializeField] bool canUse = true;//스킬 사용 가능 여부
     [SerializeField] bool isCooling;//스킬 쿨타임 가능 여부
     [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
     [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
     public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
+    public bool isDisableATK = false;
     Action skillEffect;
 
 
@@ -33,10 +35,12 @@ public class PlayerSkill : MonoBehaviour
         bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
         skillSOs = new List<SkillSO>(skillSOSets);
         skillCoolingTimer = skillSOs[0].skillCooldown_Now;
+        StartCoroutine(SkillCooling());
     }
 
     void Update()
     {
+        SkillLvltext.text = skillSOs[0].skillLvl.ToString();
         if (skillCharges >= 1)
         {
             canUse = true;
@@ -77,7 +81,7 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
-        if (!canUse || isCooling)
+        if (!canUse || isCooling || isDisableATK)
         {
             return;
         }
@@ -127,6 +131,11 @@ public class PlayerSkill : MonoBehaviour
 
         while (RepeatNum > 0)
         {
+            if (isDisableATK)
+            {
+                yield break;
+            }
+            
             // 쿨다운이 끝날 때까지 대기
             while (isCooling)
                 yield return null;
@@ -146,20 +155,35 @@ public class PlayerSkill : MonoBehaviour
             // 다음 반복 전 대기
             yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
         }
+
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+        {
+            playerSkill.isDisableATK = false;
+        }
     }
 
     void MineMineral()
     {
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
+        {
+            if (playerSkill != this)
+            {
+                playerSkill.isDisableATK = true;
+            }
+        }
+
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
-            GetComponent<PlayerStat>().isDisableATK = false;
+            foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+            {
+                playerSkill.isDisableATK = false;
+            }
             return;
         }
 
         GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
         
-        GetComponent<PlayerStat>().mineralNum++;
-        GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Gathered();
+        GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Mined();
         Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
     }
 

@@ -17,8 +17,8 @@ MonoBehaviour:
   isGetKey: 0
   skillCooldown_Origin: 10
   skillCooldown_Now: 10
-  skillRepeat_Origin: 1
-  skillRepeat_Now: 1
+  skillRepeat_Origin: 2147483647
+  skillRepeat_Now: 2147483647
   skillRepeatCooldown_Origin: 0.1
   skillRepeatCooldown_Now: 0.1
   skillMaxCharges_Origin: 10

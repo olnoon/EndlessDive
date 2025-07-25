@@ -32,12 +32,12 @@ public class PlayerStat : MonoBehaviour
     public int maxXp;
     public int currentXp;
     public int mineralNum;
+    public Text mineralText;
     [SerializeField] GameObject HPBarBackground;
     [SerializeField] Image HPBarFilled;
     [SerializeField] Text HPtext;
     [SerializeField] GameObject XPBarBackground;
-    [SerializeField] Image XPBarFilled;
-    [SerializeField] Text XPtext;
+    [SerializeField] Text lvltext;
     public Vector3 mousePos;
     [SerializeField] float gainRange;
 
@@ -45,8 +45,9 @@ public class PlayerStat : MonoBehaviour
     {
         mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
-        XPBarFilled.fillAmount = 0f;
-        XPtext.text = $"{currentXp}/{maxXp}";
+        // XPBarFilled.fillAmount = 0f;
+        
+        // XPtext.text = $"{currentXp}/{maxXp}";
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new RatioStatRuntime(stat.atk.FinalRatio);
@@ -61,10 +62,13 @@ public class PlayerStat : MonoBehaviour
         Mining = new RatioStatRuntime(stat.mining.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
+        lvltext.text = currentLvl.ToString();
+        mineralText.text = mineralNum.ToString();
     }
 
     void Start()
     {
+        stat.InitializeFromSelf();
         StartCoroutine("FindEnemy");
         StartCoroutine("FindOrb");
     }
@@ -117,14 +121,15 @@ public class PlayerStat : MonoBehaviour
         {
             levelUP();
         }
-        XPBarFilled.fillAmount = (float)currentXp / maxXp;
-        XPtext.text = $"{currentXp}/{maxXp}";
+        // XPBarFilled.fillAmount = (float)currentXp / maxXp;
+        // XPtext.text = $"{currentXp}/{maxXp}";
     }
 
     void levelUP()//레벨 증가 및 업그레이드 화면 띄우기
     {
         currentXp -= maxXp;
         currentLvl++;
+        lvltext.text = currentLvl.ToString();
         GM.levelUP();
     }
 

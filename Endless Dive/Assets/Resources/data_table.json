@@ -2,7 +2,7 @@
   "character_table": [
     {
       "character_id": 10000,
-      "ch_HP_base": 100.0,
+      "ch_HP_base": 100,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,
@@ -24,7 +24,7 @@
     },
     {
       "character_id": 10001,
-      "ch_HP_base": 100.0,
+      "ch_HP_base": 100,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,
@@ -46,7 +46,7 @@
     },
     {
       "character_id": 10002,
-      "ch_HP_base": 100.0,
+      "ch_HP_base": 100,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,

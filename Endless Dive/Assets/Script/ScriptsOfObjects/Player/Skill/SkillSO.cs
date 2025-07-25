@@ -18,4 +18,9 @@ public class SkillSO : ScriptableObject
     public int skillMaxCharges_Now;//버프나 보너스를 통해 변경된, 스킬의 최종 최대 충전 횟수
     public SkillType skillType;//스킬의 스킬타입
     public GameObject bulletPrefab;//발사될 불렛의 프리팹
+
+    public void InitializeFromSelf()
+    {
+        
+    }
 }
