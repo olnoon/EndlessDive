@@ -19,8 +19,6 @@ public class SkillSO : ScriptableObject
     public SkillType skillType;//스킬의 스킬타입
     public GameObject bulletPrefab;//발사될 불렛의 프리팹
 
-
-
     public void InitializeFromSelf()
     {
         

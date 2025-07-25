@@ -26,6 +26,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
     [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
     public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
+    public bool isDisableATK = false;
     Action skillEffect;
 
 
@@ -34,6 +35,7 @@ public class PlayerSkill : MonoBehaviour
         bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
         skillSOs = new List<SkillSO>(skillSOSets);
         skillCoolingTimer = skillSOs[0].skillCooldown_Now;
+        StartCoroutine(SkillCooling());
     }
 
     void Update()
@@ -79,7 +81,7 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
-        if (!canUse || isCooling)
+        if (!canUse || isCooling || isDisableATK)
         {
             return;
         }
@@ -148,10 +150,20 @@ public class PlayerSkill : MonoBehaviour
             // 다음 반복 전 대기
             yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
         }
+
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+        {
+            playerSkill.isDisableATK = false;
+        }
     }
 
     void MineMineral()
     {
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
+        {
+            playerSkill.isDisableATK = true;
+        }
+
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
             GetComponent<PlayerStat>().isDisableATK = false;
