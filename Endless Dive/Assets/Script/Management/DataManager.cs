@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json; // JSON 직렬화/역직렬화를 위한 Newtonsoft.Json
+using Newtonsoft.Json.Converters;   // string 형식을 enum으로 변환할 수 있게 해줌
 using System.IO;       // 파일 입출력
 using System.Linq;     // LINQ 사용
 
@@ -8,16 +9,20 @@ using System.Linq;     // LINQ 사용
 [System.Serializable]
 public class GameData
 {
-    public List<CharacterData> character_table; // 기본 데이터 테이블
+    public List<CharacterData> character_table; // 캐릭터 데이터 테이블
+    public List<SkillData> skill_table;         // 스킬 데이터 테이블
 }
+
+// - 열거형 데이터 사전 선언
+public enum Sk_EffectType { missile, buff, instant }
 
 // - 캐릭터 데이터 클래스
 [System.Serializable]
 public class CharacterData
 {
     public int character_id;    // 고유 ID
-    public string name;         // 이름
-    public string description;  // 설명
+    public string name;         // 이름 호출 코드
+    public string description;  // 설명 호출 코드
     public float ch_HP_base;    // 기본 체력
     public float ch_ATK_base;   // 공격력
     public int ch_PhyATK_base;  // 물리 공격력
@@ -30,6 +35,20 @@ public class CharacterData
     public float ch_SPD_base;           // 이동속도 증가량
     public float ch_PickupRange_base;   // 획득 범위
     public float ch_Mining_base;        // 채굴 증가량
+}
+
+[System.Serializable]
+public class SkillData
+{
+    public int skill_id;                        // 스킬 ID
+    public float sk_Cooldown_base;              // 쿨타임
+    public int sk_Repeat_base;                  // 연속사용 횟수
+    public float sk_RepeatCooldown_base;        // 연속사용 대기시간
+    public int sk_MaxCharges_base;              // 최대 충전량
+    public bool sk_ChargeAll;                   // 쿨타임이 돌았을때 충전량이 전부 회복되는지 여부
+    [JsonConverter(typeof(StringEnumConverter))]
+    public Sk_EffectType sk_EffectType;         // 스킬 사용시의 효과 종류 (예 : 투사체, 버프, 특수 )
+    public int sk_Effect_id;                    // 발동시킬 효과의 ID
 }
 
 // - 저장용 플레이어 데이터
@@ -45,7 +64,8 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance; // 싱글턴 인스턴스
 
-    private Dictionary<int, CharacterData> dataDict = new(); // 로드된 데이터를 저장하는 딕셔너리
+    private Dictionary<int, CharacterData> characterDict = new(); // 로드된 데이터를 저장하는 딕셔너리
+    private Dictionary<int, SkillData> skillDict = new(); // 로드된 데이터를 저장하는 딕셔너리
 
     public static SaveData currentSaveData; // 현재 세이브 데이터
 
@@ -80,26 +100,26 @@ public class DataManager : MonoBehaviour
             return;
         }
 
+        // JSON을 GameData 형식으로 변환
         GameData data = JsonConvert.DeserializeObject<GameData>(jsonFile.text); // JSON → 객체 변환
 
         // 각 테이블에 있는 데이터를 딕셔너리에 저장
         foreach (var character in data.character_table)
-            dataDict[character.character_id] = character;
+            characterDict[character.character_id] = character;
+        foreach (var skill in data.skill_table)
+            skillDict[skill.skill_id] = skill;
 
-        Debug.Log($"캐릭터 데이터 {dataDict.Count}개 로드 완료!");
+        Debug.Log($"캐릭터 데이터 {characterDict.Count}개 로드 완료!");
+        Debug.Log($"스킬 데이터 {skillDict.Count}개 로드 완료!");
     }
 
     // - 특정 ID의 데이터를 가져옴
-    public CharacterData GetCharacterData(int id)
-    {
-        return dataDict.TryGetValue(id, out var data) ? data : null;
-    }
+    public CharacterData GetCharacterData(int id)       { return characterDict.TryGetValue(id, out var data) ? data : null; }
+    public SkillData GetSkillData(int id)               { return skillDict.TryGetValue(id, out var data) ? data : null; }
 
     // - 모든 데이터를 리스트 형태로 반환
-    public List<CharacterData> GetAllData()
-    {
-        return dataDict.Values.ToList();
-    }
+    public List<CharacterData> GetAllCharacterData()    { return characterDict.Values.ToList(); }
+    public List<SkillData> GetAllSkillData()            { return skillDict.Values.ToList(); }
 
     // - 세이브 데이터를 파일로 저장
     public void SaveGame()
