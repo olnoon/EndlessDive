@@ -35,6 +35,7 @@ public class PlayerSkill : MonoBehaviour
         bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
         skillSOs = new List<SkillSO>(skillSOSets);
         skillCoolingTimer = skillSOs[0].skillCooldown_Now;
+        
         StartCoroutine(SkillCooling());
     }
 

@@ -38,6 +38,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] Text lvltext;//레벨을 글로 표시할 textUI
     public Vector3 mousePos;//보는 방향을 결정하거나 불렛이 나갈 방향을 결정지을 마우스 위치
     [SerializeField] float gainRange;//아이템(오브)를 획득할 수 있게 하는 범위
+    [SerializeField] bool invincibility;
 
     void Awake()
     {
