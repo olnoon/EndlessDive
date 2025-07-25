@@ -40,6 +40,7 @@ public class PlayerStatsSetSO : ScriptableObject
     [Header("채굴량 (Mining)")]
     public RatioStatSO mining;
 
+    //SO를 읽어온 text파일의 글들로 변형시키는 메서드
     public void InitializeFromSelf()
     {
         var data = DataManager.Instance.GetCharacterData(character_id);
@@ -49,7 +50,7 @@ public class PlayerStatsSetSO : ScriptableObject
             return;
         }
 
-        if (hp != null) hp.baseMax = data.ch_HP_base;
+        if (hp != null) hp.baseMax = Mathf.RoundToInt(data.ch_HP_base);
         if (atk != null) atk.baseRatio = data.ch_ATK_base;
         if (phyAtk != null) phyAtk.baseValue = data.ch_PhyATK_base;
         if (enAtk != null) enAtk.baseValue = data.ch_EnATK_base;

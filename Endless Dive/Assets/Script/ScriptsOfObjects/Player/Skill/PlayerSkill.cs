@@ -53,7 +53,10 @@ public class PlayerSkill : MonoBehaviour
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(key))
             {
-                GetComponent<PlayerStat>().isDisableATK = false;
+                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+                {
+                    playerSkill.isDisableATK = false;
+                }
             }
         }
         if (Input.GetKeyDown(key) && Time.timeScale != 0)
@@ -98,14 +101,14 @@ public class PlayerSkill : MonoBehaviour
                 skillEffect = SpellSkill;
                 break;
             case SkillType.NewSkill:
-                if (!canUse || GetComponent<PlayerStat>().isDisableATK)
+                if (!canUse || isDisableATK)
                 {
                     break;
                 }
                 skillEffect = SkillA;
                 break;
             case SkillType.NewSkill2:
-                if (!canUse || GetComponent<PlayerStat>().isDisableATK)
+                if (!canUse || isDisableATK)
                 {
                     break;
                 }
@@ -180,8 +183,6 @@ public class PlayerSkill : MonoBehaviour
             }
             return;
         }
-
-        GetComponent<PlayerStat>().isDisableATK = true;//공격을 못하게 제한 시킴
         
         GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Mined();
         Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
@@ -189,7 +190,7 @@ public class PlayerSkill : MonoBehaviour
 
     void SkillA()
     {
-        if (!canUse || GetComponent<PlayerStat>().isDisableATK)
+        if (!canUse || isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 A발동");
@@ -200,7 +201,7 @@ public class PlayerSkill : MonoBehaviour
 
     void SkillB()
     {
-        if (!canUse || GetComponent<PlayerStat>().isDisableATK)
+        if (!canUse || isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 B발동");
@@ -267,7 +268,7 @@ public class PlayerSkill : MonoBehaviour
 
         bool reused = false;
 
-        if (GetComponent<PlayerStat>().isDisableATK)
+        if (isDisableATK)
         {
             return;
         }

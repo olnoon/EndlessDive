@@ -38,7 +38,7 @@ public class UpgradeSelect : MonoBehaviour
         SetFuction();
     }
 
-    void SetFuction()//기능 및 텍스트들을 바꿔주는 함수
+    void SetFuction()//선택지의 기능 및 텍스트들을 바꿔주는 함수
     {
         int randIndex = UnityEngine.Random.Range(0, choices.Count);
 

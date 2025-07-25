@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-//TODO 기본 공격 플레이어스킬로 이동시키기
 public class PlayerStat : MonoBehaviour
 {
     public SingleStatSO Level;//레벨
@@ -24,22 +23,21 @@ public class PlayerStat : MonoBehaviour
     public GameObject targetEnemy;//타겟팅중인 적
     public float findEnemyRange;//적 타겟팅 범위
     public GameManager GM;//게임메니저
-    public Transform bulletSpawnPoint;
-    public int spcialBulletCooldown = 10;//단위 0.1초
+    public Transform bulletSpawnPoint;//불렛이 생성되는 위치
     [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
-    public int currentLvl;
-    public int maxXp;
-    public int currentXp;
-    public int mineralNum;
-    public Text mineralText;
-    [SerializeField] GameObject HPBarBackground;
-    [SerializeField] Image HPBarFilled;
-    [SerializeField] Text HPtext;
+    public int currentLvl;//현재 레벨
+    public int maxXp;//다음 레벨로 넘어가기까지의 XP
+    public int currentXp;//현재 xp
+    public int mineralNum;//캔 미네랄 갯수
+    public Text mineralText;//미네랄 갯수를 표시할 UI
+    [SerializeField] GameObject HPBarBackground;//HP를 표시할 UI의 배경
+    [SerializeField] Image HPBarFilled;//HP를 표시할 UI
+    [SerializeField] Text HPtext;//HP를 글로 표시할 textUI
     [SerializeField] GameObject XPBarBackground;
-    [SerializeField] Text lvltext;
-    public Vector3 mousePos;
-    [SerializeField] float gainRange;
+    [SerializeField] Text lvltext;//레벨을 글로 표시할 textUI
+    public Vector3 mousePos;//보는 방향을 결정하거나 불렛이 나갈 방향을 결정지을 마우스 위치
+    [SerializeField] float gainRange;//아이템(오브)를 획득할 수 있게 하는 범위
 
     void Awake()
     {
@@ -156,7 +154,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    IEnumerator FindOrb()//0.2초 마다 gainRange안의 오브들을 찾음, 체력오브이고 최대체력이면 발견됨 상태로 만들지 않음
+    IEnumerator FindOrb()//0.2초 마다 gainRange안의 오브들을 찾음, 오브들을 발견됨 상태로 만드나 체력오브이고 최대체력이면 발견됨 상태로 만들지 않음
     {
         while (true)
         {
