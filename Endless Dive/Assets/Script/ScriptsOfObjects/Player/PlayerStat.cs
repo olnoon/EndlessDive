@@ -48,7 +48,6 @@ public class PlayerStat : MonoBehaviour
         HPBarFilled.fillAmount = 1f;
         XPBarFilled.fillAmount = 0f;
         
-        stat.InitializeFromSelf();
         XPtext.text = $"{currentXp}/{maxXp}";
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
@@ -68,6 +67,7 @@ public class PlayerStat : MonoBehaviour
 
     void Start()
     {
+        stat.InitializeFromSelf();
         StartCoroutine("FindEnemy");
         StartCoroutine("FindOrb");
     }
