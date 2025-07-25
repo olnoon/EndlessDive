@@ -42,6 +42,8 @@ public class PlayerSkill : MonoBehaviour
     void Update()
     {
         SkillLvltext.text = skillSOs[0].skillLvl.ToString();
+
+        //skillCharges가 1보다 크면 canUse를 true로 바꿔 줌.
         if (skillCharges >= 1)
         {
             canUse = true;
@@ -50,16 +52,20 @@ public class PlayerSkill : MonoBehaviour
         {
             canUse = false;
         }
+
+        //skillType이 Mine이면 모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌
         if (skillSOs[0].skillType == SkillType.Mine)
         {
             if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(key))
             {
-                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
                 {
                     playerSkill.isDisableATK = false;
                 }
             }
         }
+
+        //key가 누르면 어떤 스킬을 실행할지 판단
         if (Input.GetKeyDown(key) && Time.timeScale != 0)
         {
             DetermineSkill();
@@ -85,10 +91,13 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
+        //canUse가 false이거나 쿨타임이 돌고 있거나 광물을 채굴중이여서 isDiableATK가 켜져 있으면 함수를 끝내줌
         if (!canUse || isCooling || isDisableATK)
         {
             return;
         }
+
+        //스킬타입에 맞는 스킬을 skillEffect 변수에 구독
         switch (skillSOs[0].skillType)
         {
             case SkillType.Basic:
@@ -119,6 +128,8 @@ public class PlayerSkill : MonoBehaviour
                 skillEffect = MineMineral;
                 break;
         }
+
+        //구독한 스킬을 반복하기 위해 RepeatSkill코루틴을 실행시켜줌
         StartCoroutine(RepeatSkill());
     }
 
@@ -135,6 +146,7 @@ public class PlayerSkill : MonoBehaviour
 
         while (RepeatNum > 0)
         {
+            //광물 채굴중이여서 isDisableATK가 켜져있으면 코루틴을 끝내줌
             if (isDisableATK)
             {
                 yield break;
