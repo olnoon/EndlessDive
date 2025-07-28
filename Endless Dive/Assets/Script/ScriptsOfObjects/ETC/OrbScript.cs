@@ -5,7 +5,7 @@ using System.Collections;
 public enum OrbKind
 {
     HP,
-    XP
+    AetherEnergy
 }
 
 public class OrbScript : MonoBehaviour
@@ -82,7 +82,7 @@ public class OrbScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.7f);
         }
-        else if (orbKind == OrbKind.XP)//경험치 오브라고 판단시 테니공색?으로 변경
+        else if (orbKind == OrbKind.AetherEnergy)//경험치 오브라고 판단시 테니공색?으로 변경
         {
             GetComponent<SpriteRenderer>().color = new Color(0.8282f, 1, 0, 0.7f);
         }
@@ -107,9 +107,9 @@ public class OrbScript : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            if (orbKind == OrbKind.XP)//플레이어와 충돌했을 때 플레이어의 xp 증가
+            if (orbKind == OrbKind.AetherEnergy)//플레이어와 충돌했을 때 플레이어의 xp 증가
             {
-                collision.GetComponent<PlayerStat>().addXP();
+                collision.GetComponent<PlayerStat>().AddAether();
             }
             else if (orbKind == OrbKind.HP)//플레이어와 충돌했을 때 플레이어의 체력 회복
             {

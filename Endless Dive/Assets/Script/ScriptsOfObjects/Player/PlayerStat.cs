@@ -27,9 +27,7 @@ public class PlayerStat : MonoBehaviour
     public Transform bulletSpawnPoint;//불렛이 생성되는 위치
     [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
-    public int currentLvl;//현재 레벨
-    public int maxXp;//다음 레벨로 넘어가기까지의 XP
-    public int currentXp;//현재 xp
+    public int currentaAther;//현재 xp
     public int mineralNum;//캔 미네랄 갯수
     public Text mineralText;//미네랄 갯수를 표시할 UI
     [SerializeField] GameObject HPBarBackground;//HP를 표시할 UI의 배경
@@ -52,9 +50,6 @@ public class PlayerStat : MonoBehaviour
 
         mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
-        // XPBarFilled.fillAmount = 0f;
-        
-        // XPtext.text = $"{currentXp}/{maxXp}";
         GM = FindFirstObjectByType<GameManager>();
         HP = new GaugeStatRuntime(stat.hp.MaxFinal);
         ATK = new RatioStatRuntime(stat.atk.FinalRatio);
@@ -69,7 +64,7 @@ public class PlayerStat : MonoBehaviour
         Mining = new RatioStatRuntime(stat.mining.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
-        lvltext.text = currentLvl.ToString();
+        lvltext.text = currentaAther.ToString();
         mineralText.text = mineralNum.ToString();
     }
 
@@ -145,23 +140,10 @@ public class PlayerStat : MonoBehaviour
         Debug.Log("GameOver");
     }
 
-    public void addXP()//경험치 증가
+    public void AddAether()//경험치 증가
     {
-        currentXp++;
-        if (currentXp >= maxXp)
-        {
-            levelUP();
-        }
-        // XPBarFilled.fillAmount = (float)currentXp / maxXp;
-        // XPtext.text = $"{currentXp}/{maxXp}";
-    }
-
-    void levelUP()//레벨 증가 및 업그레이드 화면 띄우기
-    {
-        currentXp -= maxXp;
-        currentLvl++;
-        lvltext.text = currentLvl.ToString();
-        GM.levelUP();
+        currentaAther++;
+        lvltext.text = currentaAther.ToString();
     }
 
     IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음

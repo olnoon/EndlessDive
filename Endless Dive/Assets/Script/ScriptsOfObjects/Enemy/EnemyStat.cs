@@ -56,7 +56,7 @@ public class EnemyStat : MonoBehaviour
             int probability = Random.Range(0, 101);
             if (probability >= 0 && probability <= 39)
             {
-                GM.GenerateOrb(gameObject, OrbKind.XP);
+                GM.GenerateOrb(gameObject, OrbKind.AetherEnergy);
             }
             else if (probability >= 40 && probability <= 54)
             {
