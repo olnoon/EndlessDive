@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMoveSet : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerMoveSet : MonoBehaviour
     public float maxY = 5f;//Y좌표 최대제한
     public GameObject mineral;//타겟팅된 미네랄
     public bool isDisableOperation;//조작 불가 상태
+    public bool isExitable;
 
     void Awake()
     {
@@ -25,6 +27,42 @@ public class PlayerMoveSet : MonoBehaviour
             Move();
             UpdateFacing();
         }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && isExitable)
+        {
+            StartCoroutine(CheckExitZone());
+        }
+    }
+
+    IEnumerator CheckExitZone()
+    {
+        int repeatAmount = 0;
+        isDisableOperation = true;//조작불가 상태 활성화
+        GetComponent<PlayerStat>().isInvincibility = true;//무적 활성화
+        while (repeatAmount < 20)//2초 기다림
+        {
+            if (!Input.GetKey(KeyCode.F))//지역 이탈 포기
+            {
+                isDisableOperation = false;//조작불가 상태 비활성화
+                GetComponent<PlayerStat>().isInvincibility = false;//무적 비활성화
+                yield break;
+            }
+
+            repeatAmount++;
+            yield return new WaitForSeconds(0.1f);
+        }
+        StartCoroutine(ExitZone());//지역 이탈 루틴 실행
+    }
+
+    IEnumerator ExitZone()
+    {
+        //TODO 애니메이션 넣기
+        yield return new WaitForSeconds(3);
+
+        GetComponent<PlayerStat>().GM.FadeOut(true);//암전 효과
     }
 
     void UpdateFacing()//마우스 방향 보는 함수

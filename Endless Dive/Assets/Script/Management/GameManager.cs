@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,10 +21,46 @@ public class GameManager : MonoBehaviour
     public int currentMissionNum;//현재 잡은 미션에서 필요로 하는 적의 갯수
     public Text missionText;//미션현황을 보여주는 텍스트
     public List<Action> upgrades;//업그레이드할 갯수
+    public Image blackScreen;
+    public float fadeDuration = 1f;
+
     void Start()
     {
         StartCoroutine(SpawnTempEnemy());
         GiveMainMission();
+    }
+
+    public void FadeOut(bool isUpgrade)
+    {
+        StartCoroutine(Fade(0f, 1f, isUpgrade)); // 화면을 암전
+    }
+
+    public void FadeIn(bool isUpgrade)
+    {
+        StartCoroutine(Fade(1f, 0f, isUpgrade)); // 화면을 복구
+    }
+
+    IEnumerator Fade(float startAlpha, float endAlpha, bool isUpgrade)
+    {
+        float time = 0f;
+        Color color = blackScreen.color;
+
+        while (time < fadeDuration)
+        {
+            time += Time.unscaledDeltaTime;
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, time / fadeDuration);
+            blackScreen.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        blackScreen.color = new Color(color.r, color.g, color.b, endAlpha);
+
+        yield return null;
+
+        if(isUpgrade)
+        {
+            SceneLoader.Instance.LoadScene("UpgradeScene");
+        }
     }
 
     IEnumerator SpawnTempEnemy()//임시로 만든 SummonEnemy 반복시켜주는 코루틴
@@ -143,25 +180,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CompleteMission()//upgrades에 UpgradeOn함수를 구독해 주며 레벨이 0보다 작다고 판단시 건너 뜀, 또한 레벨 초기화
+    void CompleteMission()//미션을 완료하면 플레이어 무브셋의 이탈가능하게 하는 변수인 isExitable을 true로 바꿔줌
     {
-        upgrades = new List<Action>();
-        foreach (GameObject enemy in enemies)
-        {
-            enemy.SetActive(false);
-        }
-        for (int i = 0; i < FindAnyObjectByType<PlayerStat>().currentaAther; i++)
-        {
-            upgrades.Add(UpgradeOn);
-        }
-        if (upgrades.Count <= 0)
-        {
-            Debug.Log("미션완료, 레벨 낮아서 업그레이드 불가");
-            GiveMainMission();
-            return;
-        }
-        PauseTime(0);
-        upgrades[0]();
+        // foreach (GameObject enemy in enemies)
+        // {
+        //     enemy.SetActive(false);
+        // }
+        FindAnyObjectByType<PlayerMoveSet>().isExitable = true;
     }
 
     public void DealDamage(GameObject target, int ATK, int weight = 1)//에너미 게임 오브젝트에게 대미지를 가하는 메서드

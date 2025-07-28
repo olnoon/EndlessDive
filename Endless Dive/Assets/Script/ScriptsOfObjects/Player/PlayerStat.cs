@@ -27,7 +27,7 @@ public class PlayerStat : MonoBehaviour
     public Transform bulletSpawnPoint;//불렛이 생성되는 위치
     [SerializeField] bool isToggleATK = true;
     public bool isDisableATK;
-    public int currentaAther;//현재 xp
+    public int currentaAether;//현재 Ather에너지
     public int mineralNum;//캔 미네랄 갯수
     public Text mineralText;//미네랄 갯수를 표시할 UI
     [SerializeField] GameObject HPBarBackground;//HP를 표시할 UI의 배경
@@ -64,7 +64,7 @@ public class PlayerStat : MonoBehaviour
         Mining = new RatioStatRuntime(stat.mining.FinalRatio);
 
         bulletSpawnPoint = transform.GetChild(0);
-        lvltext.text = currentaAther.ToString();
+        lvltext.text = currentaAether.ToString();
         mineralText.text = mineralNum.ToString();
     }
 
@@ -140,10 +140,10 @@ public class PlayerStat : MonoBehaviour
         Debug.Log("GameOver");
     }
 
-    public void AddAether()//경험치 증가
+    public void AddAether()//에테르 증가
     {
-        currentaAther++;
-        lvltext.text = currentaAther.ToString();
+        currentaAether++;
+        lvltext.text = currentaAether.ToString();
     }
 
     IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음
