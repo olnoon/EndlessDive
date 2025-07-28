@@ -1038,7 +1038,6 @@ MonoBehaviour:
   findEnemyRange: 5
   GM: {fileID: 0}
   bulletSpawnPoint: {fileID: 197016563}
-  spcialBulletCooldown: 5
   isToggleATK: 1
   isDisableATK: 0
   currentLvl: 0
@@ -1053,6 +1052,7 @@ MonoBehaviour:
   lvltext: {fileID: 714053975}
   mousePos: {x: 0, y: 0, z: 0}
   gainRange: 10
+  invincibility: 0
 --- !u!70 &384228396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1515,9 +1515,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505119313}
-  - component: {fileID: 505119314}
   - component: {fileID: 505119315}
   - component: {fileID: 505119316}
+  - component: {fileID: 505119314}
   - component: {fileID: 505119317}
   m_Layer: 0
   m_Name: DebuffZone
@@ -1589,6 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e657060be0042448b39999d968ac7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffSO: {fileID: 11400000, guid: 84ac98170d2c0e7488d2465bddffff5e, type: 2}
 --- !u!212 &505119316
 SpriteRenderer:
   m_ObjectHideFlags: 0

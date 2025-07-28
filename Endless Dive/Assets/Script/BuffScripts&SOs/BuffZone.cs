@@ -12,11 +12,14 @@ public enum BuffToWhat
 
 public class BuffZone : MonoBehaviour
 {
-    BuffSO buffSO;//해당 스크립트의 변수들의 초깃값을 갖고 있는 SO
+    [SerializeField] BuffSO buffSO;//해당 스크립트의 변수들의 초깃값을 갖고 있는 SO
 
     void OnTriggerEnter2D(Collider2D collision)//AbnormalStatus스크립트를 추가 시켜줌
     {
         //나중에 다시 활성화 시킬 예정
-        // collision.AddComponent<AbnormalStatus>().buffSetSO = Instantiate(buffSO);
+        if(collision.GetComponent<EnemyStat>() != null || collision.GetComponent<PlayerStat>() != null)
+        {
+            collision.AddComponent<AbnormalStatus>().buffSetSO = Instantiate(buffSO);
+        }
     }
 }

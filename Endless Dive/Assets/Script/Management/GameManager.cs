@@ -168,10 +168,20 @@ public class GameManager : MonoBehaviour
         upgrades[0]();
     }
 
-    public void DealDamage(GameObject enemy, int ATK, int weight = 1)//에너미 게임 오브젝트에게 대미지를 가하는 메서드
+    public void DealDamage(GameObject target, int ATK, int weight = 1)//에너미 게임 오브젝트에게 대미지를 가하는 메서드
     {
-        enemy.GetComponent<EnemyStat>().HP.TakeDamage(ATK * weight);
-        enemy.GetComponent<EnemyStat>().DetectDamage();
-        // Debug.Log($"{gameObject.name} > {enemy.name}에게 {ATK.FinalValue * weight}의 대미지. 남은 HP {enemy.GetComponent<EnemyStat>().HP.Current}");
+        if (target.GetComponent<EnemyStat>() != null)
+        {
+            target.GetComponent<EnemyStat>().HP.TakeDamage(ATK * weight);
+            target.GetComponent<EnemyStat>().DetectDamage();
+        }
+        else
+        {
+            if (target.GetComponent<PlayerStat>().isInvincibility)
+            {
+                return;
+            }
+            target.GetComponent<PlayerStat>().HP.TakeDamage(ATK * weight);
+        }
     }
 }

@@ -79,7 +79,7 @@ public class EnemyStat : MonoBehaviour
         {
             if (Time.time - lastAttackTime >= attackCooldown)
             {
-                collision.gameObject.GetComponent<PlayerStat>().HP.TakeDamage(phyAtk.FinalValue);
+                GM.DealDamage(collision.gameObject, phyAtk.FinalValue);
                 // Debug.Log($"{gameObject.name} > {collision.gameObject.name}에게 {ATK.FinalValue}의 대미지. 남은 HP {collision.gameObject.GetComponent<PlayerStat>().HP.Current}");
                 lastAttackTime = Time.time;
             }

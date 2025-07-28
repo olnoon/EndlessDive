@@ -6,17 +6,20 @@ public class AbnormalStatus : MonoBehaviour
     [SerializeField] float damagePerTick;//tickInterval당 들어가는 버프 혹은 디버프의 세기
     [SerializeField] float tickInterval;//한번 버프가 들어갈 때 마다의 시간
     [SerializeField] int repeatCount;//버프가 들어가는 반복 횟수
+    [SerializeField] bool canRecovery;//버프 혹은 디버프가 들어갔다가 끝날때 스텟등이 원상복구 되는지의 여부
     [SerializeField] BuffToWhat buffKind;//들어가는 버프의 종류(Ex : HP, 공격력 등)
     public BuffSO buffSetSO;//해당 스크립트의 변수들의 초깃값을 갖고 있는 SO
-
+    public GameManager GM;
     void Start()
     {
+        GM = FindAnyObjectByType<GameManager>();
         if (buffSetSO != null)
         {
             damagePerTick = buffSetSO.damagePerTick;
             tickInterval = buffSetSO.tickInterval;
             repeatCount = buffSetSO.repeatCount;
             buffKind = buffSetSO.buffKind;
+            canRecovery = buffSetSO.canRecovery;
         }
         DetermineBuffTarget();
     }
@@ -41,12 +44,16 @@ public class AbnormalStatus : MonoBehaviour
             {
                 //추가할 예정
                 case BuffToWhat.currentHP:
-                    GetComponent<EnemyStat>().HP.TakeDamage(Mathf.RoundToInt(damagePerTick));
+                    GM.DealDamage(gameObject, Mathf.RoundToInt(damagePerTick));
                     GetComponent<EnemyStat>().DetectDamage();
                 break;
+                case BuffToWhat.speed:
+                    GetComponent<EnemyMove>().basicSpeed -= damagePerTick;
+                    //나중에 Runtime을 활용하는 방식으로 수정될 수 있음
+                break;
             }
-            yield return new WaitForSeconds(tickInterval);
             repeatCount--;
+            yield return new WaitForSeconds(tickInterval);
         }
         Destroy(this);
     }
@@ -59,14 +66,57 @@ public class AbnormalStatus : MonoBehaviour
             {
                 //추가할 예정
                 case BuffToWhat.currentHP:
-                    GetComponent<EnemyStat>().HP.TakeDamage(Mathf.RoundToInt(damagePerTick));
-                    GetComponent<EnemyStat>().DetectDamage();
+                    GM.DealDamage(gameObject, Mathf.RoundToInt(damagePerTick));
+                break;
+                case BuffToWhat.speed:
+                    GetComponent<PlayerMoveSet>().basicSpeed -= damagePerTick;
+                    //나중에 Runtime을 활용하는 방식으로 수정될 수 있음
                 break;
             }
-            yield return new WaitForSeconds(tickInterval);
             repeatCount--;
+            yield return new WaitForSeconds(tickInterval);
         }
+
         Destroy(this);
+    }
+
+    public void OnDestroy()//(나중에 변경될 가능성이 높음)강제로 삭제 될 시 버프를 해제 시켜주기 위한 메서드
+    {
+        if (GetComponent<EnemyStat>() != null)//적일때
+        {
+            ClearBuffEnemy();
+        }
+        else//그 외
+        {
+            ClearBuffPlayer();
+        }
+    }
+
+    void ClearBuffPlayer()//(나중에 변경될 가능성이 높음)플레이어의 버프를 틱당대미지 * (총 반복횟수 - 현재횟수)만큼 플레이어의 스텟값에 더해줌
+    {
+        if (canRecovery)
+        {
+            switch (buffKind)
+            {
+                case BuffToWhat.speed:
+                    GetComponent<PlayerMoveSet>().basicSpeed += damagePerTick * (buffSetSO.repeatCount - repeatCount);
+                    Debug.Log("?");
+                break;
+            }
+        }
+    }
+
+    void ClearBuffEnemy()//(나중에 변경될 가능성이 높음)적의 버프를 틱당대미지 * (총 반복횟수 - 현재횟수)만큼 적의 스텟값에 더해줌
+    {
+        if (canRecovery)
+        {
+            switch (buffKind)
+            {
+                case BuffToWhat.speed:
+                    GetComponent<EnemyMove>().basicSpeed += damagePerTick * (buffSetSO.repeatCount - repeatCount);
+                break;
+            }
+        }
     }
     
     // IEnumerator ClearBuffPlayer(GameObject collision)//지속시간이 끝나면 플레이어의 버프 삭제

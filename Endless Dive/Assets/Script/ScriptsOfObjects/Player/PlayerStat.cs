@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,10 +39,17 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] Text lvltext;//레벨을 글로 표시할 textUI
     public Vector3 mousePos;//보는 방향을 결정하거나 불렛이 나갈 방향을 결정지을 마우스 위치
     [SerializeField] float gainRange;//아이템(오브)를 획득할 수 있게 하는 범위
-    [SerializeField] bool invincibility;
+    public bool isInvincibility;//무적 상태 체크
+    float savedMass;//저장해둘 RB의 Mass
+    float savedLinear;//저장해둘 RB의 LinearDamping
+    float savedAngular;//저장해둘 RB의 AngularDamping
 
     void Awake()
     {
+        savedMass = GetComponent<Rigidbody2D>().mass;
+        savedAngular = GetComponent<Rigidbody2D>().angularDamping;
+        savedLinear = GetComponent<Rigidbody2D>().linearDamping;
+
         mousePos.z = 0f;
         HPBarFilled.fillAmount = 1f;
         // XPBarFilled.fillAmount = 0f;
@@ -76,6 +84,30 @@ public class PlayerStat : MonoBehaviour
     {
         HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
         HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
+
+        if (isInvincibility)
+        {
+            //무적일시 넉백 무시
+            GetComponent<Rigidbody2D>().mass = 1000000;
+            GetComponent<Rigidbody2D>().linearDamping = 1000000;
+            GetComponent<Rigidbody2D>().angularDamping = 1000000;
+            
+            //무적일시 모든 디버프 제거
+            foreach (AbnormalStatus buff in GetComponents<AbnormalStatus>())
+            {
+                if (buff.buffSetSO.damagePerTick > 0)
+                {
+                    Destroy(buff);
+                }
+            }
+        }
+        else
+        {
+            //넉백을 원래대로 돌려 놓음
+            GetComponent<Rigidbody2D>().mass = savedMass;
+            GetComponent<Rigidbody2D>().linearDamping = savedLinear;
+            GetComponent<Rigidbody2D>().angularDamping = savedAngular;
+        }
 
         if (HP.MaxFinal <= 0)//사망 판정
         {
