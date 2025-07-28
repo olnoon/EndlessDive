@@ -91,6 +91,11 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
+        if (GetComponent<PlayerMoveSet>().isDisableOperation)//조작 불가능 상태가 켜져있으면 리턴
+        {
+            return;
+        }
+        
         //canUse가 false이거나 쿨타임이 돌고 있거나 광물을 채굴중이여서 isDiableATK가 켜져 있으면 함수를 끝내줌
         if (!canUse || isCooling || isDisableATK)
         {

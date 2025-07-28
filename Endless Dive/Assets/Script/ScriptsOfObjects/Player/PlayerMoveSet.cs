@@ -11,6 +11,7 @@ public class PlayerMoveSet : MonoBehaviour
     public float minY = -5f;//Y좌표 최소제한
     public float maxY = 5f;//Y좌표 최대제한
     public GameObject mineral;//타겟팅된 미네랄
+    public bool isDisableOperation;//조작 불가 상태
 
     void Awake()
     {
@@ -38,6 +39,11 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Move()//플레이어 움직임을 WASD에 따라 제어
     {
+        if (isDisableOperation)//조작 불가능 상태가 켜져있으면 리턴
+        {
+            return;
+        }
+
         float xSpeed = 0;
         float ySpeed = 0;
 
