@@ -5,7 +5,6 @@ public class BackToBattle : MonoBehaviour
 {
     public void BackToMainScene()//메인씬으로 복귀
     {
-        Debug.Log("일단 눌림");
         SceneLoader.Instance.LoadScene("MainScene");
     }
 }

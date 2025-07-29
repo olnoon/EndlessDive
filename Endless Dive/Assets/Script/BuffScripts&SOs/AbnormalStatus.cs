@@ -10,6 +10,7 @@ public class AbnormalStatus : MonoBehaviour
     [SerializeField] BuffToWhat buffKind;//들어가는 버프의 종류(Ex : HP, 공격력 등)
     public BuffSO buffSetSO;//해당 스크립트의 변수들의 초깃값을 갖고 있는 SO
     public GameManager GM;
+    public bool isDontDestroyOnLoad;
     void Start()
     {
         GM = FindAnyObjectByType<GameManager>();

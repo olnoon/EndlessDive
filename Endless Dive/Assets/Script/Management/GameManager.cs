@@ -3,10 +3,12 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance; // 싱글턴 인스턴스
     public List<GameObject> enemies;//필드에 나와있는 활성화/비활성화 되어있는 모든 적들
     public List<GameObject> orbs;//필드에 나와있는 활성화/비활성화 되어있는 모든 오브들
 
@@ -15,32 +17,113 @@ public class GameManager : MonoBehaviour
     public GameObject UpgradeScreen;//업그레이드 선택창
 
     public GameObject orbPrefab;//오브의 프리팹
-    public Text lvlText;//레벨을 표시하는 UI
     public EnemyKind missionTarget;//미션에서 필요로 하는 적의 종류
     public int missionNum;//미션에서 필요로 하는 적의 갯수
     public int currentMissionNum;//현재 잡은 미션에서 필요로 하는 적의 갯수
     public Text missionText;//미션현황을 보여주는 텍스트
     public List<Action> upgrades;//업그레이드할 갯수
     public Image blackScreen;
-    public float fadeDuration = 1f;
+    public float fadeDuration = 1f;// - 씬이 시작될 때 호출됨
+    public Coroutine enemySpawnRoutine;//씬이 바뀔때 눌익셉션과 바뀐씬에서의 적 스폰 방지를 위한 변수
+    public List<GameObject> players;
+
+    void Awake()
+    {
+        // 싱글턴 패턴 적용: 인스턴스가 없다면 자신을 등록
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지
+        }
+        else
+        {
+            Instance.ResetVars(this);
+            Destroy(gameObject); // 기존 인스턴스가 있다면 제거
+        }
+    }
+
+    void ResetVars(GameManager disappearGM)
+    {
+        UpgradeScreen = disappearGM.UpgradeScreen;//업그레이드 선택창을 없앨 GM에서 가져와서 초기화시켜 줌
+        blackScreen = disappearGM.blackScreen;//암전화면을 없앨 GM에서 가져와서 초기화시켜 줌
+        missionText = disappearGM.missionText;//미션텍스트를 없앨 GM에서 가져와서 초기화시켜 줌
+
+        StartCoroutine(InitAfterSceneLoad());
+    }
 
     void Start()
     {
-        StartCoroutine(SpawnTempEnemy());
+        enemySpawnRoutine = StartCoroutine(SpawnTempEnemy());
         GiveMainMission();
     }
 
-    public void FadeOut(bool isUpgrade)
+    void OnEnable()
+    {
+        // 씬이 로드될 때마다 호출됨
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        // 이벤트 등록 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    // 씬이 로드되었을 때 실행되는 메서드
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 특정 씬 이름일 때만 동작
+        if (scene.name == "UpgradeScene")
+        {
+            ClearVars();
+        }
+    }
+
+    IEnumerator InitAfterSceneLoad()
+    {
+        yield return null; // 씬 완전히 초기화되길 기다림
+
+        GameObject newPlayer = null;
+        foreach (GameObject Obj in players)
+        {
+            if (Obj.activeSelf)
+            {
+                newPlayer = Obj;
+            }
+            else
+            {
+                Obj.SetActive(true);
+                yield return null;
+                GetComponent<PlayerStat>().SetUI(newPlayer);
+                break;
+            }
+        }
+        players.Remove(newPlayer);
+
+        enemySpawnRoutine = StartCoroutine(SpawnTempEnemy());
+        GiveMainMission();
+    }
+    
+    void ClearVars()//눌익셉션 방지를 위해 변수들을 Clear해주는 메서드
+    {
+        enemies.Clear();
+        orbs.Clear();
+        // upgrades.Clear();
+        StopCoroutine(enemySpawnRoutine);
+        enemySpawnRoutine = null;
+    }
+    
+    public void FadeOut(bool isUpgrade)//isUpgrade는 Upgrade씬으로 이동할건지를 뜻함
     {
         StartCoroutine(Fade(0f, 1f, isUpgrade)); // 화면을 암전
     }
 
-    public void FadeIn(bool isUpgrade)
+    public void FadeIn(bool isUpgrade)//isUpgrade는 Upgrade씬으로 이동할건지를 뜻함
     {
         StartCoroutine(Fade(1f, 0f, isUpgrade)); // 화면을 복구
     }
 
-    IEnumerator Fade(float startAlpha, float endAlpha, bool isUpgrade)
+    IEnumerator Fade(float startAlpha, float endAlpha, bool isUpgrade)//화면을 암전/밝힘을 해주는 메서드
     {
         float time = 0f;
         Color color = blackScreen.color;

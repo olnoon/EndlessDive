@@ -66,6 +66,7 @@ public class PlayerStat : MonoBehaviour
         bulletSpawnPoint = transform.GetChild(0);
         lvltext.text = currentaAether.ToString();
         mineralText.text = mineralNum.ToString();
+        GM.players.Add(gameObject);
     }
 
     void Start()
@@ -73,6 +74,33 @@ public class PlayerStat : MonoBehaviour
         stat.InitializeFromSelf();
         StartCoroutine("FindEnemy");
         StartCoroutine("FindOrb");
+    }
+    
+    public void SetUI(GameObject newPlayer)//UI를 새로운 오브젝트로 부터 받아와서 초기화시켜줌
+    {
+        PlayerStat newStat = newPlayer.GetComponent<PlayerStat>();
+
+        // UI 참조 연결
+        mineralText = newStat.mineralText;
+        HPBarBackground = newStat.HPBarBackground;
+        HPBarFilled = newStat.HPBarFilled;
+        HPtext = newStat.HPtext;
+        XPBarBackground = newStat.XPBarBackground;
+        lvltext = newStat.lvltext;
+
+        if (mineralText != null)
+            mineralText.text = mineralNum.ToString();
+
+        if (lvltext != null)
+            lvltext.text = $"Lv. {newStat.Level}";
+
+        for (int i = 0; i < GetComponents<PlayerSkill>().Length; i++)
+        {
+            GetComponents<PlayerSkill>()[i].SkillCooltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillCooltext;
+            GetComponents<PlayerSkill>()[i].SkillLvltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillLvltext;
+        }
+
+        Destroy(newPlayer);
     }
 
     void Update()

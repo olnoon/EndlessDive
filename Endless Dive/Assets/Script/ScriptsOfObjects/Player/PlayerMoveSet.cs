@@ -18,6 +18,7 @@ public class PlayerMoveSet : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        DontDestroyOnLoad(gameObject);
     }
 
     void FixedUpdate()
@@ -61,6 +62,16 @@ public class PlayerMoveSet : MonoBehaviour
     {
         //TODO 애니메이션 넣기
         yield return new WaitForSeconds(3);
+
+        foreach (AbnormalStatus abnormalStatus in GetComponents<AbnormalStatus>())
+        {
+            if (!abnormalStatus.isDontDestroyOnLoad)
+            {
+                Destroy(abnormalStatus);
+            }
+        }
+
+        gameObject.SetActive(false);//업그레이드씬에서 방해되지 않게 비활성화
 
         GetComponent<PlayerStat>().GM.FadeOut(true);//암전 효과
     }

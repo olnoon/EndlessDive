@@ -19,8 +19,8 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;//불렛 스폰위치
     [SerializeField] float skillCoolingTimer;//스킬의 남은 쿨타임
     [SerializeField] int skillCharges;//스킬의 남은 충전 횟수
-    [SerializeField] Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
-    [SerializeField] Text SkillLvltext;//스킬 쿨타임을 보여주는 텍스트
+    public Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
+    public Text SkillLvltext;//스킬 쿨타임을 보여주는 텍스트
     [SerializeField] bool canUse = true;//스킬 사용 가능 여부
     [SerializeField] bool isCooling;//스킬 쿨타임 가능 여부
     [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
