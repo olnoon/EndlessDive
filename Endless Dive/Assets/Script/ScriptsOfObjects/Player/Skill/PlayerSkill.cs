@@ -27,6 +27,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
     public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
     public bool isDisableATK = false;
+    public bool isDisableOperation = false;
     Action skillEffect;
 
 
@@ -94,7 +95,7 @@ public class PlayerSkill : MonoBehaviour
 
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
-        if (GetComponent<PlayerMoveSet>().isDisableOperation)//조작 불가능 상태가 켜져있으면 리턴
+        if (isDisableOperation)//조작 불가능 상태가 켜져있으면 리턴
         {
             return;
         }
@@ -239,8 +240,6 @@ public class PlayerSkill : MonoBehaviour
 
         foreach (GameObject bullet in bullets)
         {
-            Debug.Log("총" + bullets.Count);
-            Debug.Log("현재" + bullets.IndexOf(bullet));
             if (bullet.GetComponent<Bullet>() == null)
             {
                 continue;

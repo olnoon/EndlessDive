@@ -75,10 +75,11 @@ public class PlayerStat : MonoBehaviour
         StartCoroutine("FindEnemy");
         StartCoroutine("FindOrb");
     }
-    
-    public void SetUI(GameObject newPlayer)//UI를 새로운 오브젝트로 부터 받아와서 초기화시켜줌
+
+    public void SetUI(GameObject newPlayer)//UI를 새로운 플레이어 오브젝트로 부터 받아와서 초기화시켜줌
     {
         PlayerStat newStat = newPlayer.GetComponent<PlayerStat>();
+        PlayerMoveSet newMove = newPlayer.GetComponent<PlayerMoveSet>();
 
         // UI 참조 연결
         mineralText = newStat.mineralText;
@@ -87,12 +88,15 @@ public class PlayerStat : MonoBehaviour
         HPtext = newStat.HPtext;
         XPBarBackground = newStat.XPBarBackground;
         lvltext = newStat.lvltext;
+        GetComponent<PlayerMoveSet>().exitTimeBarBG = newMove.exitTimeBarBG;
+        GetComponent<PlayerMoveSet>().exitTimeBarFilled = newMove.exitTimeBarFilled;
+        GetComponent<PlayerMoveSet>().exitTimeText = newMove.exitTimeText;
 
         if (mineralText != null)
-            mineralText.text = mineralNum.ToString();
+            mineralText.text = $"{mineralNum}";
 
         if (lvltext != null)
-            lvltext.text = $"Lv. {newStat.Level}";
+            lvltext.text = $"{newStat.Level}";
 
         for (int i = 0; i < GetComponents<PlayerSkill>().Length; i++)
         {
@@ -103,6 +107,10 @@ public class PlayerStat : MonoBehaviour
 
         //무적 상태와 조작 불능 상태 해제
         isInvincibility = false;
+        foreach (PlayerSkill skill in GetComponents<PlayerSkill>())
+        {
+            skill.isDisableOperation = false;
+        }
         GetComponent<PlayerMoveSet>().isDisableOperation = false;
 
         Destroy(newPlayer);//새로운 플레이어 삭제

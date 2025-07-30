@@ -91,8 +91,6 @@ public class GameManager : MonoBehaviour
             if (Obj.activeSelf)
             {
                 newPlayer = Obj;
-                // Debug.Log($"{players.IndexOf(Obj)}번째 작동");
-                // Debug.Log(newPlayer == null);
             }
             else
             {

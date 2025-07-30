@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMoveSet : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerMoveSet : MonoBehaviour
     public GameObject mineral;//타겟팅된 미네랄
     public bool isDisableOperation;//조작 불가 상태
     public bool isExitable;
+    public GameObject exitTimeBarBG;//필드를 이탈하기까지의 시간을 표시할 UI의 배경
+    public Image exitTimeBarFilled;//필드를 이탈하기까지의 시간을 표시할 UI
+    public Text exitTimeText;//필드를 이탈하기까지의 시간을 표시할 UI의 텍스트
 
     void Awake()
     {
@@ -41,13 +45,23 @@ public class PlayerMoveSet : MonoBehaviour
     IEnumerator CheckExitZone()
     {
         int repeatAmount = 0;
-        isDisableOperation = true;//조작불가 상태 활성화
+        exitTimeBarBG.SetActive(true);//이탈시간을 보여주는 UI활성황
         GetComponent<PlayerStat>().isInvincibility = true;//무적 활성화
+        foreach (PlayerSkill skill in GetComponents<PlayerSkill>())//스킬발동 비활성화
+        {
+            skill.isDisableOperation = true;
+        }
         while (repeatAmount < 20)//2초 기다림
         {
+            exitTimeBarFilled.fillAmount = (float)repeatAmount/20;
+            exitTimeText.text = $"지역 이탈 까지 : {repeatAmount}/20";
             if (!Input.GetKey(KeyCode.F))//지역 이탈 포기
             {
-                isDisableOperation = false;//조작불가 상태 비활성화
+                exitTimeBarBG.SetActive(false);
+                foreach (PlayerSkill skill in GetComponents<PlayerSkill>())//스킬발동 활성화
+                {
+                    skill.isDisableOperation = false;
+                }
                 GetComponent<PlayerStat>().isInvincibility = false;//무적 비활성화
                 yield break;
             }
@@ -60,6 +74,8 @@ public class PlayerMoveSet : MonoBehaviour
 
     IEnumerator ExitZone()
     {
+        exitTimeBarBG.SetActive(false);
+        isDisableOperation = true;//조작불가 상태 활성화
         //TODO 애니메이션 넣기
         yield return new WaitForSeconds(3);
 
