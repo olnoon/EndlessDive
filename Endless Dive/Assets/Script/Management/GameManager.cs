@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
             }
         }
         oldPlayer.SetActive(true);
-        oldPlayer.GetComponent<PlayerStat>().SetUI(newPlayer);
+        oldPlayer.GetComponent<PlayerStat>().SetAfterReturnToMain(newPlayer);
 
         players.Remove(newPlayer);
 

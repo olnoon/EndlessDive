@@ -76,7 +76,7 @@ public class PlayerStat : MonoBehaviour
         StartCoroutine("FindOrb");
     }
 
-    public void SetUI(GameObject newPlayer)//UI를 새로운 플레이어 오브젝트로 부터 받아와서 초기화시켜줌
+    public void SetAfterReturnToMain(GameObject newPlayer)//UI를 새로운 플레이어 오브젝트로 부터 받아와서 초기화시켜줌
     {
         PlayerStat newStat = newPlayer.GetComponent<PlayerStat>();
         PlayerMoveSet newMove = newPlayer.GetComponent<PlayerMoveSet>();
@@ -112,6 +112,8 @@ public class PlayerStat : MonoBehaviour
             skill.isDisableOperation = false;
         }
         GetComponent<PlayerMoveSet>().isDisableOperation = false;
+
+        StartCoroutine(FindOrb());//FindOrb코루틴을 다시 시작 해 줌.
 
         Destroy(newPlayer);//새로운 플레이어 삭제
     }
