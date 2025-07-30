@@ -18,6 +18,10 @@ public class CameraMove : MonoBehaviour
     }
     void LateUpdate()//제한된 위치 안에서 플레이어 위치로 부드럽게 이동
     {
+        if (player == null)
+        {
+            player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
+        }
         Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);

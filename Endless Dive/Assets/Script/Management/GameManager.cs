@@ -84,20 +84,24 @@ public class GameManager : MonoBehaviour
         yield return null; // 씬 완전히 초기화되길 기다림
 
         GameObject newPlayer = null;
+        GameObject oldPlayer = null;
+        
         foreach (GameObject Obj in players)
         {
             if (Obj.activeSelf)
             {
                 newPlayer = Obj;
+                // Debug.Log($"{players.IndexOf(Obj)}번째 작동");
+                // Debug.Log(newPlayer == null);
             }
             else
             {
-                Obj.SetActive(true);
-                yield return null;
-                GetComponent<PlayerStat>().SetUI(newPlayer);
-                break;
+                oldPlayer = Obj;
             }
         }
+        oldPlayer.SetActive(true);
+        oldPlayer.GetComponent<PlayerStat>().SetUI(newPlayer);
+
         players.Remove(newPlayer);
 
         enemySpawnRoutine = StartCoroutine(SpawnTempEnemy());

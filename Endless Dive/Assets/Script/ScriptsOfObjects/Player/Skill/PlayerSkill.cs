@@ -41,7 +41,10 @@ public class PlayerSkill : MonoBehaviour
 
     void Update()
     {
-        SkillLvltext.text = skillSOs[0].skillLvl.ToString();
+        if (SkillLvltext != null)
+        {
+            SkillLvltext.text = skillSOs[0].skillLvl.ToString();
+        }
 
         //skillCharges가 1보다 크면 canUse를 true로 바꿔 줌.
         if (skillCharges >= 1)
@@ -236,6 +239,12 @@ public class PlayerSkill : MonoBehaviour
 
         foreach (GameObject bullet in bullets)
         {
+            Debug.Log("총" + bullets.Count);
+            Debug.Log("현재" + bullets.IndexOf(bullet));
+            if (bullet.GetComponent<Bullet>() == null)
+            {
+                continue;
+            }
             var move = bullet.GetComponent<Bullet>();
             if (!bullet.activeSelf)
             {

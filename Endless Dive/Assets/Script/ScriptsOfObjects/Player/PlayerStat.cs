@@ -98,15 +98,23 @@ public class PlayerStat : MonoBehaviour
         {
             GetComponents<PlayerSkill>()[i].SkillCooltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillCooltext;
             GetComponents<PlayerSkill>()[i].SkillLvltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillLvltext;
+            GetComponents<PlayerSkill>()[i].bullets.Clear();
         }
 
-        Destroy(newPlayer);
+        //무적 상태와 조작 불능 상태 해제
+        isInvincibility = false;
+        GetComponent<PlayerMoveSet>().isDisableOperation = false;
+
+        Destroy(newPlayer);//새로운 플레이어 삭제
     }
 
     void Update()
     {
-        HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
-        HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
+        if (HPBarFilled != null && HPtext != null)
+        {
+            HPBarFilled.fillAmount = (float)HP.Current / HP.MaxFinal;
+            HPtext.text = $"{HP.Current}/{HP.MaxFinal}";
+        }
 
         if (isInvincibility)
         {

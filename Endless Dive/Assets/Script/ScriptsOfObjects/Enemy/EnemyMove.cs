@@ -49,6 +49,11 @@ public class EnemyMove : MonoBehaviour
 
     void Move()//움직임 제어(플레이어와 해당 오브젝트 사이의 방향을 알아내서 해당 방향으로 향함)
     {
+        if (player == null)
+        {
+            player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
+            return;
+        }
         Vector2 currentPos = rb.position;
         Vector2 targetPos = player.transform.position;
         Vector2 dir = (targetPos - currentPos).normalized;
