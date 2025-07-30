@@ -89,6 +89,8 @@ public class PlayerMoveSet : MonoBehaviour
 
         gameObject.SetActive(false);//업그레이드씬에서 방해되지 않게 비활성화
 
+        isExitable = false;//지역 이탈 비활성화
+
         GetComponent<PlayerStat>().GM.FadeOut(true);//암전 효과
     }
 
