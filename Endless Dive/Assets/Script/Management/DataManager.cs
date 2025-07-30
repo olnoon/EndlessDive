@@ -11,6 +11,8 @@ public class GameData
 {
     public List<CharacterData> character_table; // 캐릭터 데이터 테이블
     public List<SkillData> skill_table;         // 스킬 데이터 테이블
+
+    public List<LevelData> level_table;         // 레벨 데이터 테이블
 }
 
 // - 열거형 데이터 사전 선언
@@ -51,6 +53,14 @@ public class SkillData
     public int sk_Effect_id;                    // 발동시킬 효과의 ID
 }
 
+[System.Serializable]
+public class LevelData
+{
+    public int level_id;                        // 레벨 ID
+    public float level_up_RequiredEnergy;       // 레벨업 요구 에너지량
+    // 레벨 1 > 2 에 필요한 에너지량은 level_id가 2인 LevelData의 level_up_RequiredEnergy
+}
+
 // - 저장용 플레이어 데이터
 [System.Serializable]
 public class SaveData
@@ -65,7 +75,8 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance; // 싱글턴 인스턴스
 
     private Dictionary<int, CharacterData> characterDict = new(); // 로드된 데이터를 저장하는 딕셔너리
-    private Dictionary<int, SkillData> skillDict = new(); // 로드된 데이터를 저장하는 딕셔너리
+    private Dictionary<int, SkillData> skillDict = new();
+    private Dictionary<int, LevelData> levelDict = new();
 
     public static SaveData currentSaveData; // 현재 세이브 데이터
 
@@ -81,7 +92,7 @@ public class DataManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지
             LoadData();  // JSON 데이터 테이블 로드
-            LoadSave();  // 세이브 파일 로드
+            /*LoadSave();  // 세이브 파일 로드*/
         }
         else
         {
@@ -108,18 +119,23 @@ public class DataManager : MonoBehaviour
             characterDict[character.character_id] = character;
         foreach (var skill in data.skill_table)
             skillDict[skill.skill_id] = skill;
+        foreach (var level in data.level_table)
+            levelDict[level.level_id] = level;
 
         Debug.Log($"캐릭터 데이터 {characterDict.Count}개 로드 완료!");
         Debug.Log($"스킬 데이터 {skillDict.Count}개 로드 완료!");
+        Debug.Log($"레벨 데이터 {levelDict.Count}개 로드 완료!");
     }
 
     // - 특정 ID의 데이터를 가져옴
     public CharacterData GetCharacterData(int id)       { return characterDict.TryGetValue(id, out var data) ? data : null; }
     public SkillData GetSkillData(int id)               { return skillDict.TryGetValue(id, out var data) ? data : null; }
+    public LevelData GetLevelData(int id)               { return levelDict.TryGetValue(id, out var data) ? data : null; }
 
     // - 모든 데이터를 리스트 형태로 반환
     public List<CharacterData> GetAllCharacterData()    { return characterDict.Values.ToList(); }
     public List<SkillData> GetAllSkillData()            { return skillDict.Values.ToList(); }
+    public List<LevelData> GetAllLevelData()            { return levelDict.Values.ToList(); }
 
     // - 세이브 데이터를 파일로 저장
     public void SaveGame()

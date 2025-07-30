@@ -1,8 +1,8 @@
 {
   "character_table": [
     {
-      "character_id": 10000,
-      "ch_HP_base": 100,
+      "character_id": 100,
+      "ch_HP_base": 100.0,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,
@@ -23,8 +23,8 @@
       "ch_ui_icon": "UI\\Characters\\Icons\\Stella_icon"
     },
     {
-      "character_id": 10001,
-      "ch_HP_base": 100,
+      "character_id": 101,
+      "ch_HP_base": 100.0,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,
@@ -45,8 +45,8 @@
       "ch_ui_icon": "UI\\Characters\\Icons\\Mars_icon"
     },
     {
-      "character_id": 10002,
-      "ch_HP_base": 100,
+      "character_id": 102,
+      "ch_HP_base": 100.0,
       "ch_ATK_base": 0.0,
       "ch_PhyATK_base": 0,
       "ch_EnATK_base": 0,
@@ -69,112 +69,542 @@
   ],
   "skill_table": [
     {
-      "skill_id": 1000000,
+      "skill_id": 100000,
       "sk_Cooldown_base": 0.4,
       "sk_Repeat_base": 6,
       "sk_RepeatCooldown_base": 0.1,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000001,
+      "skill_id": 100001,
       "sk_Cooldown_base": 6.0,
       "sk_Repeat_base": 1,
       "sk_RepeatCooldown_base": 1.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": false,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000002,
+      "skill_id": 100002,
       "sk_Cooldown_base": 4.0,
       "sk_Repeat_base": 1,
       "sk_RepeatCooldown_base": 1.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": false,
-      "sk_Type": "buff"
+      "sk_Multiple": true,
+      "sk_EffectType": "buff",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000003,
+      "skill_id": 100003,
       "sk_Cooldown_base": 0.2,
       "sk_Repeat_base": 10,
       "sk_RepeatCooldown_base": 0.5,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": false,
-      "sk_Type": "instant"
+      "sk_Multiple": false,
+      "sk_EffectType": "instant",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000100,
+      "skill_id": 100100,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000101,
+      "skill_id": 100101,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000102,
+      "skill_id": 100102,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000103,
+      "skill_id": 100103,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000201,
+      "skill_id": 100200,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000202,
+      "skill_id": 100201,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000203,
+      "skill_id": 100202,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
     },
     {
-      "skill_id": 1000204,
+      "skill_id": 100203,
       "sk_Cooldown_base": 0.0,
       "sk_Repeat_base": 0,
       "sk_RepeatCooldown_base": 0.0,
       "sk_MaxCharges_base": 1,
       "sk_ChargeAll": true,
-      "sk_Type": "missile"
+      "sk_Multiple": true,
+      "sk_EffectType": "missile",
+      "sk_Effect_id": 0
+    }
+  ],
+  "level_table": [
+    {
+      "level_id": 0,
+      "level_up_RequiredEnergy": 0
+    },
+    {
+      "level_id": 1,
+      "level_up_RequiredEnergy": 0
+    },
+    {
+      "level_id": 2,
+      "level_up_RequiredEnergy": 500
+    },
+    {
+      "level_id": 3,
+      "level_up_RequiredEnergy": 651
+    },
+    {
+      "level_id": 4,
+      "level_up_RequiredEnergy": 803
+    },
+    {
+      "level_id": 5,
+      "level_up_RequiredEnergy": 956
+    },
+    {
+      "level_id": 6,
+      "level_up_RequiredEnergy": 1110
+    },
+    {
+      "level_id": 7,
+      "level_up_RequiredEnergy": 1265
+    },
+    {
+      "level_id": 8,
+      "level_up_RequiredEnergy": 1421
+    },
+    {
+      "level_id": 9,
+      "level_up_RequiredEnergy": 1578
+    },
+    {
+      "level_id": 10,
+      "level_up_RequiredEnergy": 1736
+    },
+    {
+      "level_id": 11,
+      "level_up_RequiredEnergy": 1895
+    },
+    {
+      "level_id": 12,
+      "level_up_RequiredEnergy": 2055
+    },
+    {
+      "level_id": 13,
+      "level_up_RequiredEnergy": 2216
+    },
+    {
+      "level_id": 14,
+      "level_up_RequiredEnergy": 2378
+    },
+    {
+      "level_id": 15,
+      "level_up_RequiredEnergy": 2541
+    },
+    {
+      "level_id": 16,
+      "level_up_RequiredEnergy": 2705
+    },
+    {
+      "level_id": 17,
+      "level_up_RequiredEnergy": 2870
+    },
+    {
+      "level_id": 18,
+      "level_up_RequiredEnergy": 3036
+    },
+    {
+      "level_id": 19,
+      "level_up_RequiredEnergy": 3203
+    },
+    {
+      "level_id": 20,
+      "level_up_RequiredEnergy": 3371
+    },
+    {
+      "level_id": 21,
+      "level_up_RequiredEnergy": 3540
+    },
+    {
+      "level_id": 22,
+      "level_up_RequiredEnergy": 3710
+    },
+    {
+      "level_id": 23,
+      "level_up_RequiredEnergy": 3881
+    },
+    {
+      "level_id": 24,
+      "level_up_RequiredEnergy": 4053
+    },
+    {
+      "level_id": 25,
+      "level_up_RequiredEnergy": 4226
+    },
+    {
+      "level_id": 26,
+      "level_up_RequiredEnergy": 4400
+    },
+    {
+      "level_id": 27,
+      "level_up_RequiredEnergy": 4575
+    },
+    {
+      "level_id": 28,
+      "level_up_RequiredEnergy": 4751
+    },
+    {
+      "level_id": 29,
+      "level_up_RequiredEnergy": 4928
+    },
+    {
+      "level_id": 30,
+      "level_up_RequiredEnergy": 5106
+    },
+    {
+      "level_id": 31,
+      "level_up_RequiredEnergy": 5285
+    },
+    {
+      "level_id": 32,
+      "level_up_RequiredEnergy": 5465
+    },
+    {
+      "level_id": 33,
+      "level_up_RequiredEnergy": 5646
+    },
+    {
+      "level_id": 34,
+      "level_up_RequiredEnergy": 5828
+    },
+    {
+      "level_id": 35,
+      "level_up_RequiredEnergy": 6011
+    },
+    {
+      "level_id": 36,
+      "level_up_RequiredEnergy": 6195
+    },
+    {
+      "level_id": 37,
+      "level_up_RequiredEnergy": 6380
+    },
+    {
+      "level_id": 38,
+      "level_up_RequiredEnergy": 6566
+    },
+    {
+      "level_id": 39,
+      "level_up_RequiredEnergy": 6753
+    },
+    {
+      "level_id": 40,
+      "level_up_RequiredEnergy": 6941
+    },
+    {
+      "level_id": 41,
+      "level_up_RequiredEnergy": 7130
+    },
+    {
+      "level_id": 42,
+      "level_up_RequiredEnergy": 7320
+    },
+    {
+      "level_id": 43,
+      "level_up_RequiredEnergy": 7511
+    },
+    {
+      "level_id": 44,
+      "level_up_RequiredEnergy": 7703
+    },
+    {
+      "level_id": 45,
+      "level_up_RequiredEnergy": 7896
+    },
+    {
+      "level_id": 46,
+      "level_up_RequiredEnergy": 8090
+    },
+    {
+      "level_id": 47,
+      "level_up_RequiredEnergy": 8285
+    },
+    {
+      "level_id": 48,
+      "level_up_RequiredEnergy": 8481
+    },
+    {
+      "level_id": 49,
+      "level_up_RequiredEnergy": 8678
+    },
+    {
+      "level_id": 50,
+      "level_up_RequiredEnergy": 8876
+    },
+    {
+      "level_id": 51,
+      "level_up_RequiredEnergy": 9075
+    },
+    {
+      "level_id": 52,
+      "level_up_RequiredEnergy": 9275
+    },
+    {
+      "level_id": 53,
+      "level_up_RequiredEnergy": 9476
+    },
+    {
+      "level_id": 54,
+      "level_up_RequiredEnergy": 9678
+    },
+    {
+      "level_id": 55,
+      "level_up_RequiredEnergy": 9881
+    },
+    {
+      "level_id": 56,
+      "level_up_RequiredEnergy": 10085
+    },
+    {
+      "level_id": 57,
+      "level_up_RequiredEnergy": 10290
+    },
+    {
+      "level_id": 58,
+      "level_up_RequiredEnergy": 10496
+    },
+    {
+      "level_id": 59,
+      "level_up_RequiredEnergy": 10703
+    },
+    {
+      "level_id": 60,
+      "level_up_RequiredEnergy": 10911
+    },
+    {
+      "level_id": 61,
+      "level_up_RequiredEnergy": 11120
+    },
+    {
+      "level_id": 62,
+      "level_up_RequiredEnergy": 11330
+    },
+    {
+      "level_id": 63,
+      "level_up_RequiredEnergy": 11541
+    },
+    {
+      "level_id": 64,
+      "level_up_RequiredEnergy": 11753
+    },
+    {
+      "level_id": 65,
+      "level_up_RequiredEnergy": 11966
+    },
+    {
+      "level_id": 66,
+      "level_up_RequiredEnergy": 12180
+    },
+    {
+      "level_id": 67,
+      "level_up_RequiredEnergy": 12395
+    },
+    {
+      "level_id": 68,
+      "level_up_RequiredEnergy": 12611
+    },
+    {
+      "level_id": 69,
+      "level_up_RequiredEnergy": 12828
+    },
+    {
+      "level_id": 70,
+      "level_up_RequiredEnergy": 13046
+    },
+    {
+      "level_id": 71,
+      "level_up_RequiredEnergy": 13265
+    },
+    {
+      "level_id": 72,
+      "level_up_RequiredEnergy": 13485
+    },
+    {
+      "level_id": 73,
+      "level_up_RequiredEnergy": 13706
+    },
+    {
+      "level_id": 74,
+      "level_up_RequiredEnergy": 13928
+    },
+    {
+      "level_id": 75,
+      "level_up_RequiredEnergy": 14151
+    },
+    {
+      "level_id": 76,
+      "level_up_RequiredEnergy": 14375
+    },
+    {
+      "level_id": 77,
+      "level_up_RequiredEnergy": 14600
+    },
+    {
+      "level_id": 78,
+      "level_up_RequiredEnergy": 14826
+    },
+    {
+      "level_id": 79,
+      "level_up_RequiredEnergy": 15053
+    },
+    {
+      "level_id": 80,
+      "level_up_RequiredEnergy": 15281
+    },
+    {
+      "level_id": 81,
+      "level_up_RequiredEnergy": 15510
+    },
+    {
+      "level_id": 82,
+      "level_up_RequiredEnergy": 15740
+    },
+    {
+      "level_id": 83,
+      "level_up_RequiredEnergy": 15971
+    },
+    {
+      "level_id": 84,
+      "level_up_RequiredEnergy": 16203
+    },
+    {
+      "level_id": 85,
+      "level_up_RequiredEnergy": 16436
+    },
+    {
+      "level_id": 86,
+      "level_up_RequiredEnergy": 16670
+    },
+    {
+      "level_id": 87,
+      "level_up_RequiredEnergy": 16905
+    },
+    {
+      "level_id": 88,
+      "level_up_RequiredEnergy": 17141
+    },
+    {
+      "level_id": 89,
+      "level_up_RequiredEnergy": 17378
+    },
+    {
+      "level_id": 90,
+      "level_up_RequiredEnergy": 17616
+    },
+    {
+      "level_id": 91,
+      "level_up_RequiredEnergy": 17855
+    },
+    {
+      "level_id": 92,
+      "level_up_RequiredEnergy": 18095
+    },
+    {
+      "level_id": 93,
+      "level_up_RequiredEnergy": 18336
+    },
+    {
+      "level_id": 94,
+      "level_up_RequiredEnergy": 18578
+    },
+    {
+      "level_id": 95,
+      "level_up_RequiredEnergy": 18821
+    },
+    {
+      "level_id": 96,
+      "level_up_RequiredEnergy": 19065
+    },
+    {
+      "level_id": 97,
+      "level_up_RequiredEnergy": 19310
+    },
+    {
+      "level_id": 98,
+      "level_up_RequiredEnergy": 19556
+    },
+    {
+      "level_id": 99,
+      "level_up_RequiredEnergy": 19803
+    },
+    {
+      "level_id": 100,
+      "level_up_RequiredEnergy": 20051
     }
   ],
   "string_table": [
