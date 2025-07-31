@@ -24,12 +24,12 @@ public class Mineral : MonoBehaviour
         transform.GetChild(0).localScale = new Vector2(range, range);//콜라이더를 갖고 있는 자식오브젝트의 크기를 range만큼 수정
     }
 
-    public void Mined()//currectQuantity을 줄이고 플레이어스텟의 mineralNum을 그만큼 늘려줌, 또한 양이 0이면 해당 오브젝트를 비활성화 시켜줌
+    public void Mined(int mineAmount)//currectQuantity을 줄이고 플레이어스텟의 mineralNum을 그만큼 늘려줌, 또한 양이 0이면 해당 오브젝트를 비활성화 시켜줌
     {
-        currectQuantity--;
+        currectQuantity-=mineAmount;
         if (miner.GetComponent<PlayerStat>() != null)
         {
-            miner.GetComponent<PlayerStat>().mineralNum++;
+            miner.GetComponent<PlayerStat>().mineralNum+=mineAmount;
             miner.GetComponent<PlayerStat>().mineralText.text = miner.GetComponent<PlayerStat>().mineralNum.ToString();
 
             // getherer.GetComponent<PlayerStat>().addXP();

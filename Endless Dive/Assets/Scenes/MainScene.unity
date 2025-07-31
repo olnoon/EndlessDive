@@ -1133,6 +1133,7 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0, z: 0}
   gainRange: 10
   isInvincibility: 0
+  mineAmount: 75
 --- !u!70 &384228396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1195,6 +1196,7 @@ MonoBehaviour:
   bullets: []
   isDisableATK: 0
   isDisableOperation: 0
+  isCooling: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,6 +1222,7 @@ MonoBehaviour:
   bullets: []
   isDisableATK: 0
   isDisableOperation: 0
+  isCooling: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,6 +1248,7 @@ MonoBehaviour:
   bullets: []
   isDisableATK: 0
   isDisableOperation: 0
+  isCooling: 0
 --- !u!114 &384228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1270,6 +1274,7 @@ MonoBehaviour:
   bullets: []
   isDisableATK: 0
   isDisableOperation: 0
+  isCooling: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0

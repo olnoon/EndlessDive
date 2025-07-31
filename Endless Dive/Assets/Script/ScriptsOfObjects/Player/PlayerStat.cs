@@ -41,6 +41,7 @@ public class PlayerStat : MonoBehaviour
     float savedMass;//저장해둘 RB의 Mass
     float savedLinear;//저장해둘 RB의 LinearDamping
     float savedAngular;//저장해둘 RB의 AngularDamping
+    public int mineAmount;//한번에 채굴하는 광물양
 
     void Awake()
     {
