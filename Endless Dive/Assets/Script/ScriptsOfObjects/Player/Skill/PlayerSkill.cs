@@ -166,6 +166,7 @@ public class PlayerSkill : MonoBehaviour
 
             // 실제 효과 실행
             skillEffect?.Invoke();
+            StartCoroutine(SkillCooling());
 
             skillCharges--;
 
@@ -263,7 +264,7 @@ public class PlayerSkill : MonoBehaviour
         theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
 
-    IEnumerator SkillCooling()//스킬 쿨타임
+    public IEnumerator SkillCooling()//스킬 쿨타임
     {
         while (true)
         {
@@ -271,8 +272,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].skillMaxCharges_Now <= skillCharges)
             {
-                yield return null;
-                continue;
+                break;
             }
             while (true)
                 {

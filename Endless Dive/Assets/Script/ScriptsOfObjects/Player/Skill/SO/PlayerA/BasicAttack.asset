@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd23c191e5ff2f4ba7111577e988db8, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
+  skillId: 0
   skillName: BasicAttack
   skillLvl: 0
   isGetKey: 0
   skillCooldown_Origin: 7
   skillCooldown_Now: 7
   skillRepeat_Origin: 10
-  skillRepeat_Now: 99999999
-  skillRepeatCooldown_Origin: 0.1
-  skillRepeatCooldown_Now: 0.1
+  skillRepeat_Now: 10
+  skillRepeatCooldown_Origin: 0.7
+  skillRepeatCooldown_Now: 0.7
   skillMaxCharges_Origin: 10
   skillMaxCharges_Now: 10
   skillType: 0
   bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}
+  chargeAll: 0

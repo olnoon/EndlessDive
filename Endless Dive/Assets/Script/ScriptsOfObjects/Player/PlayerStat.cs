@@ -103,6 +103,7 @@ public class PlayerStat : MonoBehaviour
             GetComponents<PlayerSkill>()[i].SkillCooltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillCooltext;
             GetComponents<PlayerSkill>()[i].SkillLvltext = newPlayer.GetComponents<PlayerSkill>()[i].SkillLvltext;
             GetComponents<PlayerSkill>()[i].bullets.Clear();
+            StartCoroutine(GetComponents<PlayerSkill>()[i].SkillCooling());
         }
 
         //무적 상태와 조작 불능 상태 해제

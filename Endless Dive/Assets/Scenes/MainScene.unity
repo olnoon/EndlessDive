@@ -1185,11 +1185,10 @@ MonoBehaviour:
   key: 323
   bulletSpawnPoint: {fileID: 197016563}
   skillCoolingTimer: 1
-  skillCharges: 999999999
+  skillCharges: 10
   SkillCooltext: {fileID: 446041809}
   SkillLvltext: {fileID: 1816614371}
   canUse: 1
-  isCooling: 0
   skillSOSets:
   - {fileID: 11400000, guid: 30e101a90d82efd49a5179047b67daa4, type: 2}
   skillSOs: []
@@ -1211,11 +1210,10 @@ MonoBehaviour:
   key: 304
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 99999999
+  skillCharges: 10
   SkillCooltext: {fileID: 85630788}
   SkillLvltext: {fileID: 485443324}
   canUse: 1
-  isCooling: 0
   skillSOSets:
   - {fileID: 11400000, guid: 730063e85a1f5b2458a27a519c82819b, type: 2}
   skillSOs: []
@@ -1237,11 +1235,10 @@ MonoBehaviour:
   key: 32
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 1000
+  skillCharges: 10
   SkillCooltext: {fileID: 1000842527}
   SkillLvltext: {fileID: 1110994546}
   canUse: 1
-  isCooling: 0
   skillSOSets:
   - {fileID: 11400000, guid: 88f9d799702db8a45a6355ac76543578, type: 2}
   skillSOs: []
@@ -1263,11 +1260,10 @@ MonoBehaviour:
   key: 324
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 99999999
+  skillCharges: 10
   SkillCooltext: {fileID: 1647858675}
   SkillLvltext: {fileID: 27024604}
   canUse: 1
-  isCooling: 0
   skillSOSets:
   - {fileID: 11400000, guid: 15c4970d60c2e7a4a9976cb7e555d1d5, type: 2}
   skillSOs: []
