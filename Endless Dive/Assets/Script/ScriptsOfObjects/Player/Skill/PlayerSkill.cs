@@ -123,7 +123,6 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
-        Debug.Log("11111111");
         int RepeatNum = skillSOs[0].skillRepeat_Now;
 
         // skillEffect 미할당 방지

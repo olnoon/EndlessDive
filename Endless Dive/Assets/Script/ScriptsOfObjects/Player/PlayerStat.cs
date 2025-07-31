@@ -217,11 +217,11 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    IEnumerator FindOrb()//0.2초 마다 gainRange안의 오브들을 찾음, 오브들을 발견됨 상태로 만드나 체력오브이고 최대체력이면 발견됨 상태로 만들지 않음
+    IEnumerator FindOrb()//0.2초 마다 gainRange안의 오브들을 찾음, 오브들을 발견됨 상태로 만드나 체력오브이고 최대 체력이면 발견됨 상태로 만들지 않음
     {
         while (true)
         {
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, gainRange * stat.mining.FinalRatio, LayerMask.GetMask("Orb"));
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, gainRange * stat.pickupRange.FinalRatio, LayerMask.GetMask("Orb"));
             foreach (var hitCollider in hitColliders)
             {
                 if (GM.orbs.Contains(hitCollider.gameObject) && hitCollider.gameObject.activeSelf)
