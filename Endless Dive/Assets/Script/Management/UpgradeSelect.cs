@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,27 +27,46 @@ public class UpgradeSelect : MonoBehaviour
     void Awake()
     {
         GM = FindAnyObjectByType<GameManager>();
-        player = FindAnyObjectByType<PlayerMoveSet>().gameObject;
         choices = new List<UpgradeOption>()//선택지들 초기화
         {
             new UpgradeOption(UpgradeATK, "공격력 Up", "공격력 +1"),
         };
     }
 
-    void OnEnable()//활성화시 랜덤으로 이벤트 선택
+    void Start()
     {
+        player = FindAnyObjectByType<GameManager>().players[0];
         SetFuction();
     }
 
     void SetFuction()//선택지의 기능 및 텍스트들을 바꿔주는 함수
     {
-        int randIndex = UnityEngine.Random.Range(0, choices.Count);
-
         transform.GetChild(2).GetComponent<Button>().onClick.RemoveAllListeners();
+        
+        int index = transform.GetSiblingIndex();
 
-        transform.GetChild(0).GetComponent<Text>().text = choices[randIndex].name;
-        transform.GetChild(1).GetComponent<Text>().text = choices[randIndex].description;
-        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => choices[randIndex].action());
+        PlayerSkill skill = player.GetComponents<PlayerSkill>()[index];
+
+        var data = FindAnyObjectByType<DataManager>().GetLevelData(skill.skillSOs[0].skillLvl+1);
+
+        transform.GetChild(0).GetComponent<Text>().text = $"{skill.skillSOs[0].skillType} 업그레이드";
+        transform.GetChild(1).GetComponent<Text>().text = $"현재 레벨 : {skill.skillSOs[0].skillLvl}\n필요한 자원 : {data.level_up_RequiredEnergy}";//\n{choices[randIndex].description}";
+
+        if (player.GetComponent<PlayerStat>().currentAether < data.level_up_RequiredEnergy)
+        {
+            transform.GetChild(2).GetComponent<Button>().interactable = false;
+            return;
+        }
+        transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() =>
+        {
+            Debug.Log("111111");
+            skill.skillSOs[0].skillLvl++;
+            player.GetComponent<PlayerStat>().currentAether -= Mathf.RoundToInt(data.level_up_RequiredEnergy);
+            foreach (Transform child in transform.parent)
+            {
+                child.GetComponent<UpgradeSelect>().SetFuction();
+            }
+        });
     }
 
     public void UpgradeATK()//공격력 업그레이드

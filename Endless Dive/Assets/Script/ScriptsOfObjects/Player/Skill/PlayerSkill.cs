@@ -22,8 +22,8 @@ public class PlayerSkill : MonoBehaviour
     public Text SkillCooltext;//스킬 쿨타임을 보여주는 텍스트
     public Text SkillLvltext;//스킬 쿨타임을 보여주는 텍스트
     [SerializeField] bool canUse = true;//스킬 사용 가능 여부
-    [SerializeField] List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
-    [SerializeField] List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
+    public List<SkillSO> skillSOSets;//스킬 관련 변수가 담긴 SO(초기화용)
+    public List<SkillSO> skillSOs;//스킬 관련 변수가 담긴 SO(보관용)
     public List<GameObject> bullets;//필드에 나와있는 탄환들(재사용을 위한)
     public bool isDisableATK = false;
     public bool isDisableOperation = false;

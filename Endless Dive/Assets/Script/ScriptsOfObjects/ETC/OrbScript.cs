@@ -14,6 +14,7 @@ public class OrbScript : MonoBehaviour
     public OrbKind orbKind;//오브의 종류
     public bool isFinded;//발견상태의 여부
     public GameObject player;//해당 오브젝트가 점점 빨라지는 속도로 다가갈 플레이어
+    public int amount;//한 번 획득했을 때 얻게 될 양
 
     void Awake()
     {
@@ -109,11 +110,11 @@ public class OrbScript : MonoBehaviour
         {
             if (orbKind == OrbKind.AetherEnergy)//플레이어와 충돌했을 때 플레이어의 xp 증가
             {
-                collision.GetComponent<PlayerStat>().AddAether();
+                collision.GetComponent<PlayerStat>().AddAether(amount);
             }
             else if (orbKind == OrbKind.HP)//플레이어와 충돌했을 때 플레이어의 체력 회복
             {
-                collision.GetComponent<PlayerStat>().HP.Heal(1);
+                collision.GetComponent<PlayerStat>().HP.Heal(amount);
             }
             gameObject.SetActive(false);
         }

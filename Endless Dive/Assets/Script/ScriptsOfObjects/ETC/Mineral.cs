@@ -29,8 +29,7 @@ public class Mineral : MonoBehaviour
         currectQuantity-=mineAmount;
         if (miner.GetComponent<PlayerStat>() != null)
         {
-            miner.GetComponent<PlayerStat>().mineralNum+=mineAmount;
-            miner.GetComponent<PlayerStat>().mineralText.text = miner.GetComponent<PlayerStat>().mineralNum.ToString();
+            miner.GetComponent<PlayerStat>().AddAether(mineAmount);
 
             // getherer.GetComponent<PlayerStat>().addXP();
         }

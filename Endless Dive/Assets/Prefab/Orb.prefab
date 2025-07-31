@@ -141,7 +141,7 @@ MonoBehaviour:
   orbKind: 1
   isFinded: 0
   player: {fileID: 0}
-  duration: 0.5
+  amount: 1
 --- !u!50 &3424174128938245041
 Rigidbody2D:
   serializedVersion: 5
