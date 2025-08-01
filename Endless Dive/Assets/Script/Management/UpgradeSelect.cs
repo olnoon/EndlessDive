@@ -59,7 +59,6 @@ public class UpgradeSelect : MonoBehaviour
         }
         transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() =>
         {
-            Debug.Log("111111");
             skill.skillSOs[0].skillLvl++;
             player.GetComponent<PlayerStat>().currentAether -= Mathf.RoundToInt(data.level_up_RequiredEnergy);
             foreach (Transform child in transform.parent)
