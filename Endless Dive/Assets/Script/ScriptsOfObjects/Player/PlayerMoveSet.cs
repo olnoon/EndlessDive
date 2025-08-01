@@ -15,7 +15,7 @@ public class PlayerMoveSet : MonoBehaviour
     public GameObject mineral;//타겟팅된 미네랄
     public bool isDisableOperation;//조작 불가 상태
     public bool isExitable;//지역 이탈 가능 여부
-    public bool isTriedExit;//지역 이탈 시도
+    public bool isExiting;//중복 이탈 시도를 방지하기 위해 만든 변수
     public GameObject exitTimeBarBG;//필드를 이탈하기까지의 시간을 표시할 UI의 배경
     public Image exitTimeBarFilled;//필드를 이탈하기까지의 시간을 표시할 UI
     public Text exitTimeText;//필드를 이탈하기까지의 시간을 표시할 UI의 텍스트
@@ -37,7 +37,7 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isExitable && !isTriedExit)
+        if (Input.GetKeyDown(KeyCode.F) && isExitable && !isExiting)
         {
             StartCoroutine(CheckExitZone());
         }
@@ -59,7 +59,7 @@ public class PlayerMoveSet : MonoBehaviour
             if (!Input.GetKey(KeyCode.F))//지역 이탈 포기
             {
                 exitTimeBarBG.SetActive(false);
-                foreach (PlayerSkill skill in GetComponents<PlayerSkill>())//스킬발동 활성화
+                foreach (PlayerSkill skill in GetComponents<PlayerSkill>())//스킬 발동 활성화
                 {
                     skill.isDisableOperation = false;
                 }
@@ -70,7 +70,7 @@ public class PlayerMoveSet : MonoBehaviour
             repeatAmount++;
             yield return new WaitForSeconds(0.1f);
         }
-        isTriedExit = true;
+        isExiting = true;//지역 이탈 시도 활성화
         StartCoroutine(ExitZone());//지역 이탈 루틴 실행
     }
 
@@ -93,7 +93,7 @@ public class PlayerMoveSet : MonoBehaviour
 
         isExitable = false;//지역 이탈 비활성화
 
-        isTriedExit = false;//지역 이탈 시도 비활성화
+        isExiting = false;//지역 이탈 시도 초기화
 
         GetComponent<PlayerStat>().GM.FadeOut(true);//암전 효과
     }
