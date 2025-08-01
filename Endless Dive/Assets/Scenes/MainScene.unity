@@ -1098,6 +1098,7 @@ MonoBehaviour:
   mineral: {fileID: 0}
   isDisableOperation: 0
   isExitable: 0
+  isExiting: 0
   exitTimeBarBG: {fileID: 1697811042}
   exitTimeBarFilled: {fileID: 2104831512}
   exitTimeText: {fileID: 1805275519}
@@ -1113,7 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb43188e033eb24c8be1e2edb546658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: {fileID: 0}
+  Level: 1
   stat: {fileID: 11400000, guid: 36850da81b3b4d549b513c2a6c8dd092, type: 2}
   bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}
   targetEnemy: {fileID: 0}
@@ -1122,8 +1123,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 197016563}
   isToggleATK: 1
   isDisableATK: 0
-  currentaAether: 0
-  mineralNum: 0
+  currentAether: 0
   mineralText: {fileID: 663686066}
   HPBarBackground: {fileID: 1688401659}
   HPBarFilled: {fileID: 697511294}
@@ -1197,6 +1197,7 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
+  isRepeatCooling: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,6 +1224,7 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
+  isRepeatCooling: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,6 +1251,7 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
+  isRepeatCooling: 0
 --- !u!114 &384228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1275,6 +1278,7 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
+  isRepeatCooling: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
