@@ -28,7 +28,8 @@ public class PlayerSkill : MonoBehaviour
     public bool isDisableATK = false;
     public bool isDisableOperation = false;
     Action skillEffect;
-    public bool isCooling;
+    public bool isCooling;//스킬에 대한 쿨타임 중 인지의 여부
+    public bool isRepeatCooling;//반복에 대한 쿨타임 중 인지의 여부
 
     void Start()
     {
@@ -90,7 +91,7 @@ public class PlayerSkill : MonoBehaviour
     void DetermineSkill()//어떤 스킬을 실행할지 판단 및 스킬을 반복시켜주는 코루틴 실행
     {
         //canUse가 false이거나 쿨타임이 돌고 있거나 광물을 채굴중이여서 isDiableATK가 켜져 있거나 조작 불가능 상태가 켜져있으면 리턴
-        if (!canUse || isCooling || isDisableATK || isDisableOperation)
+        if (!canUse || isDisableATK || isDisableOperation)
         {
             return;
         }
@@ -145,7 +146,13 @@ public class PlayerSkill : MonoBehaviour
                 break;
 
             // 실제 효과 실행
+            if (isRepeatCooling)
+            {
+                yield return null;
+                continue;
+            }
             skillEffect?.Invoke();
+
             if (!isCooling)
             {
                 StartCoroutine(SkillCooling());
@@ -156,7 +163,7 @@ public class PlayerSkill : MonoBehaviour
             RepeatNum--;
 
             // 다음 반복 전 대기
-            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+            StartCoroutine(SkillRepeatCooling());
         }
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
@@ -274,6 +281,24 @@ public class PlayerSkill : MonoBehaviour
             yield return null;
         }
         isCooling = false;
+    }
+    
+    public IEnumerator SkillRepeatCooling()//스킬 반복 쿨타임
+    {
+        isRepeatCooling = true;
+
+        float skillCoolingRepeatTimer = skillSOs[0].skillRepeatCooldown_Now;//쿨타임 초기화
+
+        while (true)
+        {
+            if (skillCoolingRepeatTimer <= 0)//쿨타임이 0일 시 브레이크
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+            skillCoolingRepeatTimer--;//0.1초후 쿨타임에 -1
+        }
+        isRepeatCooling = false;
     }
 
     void TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴

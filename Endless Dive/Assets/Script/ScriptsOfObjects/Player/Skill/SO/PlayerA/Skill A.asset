@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillId: 0
   skillName: Skill A
-  skillLvl: 0
+  skillLvl: 6
   isGetKey: 0
   skillCooldown_Origin: 10
   skillCooldown_Now: 10
   skillRepeat_Origin: 10
   skillRepeat_Now: 10
-  skillRepeatCooldown_Origin: 0.7
-  skillRepeatCooldown_Now: 0.7
+  skillRepeatCooldown_Origin: 7
+  skillRepeatCooldown_Now: 7
   skillMaxCharges_Origin: 10
   skillMaxCharges_Now: 10
   skillType: 3
