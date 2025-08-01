@@ -14,7 +14,8 @@ public class PlayerMoveSet : MonoBehaviour
     public float maxY = 5f;//Y좌표 최대제한
     public GameObject mineral;//타겟팅된 미네랄
     public bool isDisableOperation;//조작 불가 상태
-    public bool isExitable;
+    public bool isExitable;//지역 이탈 가능 여부
+    public bool isTriedExit;//지역 이탈 시도
     public GameObject exitTimeBarBG;//필드를 이탈하기까지의 시간을 표시할 UI의 배경
     public Image exitTimeBarFilled;//필드를 이탈하기까지의 시간을 표시할 UI
     public Text exitTimeText;//필드를 이탈하기까지의 시간을 표시할 UI의 텍스트
@@ -36,7 +37,7 @@ public class PlayerMoveSet : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && isExitable)
+        if (Input.GetKeyDown(KeyCode.F) && isExitable && !isTriedExit)
         {
             StartCoroutine(CheckExitZone());
         }
@@ -69,6 +70,7 @@ public class PlayerMoveSet : MonoBehaviour
             repeatAmount++;
             yield return new WaitForSeconds(0.1f);
         }
+        isTriedExit = true;
         StartCoroutine(ExitZone());//지역 이탈 루틴 실행
     }
 
@@ -90,6 +92,8 @@ public class PlayerMoveSet : MonoBehaviour
         gameObject.SetActive(false);//업그레이드씬에서 방해되지 않게 비활성화
 
         isExitable = false;//지역 이탈 비활성화
+
+        isTriedExit = false;//지역 이탈 시도 비활성화
 
         GetComponent<PlayerStat>().GM.FadeOut(true);//암전 효과
     }

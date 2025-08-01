@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PlayerStat : MonoBehaviour
 {
-    public SingleStatSO Level;//레벨
+    public int Level;//레벨
     public PlayerStatsSetSO stat;//플레이어 스텟 초깃값
     public GaugeStatRuntime HP;//플레이어 체력
     public RatioStatRuntime ATK;//모든 공격력에 영향을 주는 능력치
