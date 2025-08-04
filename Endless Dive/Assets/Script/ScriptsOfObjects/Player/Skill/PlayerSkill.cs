@@ -36,7 +36,8 @@ public class PlayerSkill : MonoBehaviour
         bulletSpawnPoint = GetComponent<PlayerStat>().bulletSpawnPoint;
         skillSOs = new List<SkillSO>(skillSOSets);
         skillCoolingTimer = skillSOs[0].skillCooldown_Now;
-        
+
+        SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
         StartCoroutine(SkillCooling());
     }
 
@@ -159,6 +160,7 @@ public class PlayerSkill : MonoBehaviour
             }
 
             skillCharges--;
+            SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
             RepeatNum--;
 
@@ -274,10 +276,10 @@ public class PlayerSkill : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.1f);
                 skillCoolingTimer--;//0.1초후 쿨타임에 -1
-                SkillCooltext.text = $"{skillCoolingTimer}/{skillSOs[0].skillCooldown_Now}";
             }
             skillCharges++;
-
+            SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
+            
             yield return null;
         }
         isCooling = false;

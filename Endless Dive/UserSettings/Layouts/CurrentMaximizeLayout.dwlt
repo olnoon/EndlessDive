@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 192
+  controlID: 43
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 193
+  controlID: 44
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 194
+  controlID: 45
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -244,9 +244,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: fabe0000
-      m_LastClickedID: 48890
-      m_ExpandedIDs: 2cebffffcaeeffff08fbfffff4ffffff50bc000060bc00008cbc0000
+      m_SelectedIDs: c4e50000
+      m_LastClickedID: 58820
+      m_ExpandedIDs: acaeffff30b1ffffb6b6ffff56d7fffff8d7ffff4aeaffff08fbfffff4ffffff4ebc0000f4bd0000fccd00007ae300008ae30000cae300002ae40000bae50000cee70000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -909,9 +909,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 5.7171655, y: 1.472254, z: -0.019251935}
+    m_Target: {x: -0.8744545, y: -4.58259, z: 78.87014}
     speed: 2
-    m_Value: {x: 5.7171655, y: 1.472254, z: -0.019251935}
+    m_Value: {x: -0.8744545, y: -4.58259, z: 78.87014}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -961,9 +961,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 11.925186
+    m_Target: 4.347932
     speed: 2
-    m_Value: 11.925186
+    m_Value: 4.347932
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Script/ScriptsOfObjects/Player/Skill
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1082,31 +1082,31 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Script/ScriptsOfObjects/Player/Skill
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\syndy\\Desktop\\Spacewar\\\uBCF4\uB0B4\uAE30\\EndlessDive\\Endless
     Dive"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0abc0000
-    m_LastClickedID: 48138
-    m_ExpandedIDs: 000000007eb200000cbc000024bd0000ffffff7f
+    scrollPos: {x: 0, y: 43.333344}
+    m_SelectedIDs: 52b80000
+    m_LastClickedID: 47186
+    m_ExpandedIDs: 000000007eb200008ab4000044b8000046b80000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Script
-      m_OriginalName: Script
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 48140
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 10}
@@ -1147,8 +1147,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: fabe0000
-    m_LastClickedInstanceID: 48890
+    m_SelectedInstanceIDs: c4e50000
+    m_LastClickedInstanceID: 58820
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000dcb30000ecb3000096b00000eee90100dcb0000000000000
     m_RenameOverlay:
@@ -1298,8 +1298,8 @@ MonoBehaviour:
     y: 0
     width: 404
     height: 581.3333
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
