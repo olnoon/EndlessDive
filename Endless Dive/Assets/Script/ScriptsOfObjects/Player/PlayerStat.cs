@@ -92,7 +92,10 @@ public class PlayerStat : MonoBehaviour
         GetComponent<PlayerMoveSet>().exitTimeText = newMove.exitTimeText;
 
         if (lvltext != null)
-            lvltext.text = $"{newStat.Level}";
+            lvltext.text = $"{Level}";
+
+        if (lvltext != null)
+            mineralText.text = $"{currentAether}";
 
         for (int i = 0; i < GetComponents<PlayerSkill>().Length; i++)
         {
@@ -186,7 +189,7 @@ public class PlayerStat : MonoBehaviour
     public void AddAether(int amount)//에테르 증가
     {
         currentAether+=amount;
-        lvltext.text = currentAether.ToString();
+        mineralText.text = currentAether.ToString();
     }
 
     IEnumerator FindEnemy()//0.2초 마다 주변의 적들을 찾음

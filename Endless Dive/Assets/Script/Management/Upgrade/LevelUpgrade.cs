@@ -9,10 +9,12 @@ public class LevelUpgrade : MonoBehaviour
     [SerializeField] GameObject player;//플레이어
     public GameManager GM;//게임메니저
     public GameObject statUpgraderParent;
+    public Text remainMineralText;
 
     void Awake()
     {
         GM = FindAnyObjectByType<GameManager>();
+        GM.ShowMinerals(remainMineralText);
     }
 
     void Start()
@@ -82,5 +84,6 @@ public class LevelUpgrade : MonoBehaviour
             child.GetComponent<StatUpgrade>().SetStatUpgrade();
         }
         transform.parent.gameObject.SetActive(false);
+        GM.ShowMinerals(remainMineralText);
     }
 }

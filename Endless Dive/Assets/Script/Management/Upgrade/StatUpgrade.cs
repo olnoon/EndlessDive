@@ -26,6 +26,7 @@ public class StatUpgrade : MonoBehaviour
     public GameManager GM;//게임메니저
     List<UpgradeOption> choices;//선택지들
     public GameObject levelUpgrader;
+    public Text remainMineralText;
     void Awake()
     {
         GM = FindAnyObjectByType<GameManager>();
@@ -65,5 +66,6 @@ public class StatUpgrade : MonoBehaviour
         levelUpgrader.transform.parent.gameObject.SetActive(true);
         levelUpgrader.GetComponent<LevelUpgrade>().SetLevelUpgrade();
         transform.parent.parent.gameObject.SetActive(false);
+        GM.ShowMinerals(remainMineralText);
     }
 }

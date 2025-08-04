@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         // 이벤트 등록 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    
+
     // 씬이 로드되었을 때 실행되는 메서드
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
         GameObject newPlayer = null;
         GameObject oldPlayer = null;
-        
+
         foreach (GameObject Obj in players)
         {
             if (Obj.activeSelf)
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         enemySpawnRoutine = StartCoroutine(SpawnTempEnemy());
         GiveMainMission();
     }
-    
+
     void ClearVars()//눌익셉션 방지를 위해 변수들을 Clear해주는 메서드
     {
         enemies.Clear();
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
         StopCoroutine(enemySpawnRoutine);
         enemySpawnRoutine = null;
     }
-    
+
     public void FadeOut(bool isUpgrade)//isUpgrade는 Upgrade씬으로 이동할건지를 뜻함
     {
         StartCoroutine(Fade(0f, 1f, isUpgrade)); // 화면을 암전
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 
         yield return null;
 
-        if(isUpgrade)
+        if (isUpgrade)
         {
             SceneLoader.Instance.LoadScene("UpgradeScene");
         }
@@ -289,5 +289,10 @@ public class GameManager : MonoBehaviour
             }
             target.GetComponent<PlayerStat>().HP.TakeDamage(ATK * weight);
         }
+    }
+
+    public void ShowMinerals(Text remainMineralText)
+    {
+        remainMineralText.text = $"현재 보유 자원 : {players[0].GetComponent<PlayerStat>().currentAether}";
     }
 }
