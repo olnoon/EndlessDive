@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public float fadeDuration = 1f;// - 씬이 시작될 때 호출됨
     public Coroutine enemySpawnRoutine;//씬이 바뀔때 눌익셉션과 바뀐씬에서의 적 스폰 방지를 위한 변수
     public List<GameObject> players;
+    public GameObject statWindow;
 
     void Awake()
     {
@@ -55,6 +56,14 @@ public class GameManager : MonoBehaviour
     {
         enemySpawnRoutine = StartCoroutine(SpawnTempEnemy());
         GiveMainMission();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))//Tab키 감지
+        {
+            ShowStatWindow();
+        }
     }
 
     void OnEnable()
@@ -294,5 +303,58 @@ public class GameManager : MonoBehaviour
     public void ShowMinerals(Text remainMineralText)
     {
         remainMineralText.text = $"현재 보유 자원 : {players[0].GetComponent<PlayerStat>().currentAether}";
+    }
+
+    
+
+    void ShowStatWindow()
+    {
+        if (statWindow == null)//statWindow가 비어있을시 할당시켜줌
+        {
+            GameObject canvas = null;
+
+            foreach (Canvas each in FindObjectsByType<Canvas>(FindObjectsSortMode.None))
+            {
+                if (each != null && each.transform.parent == null)
+                {
+                    canvas = each.gameObject;
+                    break;
+                }
+            }
+
+            foreach (Transform child in canvas.transform)
+            {
+                if (child.gameObject.name == "StatWindowBackground")
+                {
+                    statWindow = child.gameObject;
+                    Debug.Log(FindAnyObjectByType<Canvas>().name);
+                    break;
+                }
+            }
+        }
+        
+        if (statWindow.activeSelf)//statWindow가 활성화 되어있다면 꺼 줌(편의성)
+        {
+            HideStatWindow();
+            return;
+        }
+
+        if (players[0].GetComponent<PlayerMoveSet>().isDisableOperation && SceneManager.GetActiveScene().name == "MainScene")//만약의 경우에 씬 넘어갈때 Tab키를 눌렀을 때 게임이 고장나는 것을 방지
+        {
+            return;
+        }
+
+        //StatWindow를 활성화, Stat들을 업데이트 시켜줌, StatWindow를 비활성화시키는 버튼에 HideStatWidow를 구독 시켜줌, 시간을 멈춤
+        statWindow.SetActive(true);
+        statWindow.transform.GetChild(0).GetComponent<StatWindow>().UpdateStat(players[0]);
+        statWindow.transform.GetChild(0).GetComponent<StatWindow>().exitBTN.onClick.RemoveAllListeners();
+        statWindow.transform.GetChild(0).GetComponent<StatWindow>().exitBTN.onClick.AddListener(HideStatWindow);
+        PauseTime(0);
+    }
+
+    void HideStatWindow()//StatWidow 비활성화 및 시간을 다시 흐르게 함
+    {
+        statWindow.SetActive(false);
+        PauseTime(1);
     }
 }

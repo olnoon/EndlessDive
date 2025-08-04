@@ -13,8 +13,8 @@ public class PlayerStat : MonoBehaviour
     public RatioStatRuntime ATK;//모든 공격력에 영향을 주는 능력치
     public SingleStatRuntime phyAtk;//물리 기반 공격력
     public SingleStatRuntime enAtk;//에너지 기반 공격력
-    public RatioStatRuntime Cri;//크리티컬 대미지
-    public RatioStatRuntime Dam;//크리티컬 확률
+    public RatioStatRuntime Cri;//크리티컬 확률
+    public RatioStatRuntime Dam;//크리티컬 대미지
     public RatioStatRuntime Dex;// 쿨타임 감소에 영향을 주는 능력치
     public RatioStatRuntime MeleeRange;// 근접 공격 사거리에 영향을 주는 능력치
     public SingleStatRuntime ARM;// 받는 피해를 줄이는 방어력 스탯
@@ -90,6 +90,7 @@ public class PlayerStat : MonoBehaviour
         GetComponent<PlayerMoveSet>().exitTimeBarBG = newMove.exitTimeBarBG;
         GetComponent<PlayerMoveSet>().exitTimeBarFilled = newMove.exitTimeBarFilled;
         GetComponent<PlayerMoveSet>().exitTimeText = newMove.exitTimeText;
+        
 
         if (lvltext != null)
             lvltext.text = $"{Level}";
@@ -132,7 +133,7 @@ public class PlayerStat : MonoBehaviour
             GetComponent<Rigidbody2D>().mass = 1000000;
             GetComponent<Rigidbody2D>().linearDamping = 1000000;
             GetComponent<Rigidbody2D>().angularDamping = 1000000;
-            
+
             //무적일시 모든 디버프 제거
             foreach (AbnormalStatus buff in GetComponents<AbnormalStatus>())
             {
@@ -164,7 +165,7 @@ public class PlayerStat : MonoBehaviour
 
         CalculateMouseCoord();
     }
-
+    
     void AttackMethod()//마우스 오른쪽, 왼쪽 입력 감지
     {
         if (!isDisableATK)
