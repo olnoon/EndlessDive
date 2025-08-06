@@ -27,3 +27,5 @@ MonoBehaviour:
   skillType: 1
   bulletPrefab: {fileID: 2525984864775521835, guid: 26428746a93c34942a9c079b37b6f085, type: 3}
   chargeAll: 0
+  MinUsageInterval: 1
+  isMultiple: 1

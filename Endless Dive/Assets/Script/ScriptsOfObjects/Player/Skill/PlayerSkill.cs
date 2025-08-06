@@ -31,7 +31,8 @@ public class PlayerSkill : MonoBehaviour
     public bool isCooling;//스킬에 대한 쿨타임 중 인지의 여부
     [SerializeField] int repeat;//스킬 반복 횟수
     [SerializeField] float repeatCooldown;//효과적용 간격
-    [SerializeField] float MinUsageInterval;//스킬 최소 사용 간격
+    [SerializeField] float skillCoolingRepeatTimer;//스킬 최소 사용 간격
+    [SerializeField] bool isUsageCooling;//반복에 대한 쿨타임 중 인지의 여부
 
     void Start()
     {
@@ -133,9 +134,31 @@ public class PlayerSkill : MonoBehaviour
             Debug.LogWarning("skillEffect is not set!");
             yield break;
         }
+        
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
+        {
+            if (skillSOs[0].isMultiple)
+            {
+                break;
+            }
+            
+            if (playerSkill != this)
+            {
+                playerSkill.isDisableATK = true;
+            }
+        }
 
         while (skillCharges > 0)
         {
+            while (true)
+            {
+                if (isUsageCooling)
+                {
+                    yield return null;
+                    continue;
+                }
+                break;
+            }
             //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
             if (isDisableATK || !Input.GetKey(key))
             {
@@ -143,14 +166,8 @@ public class PlayerSkill : MonoBehaviour
             }
 
             repeat = skillSOs[0].skillRepeat_Now;
-            MinUsageInterval = skillSOs[0].MinUsageInterval;
 
-            while (repeat > 0)
-            {
-                skillEffect?.Invoke();
-                repeat--;
-                yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
-            }
+            StartCoroutine(RepeatSkillEffect());
 
             skillCharges--;
 
@@ -159,9 +176,14 @@ public class PlayerSkill : MonoBehaviour
                 StartCoroutine(SkillCooling());
             }
 
+            if (!isUsageCooling)
+            {
+                StartCoroutine(SkillRepeatCooling());
+            }
+
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
-            yield return new WaitForSeconds(MinUsageInterval);
+            yield return null; //new WaitForSeconds(MinUsageInterval);
         }
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
@@ -170,16 +192,18 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
+    IEnumerator RepeatSkillEffect()//스킬을 한번 쓸 때 skillSOs[0].skillRepeatCooldown_Now번 실행
+    {
+        while (repeat > 0)
+        {
+            skillEffect?.Invoke();
+            repeat--;
+            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+        }
+    }
+
     void MineMineral()
     {
-        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
-        {
-            if (playerSkill != this)
-            {
-                playerSkill.isDisableATK = true;
-            }
-        }
-
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
             foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
@@ -251,7 +275,25 @@ public class PlayerSkill : MonoBehaviour
         theBullet.GetComponent<Bullet>().EnATK = new SingleStatRuntime(GetComponent<PlayerStat>().enAtk.FinalValue);
         theBullet.GetComponent<Bullet>().GM = GetComponent<PlayerStat>().GM;
     }
+ 
+    public IEnumerator SkillRepeatCooling()//스킬 반복 쿨타임
+    {
+        isUsageCooling = true;
 
+        skillCoolingRepeatTimer = skillSOs[0].MinUsageInterval;//쿨타임 초기화
+
+        while (true)
+        {
+            if (skillCoolingRepeatTimer <= 0)//쿨타임이 0일 시 브레이크
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+            skillCoolingRepeatTimer--;//0.1초후 쿨타임에 -1
+        }
+        isUsageCooling = false;
+    }
+    
     public IEnumerator SkillCooling()//스킬 쿨타임
     {
         isCooling = true;
@@ -261,7 +303,6 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].skillMaxCharges_Now <= skillCharges)
             {
-                Debug.Log($"{skillSOs[0].skillMaxCharges_Now} & {skillCharges}");
                 break;
             }
 
@@ -276,7 +317,7 @@ public class PlayerSkill : MonoBehaviour
             }
             skillCharges++;
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
-            
+
             yield return null;
         }
         isCooling = false;

@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public Coroutine enemySpawnRoutine;//씬이 바뀔때 눌익셉션과 바뀐씬에서의 적 스폰 방지를 위한 변수
     public List<GameObject> players;
     public GameObject statWindow;
+    [Header("디버그용 스폰 가능/불가능 여부")]
+    public bool isSpawnAble;
 
     void Awake()
     {
@@ -161,6 +163,11 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
+            if (!isSpawnAble)
+            {
+                yield return null;
+                continue;
+            }
             Vector2 pos = new Vector2(1, 1);
             EnemyKind kind = EnemyKind.A;
             int num = 1;

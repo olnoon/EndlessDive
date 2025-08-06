@@ -1466,7 +1466,7 @@ MonoBehaviour:
   key: 323
   bulletSpawnPoint: {fileID: 197016563}
   skillCoolingTimer: 1
-  skillCharges: 3
+  skillCharges: 1
   SkillCooltext: {fileID: 446041809}
   SkillLvltext: {fileID: 1816614371}
   canUse: 1
@@ -1524,7 +1524,7 @@ MonoBehaviour:
   key: 32
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 1
+  skillCharges: 10
   SkillCooltext: {fileID: 1000842527}
   SkillLvltext: {fileID: 1110994546}
   canUse: 1
