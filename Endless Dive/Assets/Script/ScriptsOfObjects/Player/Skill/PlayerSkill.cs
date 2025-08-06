@@ -99,9 +99,9 @@ public class PlayerSkill : MonoBehaviour
         {
             return;
         }
-        
+
         canUse = false;
-        
+
         //스킬타입에 맞는 스킬을 skillEffect 변수에 구독
         switch (skillSOs[0].skillType)
         {
@@ -148,12 +148,16 @@ public class PlayerSkill : MonoBehaviour
             }
         }
 
-        while (skillCharges > 0)
+        while (true)
         {
             while (true)
             {
-                if (isUsageCooling)
+                if (isUsageCooling || skillCharges <= 0)
                 {
+                    foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+                    {
+                        playerSkill.isDisableATK = false;
+                    }
                     yield return null;
                     continue;
                 }
@@ -165,7 +169,13 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
 
-            repeat = skillSOs[0].skillRepeat_Now;
+            if (!Input.GetKey(key))
+            {
+                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+                {
+                    playerSkill.isDisableATK = false;
+                }
+            }
 
             StartCoroutine(RepeatSkillEffect());
 
@@ -183,19 +193,21 @@ public class PlayerSkill : MonoBehaviour
 
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
-            yield return null; //new WaitForSeconds(MinUsageInterval);
-        }
+            if (!skillSOs[0].autoUse)//autoUse가 아니면 한번 만 실행
+            {
+                yield break;
+            }
 
-        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
-        {
-            playerSkill.isDisableATK = false;
+            yield return null; //new WaitForSeconds(MinUsageInterval);
         }
     }
 
     IEnumerator RepeatSkillEffect()//스킬을 한번 쓸 때 skillSOs[0].skillRepeatCooldown_Now번 실행
     {
+        repeat = skillSOs[0].skillRepeat_Now;
         while (repeat > 0)
         {
+            Debug.Log(skillEffect == null);
             skillEffect?.Invoke();
             repeat--;
             yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
@@ -219,7 +231,7 @@ public class PlayerSkill : MonoBehaviour
 
     void SkillA()
     {
-        if (!canUse || isDisableATK)
+        if (isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 A발동");
@@ -230,7 +242,7 @@ public class PlayerSkill : MonoBehaviour
 
     void SkillB()
     {
-        if (!canUse || isDisableATK)
+        if (isDisableATK)
             return;
 
         Debug.Log($"{key} 스킬 B발동");

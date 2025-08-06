@@ -22,6 +22,7 @@ public class SkillSO : ScriptableObject
     public bool chargeAll;
     public float MinUsageInterval;//스킬 최소 사용 간격
     public bool isMultiple;//스킬 동시사능 가능 여부
+    public bool autoUse;//스킬 자동사용
 
     public void InitializeFromSelf()
     {
