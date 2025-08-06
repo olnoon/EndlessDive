@@ -22,8 +22,8 @@ MonoBehaviour:
   skillRepeat_Now: 10
   skillRepeatCooldown_Origin: 7
   skillRepeatCooldown_Now: 7
-  skillMaxCharges_Origin: 10
-  skillMaxCharges_Now: 10
+  skillMaxCharges_Origin: 1
+  skillMaxCharges_Now: 1
   skillType: 3
   bulletPrefab: {fileID: 0}
   chargeAll: 0

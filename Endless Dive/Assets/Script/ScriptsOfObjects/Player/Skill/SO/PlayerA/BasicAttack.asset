@@ -16,14 +16,15 @@ MonoBehaviour:
   skillName: BasicAttack
   skillLvl: 3
   isGetKey: 0
-  skillCooldown_Origin: 7
-  skillCooldown_Now: 7
-  skillRepeat_Origin: 10
-  skillRepeat_Now: 10
-  skillRepeatCooldown_Origin: 7
-  skillRepeatCooldown_Now: 7
-  skillMaxCharges_Origin: 10
-  skillMaxCharges_Now: 10
+  skillCooldown_Origin: 10
+  skillCooldown_Now: 10
+  skillRepeat_Origin: 6
+  skillRepeat_Now: 6
+  skillRepeatCooldown_Origin: 0.1
+  skillRepeatCooldown_Now: 0.1
+  skillMaxCharges_Origin: 1
+  skillMaxCharges_Now: 1
   skillType: 0
   bulletPrefab: {fileID: 2525984864775521835, guid: 0b1151cf9aff3cc4b9bc282f9f78819a, type: 3}
   chargeAll: 0
+  MinUsageInterval: 0.1

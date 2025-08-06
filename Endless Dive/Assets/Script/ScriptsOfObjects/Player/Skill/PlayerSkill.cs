@@ -29,7 +29,9 @@ public class PlayerSkill : MonoBehaviour
     public bool isDisableOperation = false;
     Action skillEffect;
     public bool isCooling;//스킬에 대한 쿨타임 중 인지의 여부
-    public bool isRepeatCooling;//반복에 대한 쿨타임 중 인지의 여부
+    [SerializeField] int repeat;//스킬 반복 횟수
+    [SerializeField] float repeatCooldown;//효과적용 간격
+    [SerializeField] float MinUsageInterval;//스킬 최소 사용 간격
 
     void Start()
     {
@@ -125,8 +127,6 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
-        int RepeatNum = skillSOs[0].skillRepeat_Now;
-
         // skillEffect 미할당 방지
         if (skillEffect == null)
         {
@@ -134,38 +134,34 @@ public class PlayerSkill : MonoBehaviour
             yield break;
         }
 
-        while (skillCharges > 0 && RepeatNum > 0)
+        while (skillCharges > 0)
         {
-            //광물 채굴중이여서 isDisableATK가 켜져있으면 코루틴을 끝내줌
-            if (isDisableATK)
+            //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
+            if (isDisableATK || !Input.GetKey(key))
             {
                 yield break;
             }
 
-            // 키 입력 체크: 필요 없으면 제거 가능
-            if (!Input.GetKey(key))
-                break;
+            repeat = skillSOs[0].skillRepeat_Now;
+            MinUsageInterval = skillSOs[0].MinUsageInterval;
 
-            // 실제 효과 실행
-            if (isRepeatCooling)
+            while (repeat > 0)
             {
-                yield return null;
-                continue;
+                skillEffect?.Invoke();
+                repeat--;
+                yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
             }
-            skillEffect?.Invoke();
+
+            skillCharges--;
 
             if (!isCooling)
             {
                 StartCoroutine(SkillCooling());
             }
 
-            skillCharges--;
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
-            RepeatNum--;
-
-            // 다음 반복 전 대기
-            StartCoroutine(SkillRepeatCooling());
+            yield return new WaitForSeconds(MinUsageInterval);
         }
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
@@ -265,6 +261,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].skillMaxCharges_Now <= skillCharges)
             {
+                Debug.Log($"{skillSOs[0].skillMaxCharges_Now} & {skillCharges}");
                 break;
             }
 
@@ -283,24 +280,6 @@ public class PlayerSkill : MonoBehaviour
             yield return null;
         }
         isCooling = false;
-    }
-    
-    public IEnumerator SkillRepeatCooling()//스킬 반복 쿨타임
-    {
-        isRepeatCooling = true;
-
-        float skillCoolingRepeatTimer = skillSOs[0].skillRepeatCooldown_Now;//쿨타임 초기화
-
-        while (true)
-        {
-            if (skillCoolingRepeatTimer <= 0)//쿨타임이 0일 시 브레이크
-            {
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
-            skillCoolingRepeatTimer--;//0.1초후 쿨타임에 -1
-        }
-        isRepeatCooling = false;
     }
 
     void TriggerBullet()//Bullet생성 및 재사용, 또한 불렛의 변수들을 올바르게 초기화 시킴

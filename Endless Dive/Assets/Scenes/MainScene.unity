@@ -1414,7 +1414,6 @@ MonoBehaviour:
   gainRange: 10
   isInvincibility: 0
   mineAmount: 75
-  statWindow: {fileID: 1344656766}
 --- !u!70 &384228396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1467,7 +1466,7 @@ MonoBehaviour:
   key: 323
   bulletSpawnPoint: {fileID: 197016563}
   skillCoolingTimer: 1
-  skillCharges: 10
+  skillCharges: 3
   SkillCooltext: {fileID: 446041809}
   SkillLvltext: {fileID: 1816614371}
   canUse: 1
@@ -1478,7 +1477,9 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
-  isRepeatCooling: 0
+  repeat: 0
+  repeatCooldown: 0
+  MinUsageInterval: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,7 +1495,7 @@ MonoBehaviour:
   key: 304
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 10
+  skillCharges: 1
   SkillCooltext: {fileID: 85630788}
   SkillLvltext: {fileID: 485443324}
   canUse: 1
@@ -1505,7 +1506,9 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
-  isRepeatCooling: 0
+  repeat: 0
+  repeatCooldown: 0
+  MinUsageInterval: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1521,7 +1524,7 @@ MonoBehaviour:
   key: 32
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 10
+  skillCharges: 1
   SkillCooltext: {fileID: 1000842527}
   SkillLvltext: {fileID: 1110994546}
   canUse: 1
@@ -1532,7 +1535,9 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
-  isRepeatCooling: 0
+  repeat: 0
+  repeatCooldown: 0
+  MinUsageInterval: 0
 --- !u!114 &384228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,7 +1553,7 @@ MonoBehaviour:
   key: 324
   bulletSpawnPoint: {fileID: 0}
   skillCoolingTimer: 0
-  skillCharges: 10
+  skillCharges: 2
   SkillCooltext: {fileID: 1647858675}
   SkillLvltext: {fileID: 27024604}
   canUse: 1
@@ -1559,7 +1564,9 @@ MonoBehaviour:
   isDisableATK: 0
   isDisableOperation: 0
   isCooling: 0
-  isRepeatCooling: 0
+  repeat: 0
+  repeatCooldown: 0
+  MinUsageInterval: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
@@ -14064,6 +14071,7 @@ MonoBehaviour:
   blackScreen: {fileID: 176648803}
   fadeDuration: 1
   players: []
+  statWindow: {fileID: 0}
 --- !u!1 &1440840758
 GameObject:
   m_ObjectHideFlags: 0
