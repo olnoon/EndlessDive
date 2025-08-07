@@ -33,6 +33,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] float repeatCooldown;//효과적용 간격
     [SerializeField] float skillCoolingRepeatTimer;//스킬 최소 사용 간격
     [SerializeField] bool isUsageCooling;//반복에 대한 쿨타임 중 인지의 여부
+    [SerializeField] bool isUsingSkill;//스킬을 쓰고 있는지에 대한 여부
 
     void Start()
     {
@@ -69,7 +70,7 @@ public class PlayerSkill : MonoBehaviour
         }
 
         //key가 누르면 어떤 스킬을 실행할지 판단
-        if (Input.GetKeyDown(key) && Time.timeScale != 0)
+        if (Input.GetKeyDown(key) && Time.timeScale != 0 && !isUsingSkill)
         {
             DetermineSkill();
         }
@@ -128,6 +129,13 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
+        if (isUsingSkill)
+        {
+            yield break;
+        }
+
+        isUsingSkill = true;
+
         // skillEffect 미할당 방지
         if (skillEffect == null)
         {
@@ -153,6 +161,7 @@ public class PlayerSkill : MonoBehaviour
             //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
             if (isDisableATK)
             {
+                isUsingSkill = false;
                 yield break;
             }
 
@@ -165,6 +174,8 @@ public class PlayerSkill : MonoBehaviour
                 {
                     playerSkill.isDisableATK = false;
                 }
+
+                isUsingSkill = false;
                 yield break;
             }
 
@@ -189,6 +200,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
+                isUsingSkill = false;
                 yield break;
             }
         }
