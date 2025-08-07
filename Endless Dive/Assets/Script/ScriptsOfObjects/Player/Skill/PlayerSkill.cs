@@ -168,7 +168,13 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
 
-            StartCoroutine(RepeatSkillEffect());
+            repeat = skillSOs[0].skillRepeat_Now;
+            while (repeat > 0)
+            {
+                skillEffect?.Invoke();
+                repeat--;
+                yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+            }
 
             skillCharges--;//skillCharges에서 1을 뺌
 
@@ -185,17 +191,6 @@ public class PlayerSkill : MonoBehaviour
             {
                 yield break;
             }
-        }
-    }
-
-    IEnumerator RepeatSkillEffect()//스킬을 한번 쓸 때 skillSOs[0].skillRepeatCooldown_Now번 실행
-    {
-        repeat = skillSOs[0].skillRepeat_Now;
-        while (repeat > 0)
-        {
-            skillEffect?.Invoke();
-            repeat--;
-            yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
         }
     }
 

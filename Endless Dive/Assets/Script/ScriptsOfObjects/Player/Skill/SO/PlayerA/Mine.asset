@@ -20,13 +20,13 @@ MonoBehaviour:
   skillCooldown_Now: 10
   skillRepeat_Origin: 1
   skillRepeat_Now: 1
-  skillRepeatCooldown_Origin: 7
-  skillRepeatCooldown_Now: 7
+  skillRepeatCooldown_Origin: 0.1
+  skillRepeatCooldown_Now: 0.1
   skillMaxCharges_Origin: 1
   skillMaxCharges_Now: 1
   skillType: 2
   bulletPrefab: {fileID: 0}
   chargeAll: 1
-  MinUsageInterval: 1
+  MinUsageInterval: 0.1
   isMultiple: 0
   autoUse: 1

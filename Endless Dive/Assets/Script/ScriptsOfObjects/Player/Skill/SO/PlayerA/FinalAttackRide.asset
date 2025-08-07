@@ -18,14 +18,15 @@ MonoBehaviour:
   isGetKey: 0
   skillCooldown_Origin: 10
   skillCooldown_Now: 10
-  skillRepeat_Origin: 10
-  skillRepeat_Now: 10
-  skillRepeatCooldown_Origin: 7
-  skillRepeatCooldown_Now: 7
+  skillRepeat_Origin: 1
+  skillRepeat_Now: 1
+  skillRepeatCooldown_Origin: 0.1
+  skillRepeatCooldown_Now: 0.1
   skillMaxCharges_Origin: 2
   skillMaxCharges_Now: 2
   skillType: 1
   bulletPrefab: {fileID: 2525984864775521835, guid: 26428746a93c34942a9c079b37b6f085, type: 3}
   chargeAll: 0
-  MinUsageInterval: 1
+  MinUsageInterval: 0.1
   isMultiple: 1
+  autoUse: 0
