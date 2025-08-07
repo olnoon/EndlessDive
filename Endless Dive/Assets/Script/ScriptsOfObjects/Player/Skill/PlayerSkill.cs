@@ -157,6 +157,7 @@ public class PlayerSkill : MonoBehaviour
             }
 
             yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
+            yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
 
             if (!Input.GetKey(key))
             {
@@ -166,8 +167,6 @@ public class PlayerSkill : MonoBehaviour
                 }
                 yield break;
             }
-
-            yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
 
             StartCoroutine(RepeatSkillEffect());
 
