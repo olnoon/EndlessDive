@@ -154,15 +154,12 @@ public class PlayerSkill : MonoBehaviour
             {
                 if (isUsageCooling || skillCharges <= 0)
                 {
-                    foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
-                    {
-                        playerSkill.isDisableATK = false;
-                    }
                     yield return null;
                     continue;
                 }
                 break;
             }
+            
             //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
             if (isDisableATK || !Input.GetKey(key))
             {
@@ -175,6 +172,7 @@ public class PlayerSkill : MonoBehaviour
                 {
                     playerSkill.isDisableATK = false;
                 }
+                yield break;
             }
 
             StartCoroutine(RepeatSkillEffect());
@@ -207,7 +205,6 @@ public class PlayerSkill : MonoBehaviour
         repeat = skillSOs[0].skillRepeat_Now;
         while (repeat > 0)
         {
-            Debug.Log(skillEffect == null);
             skillEffect?.Invoke();
             repeat--;
             yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
