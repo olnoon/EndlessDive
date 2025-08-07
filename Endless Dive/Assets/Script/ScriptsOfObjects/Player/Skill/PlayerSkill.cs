@@ -150,21 +150,13 @@ public class PlayerSkill : MonoBehaviour
 
         while (true)
         {
-            while (true)
-            {
-                if (isUsageCooling || skillCharges <= 0)
-                {
-                    yield return null;
-                    continue;
-                }
-                break;
-            }
-            
             //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
-            if (isDisableATK || !Input.GetKey(key))
+            if (isDisableATK)
             {
                 yield break;
             }
+
+            yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
 
             if (!Input.GetKey(key))
             {
@@ -175,28 +167,25 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
 
+            yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
+
             StartCoroutine(RepeatSkillEffect());
 
-            skillCharges--;
+            skillCharges--;//skillCharges에서 1을 뺌
 
-            if (!isCooling)
+            if (!isCooling)//SkillCooling이 중복되지 않게 실행시켜 줌.
             {
                 StartCoroutine(SkillCooling());
             }
 
-            if (!isUsageCooling)
-            {
-                StartCoroutine(SkillRepeatCooling());
-            }
-
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
-            if (!skillSOs[0].autoUse)//autoUse가 아니면 한번 만 실행
+            StartCoroutine(SkillRepeatCooling());//MinUsageInterval만큼의 시간을 기다린 후 스킬을 쓸 수 있게 해줌
+
+            if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
                 yield break;
             }
-
-            yield return null; //new WaitForSeconds(MinUsageInterval);
         }
     }
 
@@ -289,17 +278,8 @@ public class PlayerSkill : MonoBehaviour
     {
         isUsageCooling = true;
 
-        skillCoolingRepeatTimer = skillSOs[0].MinUsageInterval;//쿨타임 초기화
+        yield return new WaitForSeconds(skillSOs[0].MinUsageInterval);
 
-        while (true)
-        {
-            if (skillCoolingRepeatTimer <= 0)//쿨타임이 0일 시 브레이크
-            {
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
-            skillCoolingRepeatTimer--;//0.1초후 쿨타임에 -1
-        }
         isUsageCooling = false;
     }
     
