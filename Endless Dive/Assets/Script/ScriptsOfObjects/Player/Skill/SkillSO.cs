@@ -21,6 +21,8 @@ public class SkillSO : ScriptableObject
     public GameObject bulletPrefab;//발사될 불렛의 프리팹
     public bool chargeAll;
     public float MinUsageInterval;//스킬 최소 사용 간격
+    public float startUp;//선딜레이
+    public float recovery;//후딜레이
     public bool isMultiple;//스킬 동시사능 가능 여부
     public bool autoUse;//스킬 자동사용
 

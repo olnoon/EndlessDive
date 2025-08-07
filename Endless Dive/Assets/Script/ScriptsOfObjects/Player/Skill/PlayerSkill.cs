@@ -170,6 +170,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (!Input.GetKey(key))
             {
+                StartCoroutine(RecoverSkills());
                 foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
                 {
                     playerSkill.isDisableATK = false;
@@ -178,6 +179,8 @@ public class PlayerSkill : MonoBehaviour
                 isUsingSkill = false;
                 yield break;
             }
+
+            yield return new WaitForSeconds(skillSOs[0].startUp);
 
             repeat = skillSOs[0].skillRepeat_Now;
             while (repeat > 0)
@@ -210,15 +213,21 @@ public class PlayerSkill : MonoBehaviour
     {
         if (GetComponent<PlayerMoveSet>().mineral == null)//광물이 없다고 판단 하면 다시 공격을 할 수 있게 해줌
         {
-            foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
-            {
-                playerSkill.isDisableATK = false;
-            }
+            StartCoroutine(RecoverSkills());
             return;
         }
         
         GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Mined(GetComponent<PlayerStat>().mineAmount);
         Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
+    }
+
+    IEnumerator RecoverSkills()//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
+    {
+        yield return new WaitForSeconds(skillSOs[0].recovery);
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
+        {
+            playerSkill.isDisableATK = false;
+        }
     }
 
     void SkillA()
