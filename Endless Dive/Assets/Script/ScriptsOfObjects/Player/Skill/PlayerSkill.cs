@@ -310,7 +310,14 @@ public class PlayerSkill : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 skillCoolingTimer--;//0.1초후 쿨타임에 -1
             }
-            skillCharges++;
+            if (skillSOs[0].chargeAll)
+            {
+                skillCharges = skillSOs[0].skillMaxCharges_Now;
+            }
+            else
+            {
+                skillCharges++;
+            }
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
             yield return null;
