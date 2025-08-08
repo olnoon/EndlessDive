@@ -42,8 +42,8 @@ public class PlayerSkill : MonoBehaviour
         skillSOs = new List<SkillSO>(skillSOSets);
         skillCoolingTimer = skillSOs[0].skillCooldown_Now;
 
+        skillCharges = skillSOs[0].skillMaxCharges_Now;
         SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
-        StartCoroutine(SkillCooling());
     }
 
     void Update()
@@ -68,6 +68,12 @@ public class PlayerSkill : MonoBehaviour
                     playerSkill.isDisableATK = false;
                 }
             }
+        }
+
+        if (!Input.GetKey(key) && isUsingSkill)
+        {
+            isUsingSkill = false;
+            StartCoroutine(RecoverSkills());
         }
 
         //key가 누르면 어떤 스킬을 실행할지 판단
@@ -171,12 +177,11 @@ public class PlayerSkill : MonoBehaviour
 
             yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
             yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
+            
+            skillCharges--;//skillCharges에서 1을 뺌
 
             if (!Input.GetKey(key))
             {
-                StartCoroutine(RecoverSkills());
-
-                isUsingSkill = false;
                 yield break;
             }
 
@@ -192,13 +197,9 @@ public class PlayerSkill : MonoBehaviour
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
-                if (i == 0)
+                if (i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
                 {
-                    skillCharges--;//skillCharges에서 1을 뺌
-                    if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
-                    {
-                        StartCoroutine(SkillCooling());
-                    }
+                    StartCoroutine(SkillCooling());
                 }
 
                 if (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect)
@@ -209,7 +210,6 @@ public class PlayerSkill : MonoBehaviour
             }
 
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
-
             StartCoroutine(SkillRepeatCooling());//MinUsageInterval만큼의 시간을 기다린 후 스킬을 쓸 수 있게 해줌
 
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
@@ -217,7 +217,7 @@ public class PlayerSkill : MonoBehaviour
                 isUsingSkill = false;
 
                 StartCoroutine(RecoverSkills());
-                
+
                 yield break;
             }
         }
@@ -327,6 +327,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (isCooling)//쿨타임 돌리기 중복 방지
         {
+            Debug.Log("isCooling 문제");
             yield break;
         }
         isCooling = true;
@@ -336,6 +337,9 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].skillMaxCharges_Now <= skillCharges)
             {
+                Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
+                Debug.Log($"skillCharges : {skillSOs[0].skillMaxCharges_Now}");
+                Debug.Log("skillMaxCharges_Now 문제");
                 break;
             }
 
@@ -351,10 +355,13 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].chargeAll)
             {
+                Debug.Log("chargeAll 문제");
+                Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
                 skillCharges = skillSOs[0].skillMaxCharges_Now;
             }
             else
             {
+                Debug.Log("chargeAll 문제");
                 skillCharges++;
             }
 

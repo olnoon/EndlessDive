@@ -32,4 +32,4 @@ MonoBehaviour:
   recovery: 0
   isMultiple: 1
   autoUse: 0
-  cooldownTriggerType: 3
+  cooldownTriggerType: 2
