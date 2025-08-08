@@ -33,7 +33,8 @@ public class SkillSO : ScriptableObject
     public float recovery;//후딜레이
     public bool isMultiple;//스킬 동시사능 가능 여부
     public bool autoUse;//스킬 자동사용
-    public CooldownTriggerType cooldownTriggerType;
+    public CooldownTriggerType cooldownTriggerType;//쿨타임 타이밍
+    public bool isChanneled;//채널링
 
     public void InitializeFromSelf()
     {

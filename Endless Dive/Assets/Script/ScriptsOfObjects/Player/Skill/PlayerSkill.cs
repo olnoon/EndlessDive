@@ -197,20 +197,29 @@ public class PlayerSkill : MonoBehaviour
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
-                if (i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
+
+                if ((i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
+                || (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect))
                 {
                     StartCoroutine(SkillCooling());
                 }
 
-                if (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect)
-                {
-                    StartCoroutine(SkillCooling());
-                }
                 yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+                
+                if (skillSOs[0].isChanneled)
+                {
+                    break;
+                }
             }
 
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
             StartCoroutine(SkillRepeatCooling());//MinUsageInterval만큼의 시간을 기다린 후 스킬을 쓸 수 있게 해줌
+
+            if (skillSOs[0].isChanneled)
+            {
+                StartCoroutine(RecoverSkills());
+                continue;
+            }
 
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
@@ -327,7 +336,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (isCooling)//쿨타임 돌리기 중복 방지
         {
-            Debug.Log("isCooling 문제");
+            // Debug.Log("isCooling 문제");
             yield break;
         }
         isCooling = true;
@@ -337,9 +346,9 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].skillMaxCharges_Now <= skillCharges)
             {
-                Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
-                Debug.Log($"skillCharges : {skillSOs[0].skillMaxCharges_Now}");
-                Debug.Log("skillMaxCharges_Now 문제");
+                // Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
+                // Debug.Log($"skillCharges : {skillSOs[0].skillMaxCharges_Now}");
+                // Debug.Log("skillMaxCharges_Now 문제");
                 break;
             }
 
@@ -355,13 +364,13 @@ public class PlayerSkill : MonoBehaviour
 
             if (skillSOs[0].chargeAll)
             {
-                Debug.Log("chargeAll 문제");
-                Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
+                // Debug.Log("chargeAll 문제");
+                // Debug.Log($"skillMaxCharges_Now : {skillSOs[0].skillMaxCharges_Now}");
                 skillCharges = skillSOs[0].skillMaxCharges_Now;
             }
             else
             {
-                Debug.Log("chargeAll 문제");
+                // Debug.Log("chargeAll 문제");
                 skillCharges++;
             }
 

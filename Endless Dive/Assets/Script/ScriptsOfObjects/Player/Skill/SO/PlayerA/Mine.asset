@@ -31,5 +31,6 @@ MonoBehaviour:
   startUp: 0
   recovery: 0.5
   isMultiple: 0
-  autoUse: 1
+  autoUse: 0
   cooldownTriggerType: 3
+  isChanneled: 1
