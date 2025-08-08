@@ -13,6 +13,7 @@ public enum SkillType
     NewSkill2
 }
 
+
 public class PlayerSkill : MonoBehaviour
 {
     [SerializeField] KeyCode key;//스킬의 키코드
@@ -162,6 +163,9 @@ public class PlayerSkill : MonoBehaviour
             if (isDisableATK)
             {
                 isUsingSkill = false;
+
+                StartCoroutine(RecoverSkills());
+                
                 yield break;
             }
 
@@ -171,30 +175,37 @@ public class PlayerSkill : MonoBehaviour
             if (!Input.GetKey(key))
             {
                 StartCoroutine(RecoverSkills());
-                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
-                {
-                    playerSkill.isDisableATK = false;
-                }
 
                 isUsingSkill = false;
                 yield break;
             }
 
+            if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnCastStart)//쿨타임
+            {
+                StartCoroutine(SkillCooling());
+            }
+
             yield return new WaitForSeconds(skillSOs[0].startUp);
 
             repeat = skillSOs[0].skillRepeat_Now;
-            while (repeat > 0)
+
+            for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
-                repeat--;
+                if (i == 0)
+                {
+                    skillCharges--;//skillCharges에서 1을 뺌
+                    if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
+                    {
+                        StartCoroutine(SkillCooling());
+                    }
+                }
+
+                if (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect)
+                {
+                    StartCoroutine(SkillCooling());
+                }
                 yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
-            }
-
-            skillCharges--;//skillCharges에서 1을 뺌
-
-            if (!isCooling)//SkillCooling이 중복되지 않게 실행시켜 줌.
-            {
-                StartCoroutine(SkillCooling());
             }
 
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
@@ -204,6 +215,9 @@ public class PlayerSkill : MonoBehaviour
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
                 isUsingSkill = false;
+
+                StartCoroutine(RecoverSkills());
+                
                 yield break;
             }
         }
@@ -224,9 +238,20 @@ public class PlayerSkill : MonoBehaviour
     IEnumerator RecoverSkills()//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
     {
         yield return new WaitForSeconds(skillSOs[0].recovery);
+
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
         {
+            if (skillSOs[0].isMultiple)
+            {
+                break;
+            }
+
             playerSkill.isDisableATK = false;
+        }
+
+        if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnCastEnd)
+        {
+            StartCoroutine(SkillCooling());
         }
     }
 
@@ -300,6 +325,10 @@ public class PlayerSkill : MonoBehaviour
     
     public IEnumerator SkillCooling()//스킬 쿨타임
     {
+        if (isCooling)//쿨타임 돌리기 중복 방지
+        {
+            yield break;
+        }
         isCooling = true;
         while (true)
         {
@@ -319,6 +348,7 @@ public class PlayerSkill : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
                 skillCoolingTimer--;//0.1초후 쿨타임에 -1
             }
+
             if (skillSOs[0].chargeAll)
             {
                 skillCharges = skillSOs[0].skillMaxCharges_Now;
@@ -327,6 +357,7 @@ public class PlayerSkill : MonoBehaviour
             {
                 skillCharges++;
             }
+
             SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
 
             yield return null;

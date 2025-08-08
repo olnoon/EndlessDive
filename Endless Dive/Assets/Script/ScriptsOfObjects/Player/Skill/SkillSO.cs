@@ -1,6 +1,14 @@
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
+public enum CooldownTriggerType
+{
+    OnCastStart,
+    OnFirstEffect,
+    OnLastEffect,
+    OnCastEnd
+}
+
 [CreateAssetMenu(fileName = "SkillSO", menuName = "Scriptable Objects/SkillSO")]
 public class SkillSO : ScriptableObject
 {
@@ -25,6 +33,7 @@ public class SkillSO : ScriptableObject
     public float recovery;//후딜레이
     public bool isMultiple;//스킬 동시사능 가능 여부
     public bool autoUse;//스킬 자동사용
+    public CooldownTriggerType cooldownTriggerType;
 
     public void InitializeFromSelf()
     {

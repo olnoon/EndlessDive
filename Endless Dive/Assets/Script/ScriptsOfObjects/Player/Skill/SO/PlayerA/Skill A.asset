@@ -28,5 +28,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   chargeAll: 0
   MinUsageInterval: 0.1
+  startUp: 0
+  recovery: 0
   isMultiple: 1
   autoUse: 0
+  cooldownTriggerType: 3
