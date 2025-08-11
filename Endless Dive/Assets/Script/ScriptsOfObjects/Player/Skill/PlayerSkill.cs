@@ -173,7 +173,6 @@ public class PlayerSkill : MonoBehaviour
             yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
             yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
             
-            skillCharges--;//skillCharges에서 1을 뺌
 
             if (!Input.GetKey(key))
             {
@@ -335,8 +334,10 @@ public class PlayerSkill : MonoBehaviour
         isUsageCooling = false;
     }
     
-    public IEnumerator SkillCooling()//스킬 쿨타임
+    public IEnumerator SkillCooling()//스킬 쿨타임 및 skillCharges차감
     {
+        skillCharges--;//skillCharges에서 1을 뺌
+        
         if (isCooling)//쿨타임 돌리기 중복 방지
         {
             // Debug.Log("isCooling 문제");
