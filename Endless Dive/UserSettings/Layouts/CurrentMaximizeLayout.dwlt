@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 4472
+  controlID: 5870
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 4473
+  controlID: 5871
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 4474
+  controlID: 5872
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -244,8 +244,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 98af0000
-      m_LastClickedID: 44952
+      m_SelectedIDs: 92ae0000
+      m_LastClickedID: 0
       m_ExpandedIDs: 08fbfffff4ffffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -909,9 +909,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.1370577, y: -2.1076703, z: 5.0284343}
+    m_Target: {x: 3.5740554, y: 2.6436236, z: 5.061474}
     speed: 2
-    m_Value: {x: -0.1370577, y: -2.1076703, z: 5.0284343}
+    m_Value: {x: 3.5740554, y: 2.6436236, z: 5.061474}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -961,9 +961,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 7.385169
+    m_Target: 4.0812597
     speed: 2
-    m_Value: 7.385169
+    m_Value: 4.0812597
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1072,7 +1072,7 @@ MonoBehaviour:
     m_SkipHidden: 1
     m_SearchArea: 1
     m_Folders:
-    - Assets/Script/ScriptsOfObjects/Player/Skill
+    - Assets/Script/ScriptsOfObjects/Player/Skill/SO/PlayerA
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1082,7 +1082,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Script/ScriptsOfObjects/Player/Skill
+  - Assets/Script/ScriptsOfObjects/Player/Skill/SO/PlayerA
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "C:\\Users\\syndy\\Desktop\\Spacewar\\\uBCF4\uB0B4\uAE30\\EndlessDive\\Endless
     Dive"
@@ -1090,9 +1090,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 128.66669}
-    m_SelectedIDs: f4b40000
-    m_LastClickedID: 46324
-    m_ExpandedIDs: 00000000d0b20000ffffff7f
+    m_SelectedIDs: f0b40000
+    m_LastClickedID: 46320
+    m_ExpandedIDs: 00000000d0b20000e8b40000f2b40000f4b40000f6b40000f8b40000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1147,8 +1147,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: dcae0000
-    m_LastClickedInstanceID: 44764
+    m_SelectedInstanceIDs: 98af0000
+    m_LastClickedInstanceID: 44952
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000dcb30000ecb3000096b00000eee90100dcb0000000000000
     m_RenameOverlay:

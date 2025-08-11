@@ -201,21 +201,20 @@ public class PlayerSkill : MonoBehaviour
 
                 yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
 
-                if (skillSOs[0].isChanneled)
+                // 채널링이면 i를 건드리지 말고 이 for문을 아예 무한루프처럼 유지
+                while (skillSOs[0].isChanneled)
                 {
-                    break;
+                    if (!Input.GetKey(key))
+                    {
+                        goto flag;
+                    }
+                    skillEffect?.Invoke();
+                    yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
                 }
             }
 
-            SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
+            flag:
             StartCoroutine(SkillRepeatCooling());//MinUsageInterval만큼의 시간을 기다린 후 스킬을 쓸 수 있게 해줌
-
-            if (skillSOs[0].isChanneled)
-            {
-                StartCoroutine(RecoverSkills());
-                continue;
-            }
-
 
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
@@ -337,7 +336,8 @@ public class PlayerSkill : MonoBehaviour
     public IEnumerator SkillCooling()//스킬 쿨타임 및 skillCharges차감
     {
         skillCharges--;//skillCharges에서 1을 뺌
-        
+        SkillCooltext.text = $"{skillCharges}/{skillSOs[0].skillMaxCharges_Now}";
+
         if (isCooling)//쿨타임 돌리기 중복 방지
         {
             // Debug.Log("isCooling 문제");
