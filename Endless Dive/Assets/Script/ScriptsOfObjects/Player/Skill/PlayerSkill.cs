@@ -172,13 +172,6 @@ public class PlayerSkill : MonoBehaviour
 
             yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
             yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
-            
-
-            if (!Input.GetKey(key))
-            {
-                StartCoroutine(OffisUsingSkillWithDelay());
-                yield break;
-            }
 
             if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnCastStart)//쿨타임
             {
@@ -192,6 +185,12 @@ public class PlayerSkill : MonoBehaviour
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
+
+                if (!Input.GetKey(key))
+                {
+                    StartCoroutine(OffisUsingSkillWithDelay());
+                    yield break;
+                }
 
                 if ((i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
                 || (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect))
@@ -224,6 +223,13 @@ public class PlayerSkill : MonoBehaviour
 
                 yield break;
             }
+
+            if (!Input.GetKey(key))
+            {
+                StartCoroutine(OffisUsingSkillWithDelay());
+                yield break;
+            }
+
         }
     }
 
