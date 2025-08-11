@@ -70,12 +70,6 @@ public class PlayerSkill : MonoBehaviour
             }
         }
 
-        if (!Input.GetKey(key) && isUsingSkill)
-        {
-            isUsingSkill = false;
-            StartCoroutine(RecoverSkills());
-        }
-
         //key가 누르면 어떤 스킬을 실행할지 판단
         if (Input.GetKeyDown(key) && Time.timeScale != 0 && !isUsingSkill)
         {
@@ -136,6 +130,7 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
+        Debug.Log("RepeatSkill 시작");
         if (isUsingSkill)
         {
             yield break;
@@ -182,6 +177,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (!Input.GetKey(key))
             {
+                StartCoroutine(OffisUsingSkillWithDelay());
                 yield break;
             }
 
@@ -190,10 +186,10 @@ public class PlayerSkill : MonoBehaviour
                 StartCoroutine(SkillCooling());
             }
 
-            yield return new WaitForSeconds(skillSOs[0].startUp);
-
             repeat = skillSOs[0].skillRepeat_Now;
 
+            yield return new WaitForSeconds(skillSOs[0].startUp);
+            
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
@@ -205,7 +201,7 @@ public class PlayerSkill : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
-                
+
                 if (skillSOs[0].isChanneled)
                 {
                     break;
@@ -221,6 +217,7 @@ public class PlayerSkill : MonoBehaviour
                 continue;
             }
 
+
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
             {
                 isUsingSkill = false;
@@ -230,6 +227,12 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
         }
+    }
+
+    IEnumerator OffisUsingSkillWithDelay()
+    {
+        yield return null;
+        isUsingSkill = false;
     }
 
     void MineMineral()
