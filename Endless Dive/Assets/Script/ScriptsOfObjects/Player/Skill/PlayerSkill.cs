@@ -131,7 +131,7 @@ public class PlayerSkill : MonoBehaviour
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
         Debug.Log("RepeatSkill 시작");
-        if (isUsingSkill)
+        if (isUsingSkill)//코루틴 중복 방지
         {
             yield break;
         }
@@ -145,7 +145,7 @@ public class PlayerSkill : MonoBehaviour
             yield break;
         }
         
-        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 비활성화 시켜 줌.
+        foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 isMultiple의 여부에 따라비활성화 시켜 줌.
         {
             if (skillSOs[0].isMultiple)
             {
@@ -170,30 +170,36 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling 거짓이 될때 까지 대기
+            yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling(다음 실행까지의 쿨타임 여부) 거짓이 될때 까지 대기
+
+            if (!skillSOs[0].autoUse && skillCharges <= 0)//충전이 안 돼있을 시 다음 실행을 예약하는 오류 방지
+            {
+                isUsingSkill = false;
+                yield break;
+            }
             yield return new WaitUntil(() => skillCharges > 0);//skillCharges가 양수가 될때 까지 대기
 
-            if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnCastStart)//쿨타임
+            if (skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnCastStart)//선딜레이가 발생하기 전의 쿨타임
             {
                 StartCoroutine(SkillCooling());
             }
 
-            repeat = skillSOs[0].skillRepeat_Now;
+            repeat = skillSOs[0].skillRepeat_Now;//반복횟수 할당
+            
+            if (!Input.GetKey(key))//키가 눌리지 않았다면 실행의 반복 중지
+            {
+                StartCoroutine(OffisUsingSkillWithDelay());
+                yield break;
+            }
 
             yield return new WaitForSeconds(skillSOs[0].startUp);
             
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
-
-                if (!Input.GetKey(key))
-                {
-                    StartCoroutine(OffisUsingSkillWithDelay());
-                    yield break;
-                }
-
+                
                 if ((i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
-                || (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect))
+                || (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect))//첫 번째 효과와 마지막 효과에서의 쿨타임
                 {
                     StartCoroutine(SkillCooling());
                 }
@@ -203,6 +209,7 @@ public class PlayerSkill : MonoBehaviour
                 // 채널링이면 i를 건드리지 말고 이 for문을 아예 무한루프처럼 유지
                 while (skillSOs[0].isChanneled)
                 {
+                    // 키가 안 눌려있다면 실행을 멈춰줌
                     if (!Input.GetKey(key))
                     {
                         goto flag;
@@ -224,7 +231,7 @@ public class PlayerSkill : MonoBehaviour
                 yield break;
             }
 
-            if (!Input.GetKey(key))
+            if (!Input.GetKey(key))//키가 안 눌려있다면 실행의 반복을 중단
             {
                 StartCoroutine(OffisUsingSkillWithDelay());
                 yield break;
