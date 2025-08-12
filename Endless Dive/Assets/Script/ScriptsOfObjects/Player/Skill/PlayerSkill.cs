@@ -134,12 +134,10 @@ public class PlayerSkill : MonoBehaviour
         }
         
         //Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
-        if (skillSOs[0].skillType == SkillType.Mine)
+        if (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null)
         {
-            if (GetComponent<PlayerMoveSet>().mineral == null)
-            {
-                yield break;
-            }
+            isUsingSkill = false;
+            yield break;
         }
         
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 isMultiple의 여부에 따라비활성화 시켜 줌.
@@ -207,8 +205,8 @@ public class PlayerSkill : MonoBehaviour
                 // 채널링이면 i를 건드리지 말고 이 for문을 아예 무한루프처럼 유지
                 while (skillSOs[0].isChanneled)
                 {
-                    // 키가 안 눌려있다면 실행을 멈춰줌
-                    if (!Input.GetKey(key))
+                    // 키가 안 눌려있다면 실행을 멈춰줌 혹은 Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
+                    if (!Input.GetKey(key) || (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null))
                     {
                         goto flag;
                     }
@@ -238,7 +236,7 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
-    IEnumerator OffisUsingSkillWithDelay()
+    IEnumerator OffisUsingSkillWithDelay()//isUsingSkill을 실행한 다음 프레임에 거짓으로 바꿔줌
     {
         yield return null;
         isUsingSkill = false;
@@ -259,8 +257,6 @@ public class PlayerSkill : MonoBehaviour
     IEnumerator RecoverSkills()//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
     {
         yield return new WaitForSeconds(skillSOs[0].recovery);
-
-        Debug.Log("Skills Recovered!");
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
         {
