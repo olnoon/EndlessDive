@@ -205,7 +205,8 @@ public class PlayerSkill : MonoBehaviour
                 // 채널링이면 i를 건드리지 말고 이 for문을 아예 무한루프처럼 유지
                 while (skillSOs[0].isChanneled)
                 {
-                    // 키가 안 눌려있다면 실행을 멈춰줌 혹은 Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
+                    // 키가 안 눌려있다면 실행을 멈춰줌 
+                    // 혹은 Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
                     if (!Input.GetKey(key) || (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null))
                     {
                         goto flag;
