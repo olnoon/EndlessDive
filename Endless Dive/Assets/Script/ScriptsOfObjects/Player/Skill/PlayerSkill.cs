@@ -133,13 +133,6 @@ public class PlayerSkill : MonoBehaviour
             yield break;
         }
         
-        //Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
-        if (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null)
-        {
-            isUsingSkill = false;
-            yield break;
-        }
-        
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 isMultiple의 여부에 따라비활성화 시켜 줌.
         {
             if (skillSOs[0].isMultiple)
@@ -167,7 +160,21 @@ public class PlayerSkill : MonoBehaviour
             }
 
             yield return new WaitUntil(() => !isUsageCooling);//isUsageCooling(다음 실행까지의 쿨타임 여부) 거짓이 될때 까지 대기
+            if (skillSOs[0].skillType == SkillType.Mine)//스킬 타입이 Mine이면 mineral이 null이 아닐때 까지 대기
+            {
+                while (GetComponent<PlayerMoveSet>().mineral != null)
+                {
+                    if (!skillSOs[0].autoUse && !Input.GetKey(key))//autoUse가 아니면 한번만 실행
+                    {
+                        isUsingSkill = false;
 
+                        StartCoroutine(RecoverSkills());
+
+                        yield break;
+                    }
+                    yield return null;
+                }
+            }
             if (!skillSOs[0].autoUse && skillCharges <= 0)//충전이 안 돼있을 시 다음 실행을 예약하는 오류 방지
             {
                 isUsingSkill = false;
@@ -205,9 +212,14 @@ public class PlayerSkill : MonoBehaviour
                 // 채널링이면 i를 건드리지 말고 이 for문을 아예 무한루프처럼 유지
                 while (skillSOs[0].isChanneled)
                 {
+                    //Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
+                    if (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null)
+                    {
+                        yield return new WaitForSeconds(skillSOs[0].skillRepeatCooldown_Now);
+                        continue;
+                    }
                     // 키가 안 눌려있다면 실행을 멈춰줌 
-                    // 혹은 Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
-                    if (!Input.GetKey(key) || (skillSOs[0].skillType == SkillType.Mine && GetComponent<PlayerMoveSet>().mineral == null))
+                    if (!Input.GetKey(key))
                     {
                         goto flag;
                     }
@@ -230,6 +242,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (!Input.GetKey(key))//키가 안 눌려있다면 실행의 반복을 중단
             {
+                StartCoroutine(RecoverSkills());
                 StartCoroutine(OffisUsingSkillWithDelay());
                 yield break;
             }
