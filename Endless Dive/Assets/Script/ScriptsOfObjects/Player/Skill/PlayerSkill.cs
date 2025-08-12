@@ -57,18 +57,6 @@ public class PlayerSkill : MonoBehaviour
         {
             canUse = true;
         }
-        
-        //skillType이 Mine이면 모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌
-        if (skillSOs[0].skillType == SkillType.Mine)
-        {
-            if (GetComponent<PlayerMoveSet>().mineral == null || !Input.GetKey(key))
-            {
-                foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
-                {
-                    playerSkill.isDisableATK = false;
-                }
-            }
-        }
 
         //key가 누르면 어떤 스킬을 실행할지 판단
         if (Input.GetKeyDown(key) && Time.timeScale != 0 && !isUsingSkill)
@@ -130,7 +118,7 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RepeatSkill()//skillEffect에 구독된 함수를 skillSOs의 skillRepeat_Now번 만큼 skillRepeatCooldown_Now마다 반복해줌
     {
-        Debug.Log("RepeatSkill 시작");
+        // Debug.Log("RepeatSkill 시작");
         if (isUsingSkill)//코루틴 중복 방지
         {
             yield break;
@@ -145,19 +133,29 @@ public class PlayerSkill : MonoBehaviour
             yield break;
         }
         
+        //Mineral이 없는데도 채굴 스킬을 쓰려는 것을 방지
+        if (skillSOs[0].skillType == SkillType.Mine)
+        {
+            if (GetComponent<PlayerMoveSet>().mineral == null)
+            {
+                yield break;
+            }
+        }
+        
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())//모든 플레이어 스킬 스크립트의 공격을 isMultiple의 여부에 따라비활성화 시켜 줌.
         {
             if (skillSOs[0].isMultiple)
             {
                 break;
             }
-            
+
             if (playerSkill != this)
             {
                 playerSkill.isDisableATK = true;
             }
         }
 
+        
         while (true)
         {
             //광물 채굴중이여서 isDisableATK가 켜져있거나 키가 눌려있지 않으면 코루틴을 끝내줌
@@ -166,7 +164,7 @@ public class PlayerSkill : MonoBehaviour
                 isUsingSkill = false;
 
                 StartCoroutine(RecoverSkills());
-                
+
                 yield break;
             }
 
@@ -185,7 +183,7 @@ public class PlayerSkill : MonoBehaviour
             }
 
             repeat = skillSOs[0].skillRepeat_Now;//반복횟수 할당
-            
+
             if (!Input.GetKey(key))//키가 눌리지 않았다면 실행의 반복 중지
             {
                 StartCoroutine(OffisUsingSkillWithDelay());
@@ -193,11 +191,11 @@ public class PlayerSkill : MonoBehaviour
             }
 
             yield return new WaitForSeconds(skillSOs[0].startUp);
-            
+
             for (int i = 0; i < repeat; i++)//한 반복 루틴안에서 SkillEffect 반복
             {
                 skillEffect?.Invoke();
-                
+
                 if ((i == 0 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnFirstEffect)
                 || (i == repeat - 1 && skillSOs[0].cooldownTriggerType == CooldownTriggerType.OnLastEffect))//첫 번째 효과와 마지막 효과에서의 쿨타임
                 {
@@ -219,7 +217,7 @@ public class PlayerSkill : MonoBehaviour
                 }
             }
 
-            flag:
+        flag:
             StartCoroutine(SkillRepeatCooling());//MinUsageInterval만큼의 시간을 기다린 후 스킬을 쓸 수 있게 해줌
 
             if (!skillSOs[0].autoUse)//autoUse가 아니면 한번만 실행
@@ -255,12 +253,14 @@ public class PlayerSkill : MonoBehaviour
         }
         
         GetComponent<PlayerMoveSet>().mineral.GetComponent<Mineral>().Mined(GetComponent<PlayerStat>().mineAmount);
-        Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
+        // Debug.Log($"{GetComponent<PlayerMoveSet>().mineral} 캐는 중");
     }
 
     IEnumerator RecoverSkills()//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
     {
         yield return new WaitForSeconds(skillSOs[0].recovery);
+
+        Debug.Log("Skills Recovered!");
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
         {
