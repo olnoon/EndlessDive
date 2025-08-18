@@ -1479,7 +1479,9 @@ MonoBehaviour:
   isCooling: 0
   repeat: 0
   repeatCooldown: 0
-  MinUsageInterval: 0
+  skillCoolingRepeatTimer: 0
+  isUsageCooling: 0
+  isUsingSkill: 0
 --- !u!114 &384228398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1508,7 +1510,9 @@ MonoBehaviour:
   isCooling: 0
   repeat: 0
   repeatCooldown: 0
-  MinUsageInterval: 0
+  skillCoolingRepeatTimer: 0
+  isUsageCooling: 0
+  isUsingSkill: 0
 --- !u!114 &384228399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,7 +1541,9 @@ MonoBehaviour:
   isCooling: 0
   repeat: 0
   repeatCooldown: 0
-  MinUsageInterval: 0
+  skillCoolingRepeatTimer: 0
+  isUsageCooling: 0
+  isUsingSkill: 0
 --- !u!114 &384228400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,7 +1572,9 @@ MonoBehaviour:
   isCooling: 0
   repeat: 0
   repeatCooldown: 0
-  MinUsageInterval: 0
+  skillCoolingRepeatTimer: 0
+  isUsageCooling: 0
+  isUsingSkill: 0
 --- !u!1 &397642202
 GameObject:
   m_ObjectHideFlags: 0
@@ -14072,6 +14080,7 @@ MonoBehaviour:
   fadeDuration: 1
   players: []
   statWindow: {fileID: 0}
+  isSpawnAble: 1
 --- !u!1 &1440840758
 GameObject:
   m_ObjectHideFlags: 0

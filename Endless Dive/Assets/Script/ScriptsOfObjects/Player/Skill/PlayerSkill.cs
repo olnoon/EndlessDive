@@ -271,7 +271,6 @@ public class PlayerSkill : MonoBehaviour
 
     IEnumerator RecoverSkills()//모든 플레이어 스킬 스크립트의 공격을 활성화 시켜 줌.
     {
-        Debug.Log("RecoverSkills Start");
         yield return new WaitForSeconds(skillSOs[0].recovery);
 
         foreach (PlayerSkill playerSkill in GetComponents<PlayerSkill>())
